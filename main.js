@@ -1,7 +1,7 @@
 /**
  * NodeJS interface for the AfterShip API.
  * From docs here: https://www.aftership.com/docs/api/3.0
- * 
+ *
  * @author Kirk Morales (kirk@intrakr.com)
  * @copyright Copyright (C) 2013
  * @license GNU General Public License, version 2 (see LICENSE.md)
@@ -49,7 +49,7 @@ module.exports = function(key) {
   function request(method, path, data, callback) {
 
     // Make sure path starts with a slash
-    if (path.substr(0,1) != '/') path = '/' + path;
+    if (path.substr(0, 1) != '/') path = '/' + path;
 
     data = JSON.stringify(data);
 
@@ -57,8 +57,8 @@ module.exports = function(key) {
 
     var asReq = https.request({
       hostname: REQUEST_HOSTNAME,
-      path:     API_PATH + path,
-      method:   method,
+      path: API_PATH + path,
+      method: method,
       headers: {
         'Content-Type': 'application/json',
         'Content-Length': data.length,
@@ -68,7 +68,7 @@ module.exports = function(key) {
       var body = '';
 
       // Capture the response chunks
-      asRes.on('data', function (chunk) {
+      asRes.on('data', function(chunk) {
         body += chunk;
       });
 
@@ -82,29 +82,30 @@ module.exports = function(key) {
         }
 
         callback(null, body);
-      });   
+      });
     });
 
     // Capture any errors
-    asReq.on('error', function(e) { callback(e.message); });
+    asReq.on('error', function(e) {
+      callback(e.message);
+    });
 
     asReq.write(data);
     asReq.end();
   }
 
   return {
-
     /**
-     * Starts tracking a new number.
-     * @param {string} trackingNumber The number to track. Default: DHL.
+     * create a new tracking_number.
+     * @param {string} tracking_number The number to track. Default: DHL.
      * @param {Object=} options Additional options to attach.
      * @param {function(?string, string=, Array=)} callback
      */
-    'startTracking': function(trackingNumber, options, callback) {
+    'createTracking': function(tracking_number, options, callback) {
 
       options = options || {};
 
-      if (!trackingNumber) {
+      if (!tracking_number) {
         return 'Missing Required Parameter: tracking number';
       }
 
@@ -112,7 +113,7 @@ module.exports = function(key) {
         return 'Missing Required Parameter: callback';
       }
 
-      options.tracking_number = trackingNumber;
+      options.tracking_number = tracking_number;
 
       request('POST', '/trackings', {tracking: options}, function(err, body) {
         if (err) {
@@ -146,17 +147,17 @@ module.exports = function(key) {
     /**
      * Tracks a specific tracking number.
      * @param {string} slug
-     * @param {string} trackingNumber
+     * @param {string} tracking_number
      * @param {Array|string} fields Fields to return: https://www.aftership.com/docs/api/3.0/tracking/get-trackings-slug-tracking_number
      * @param {function(?string, Object=)} callback
      */
-    'track': function(slug, trackingNumber, fields, callback) {
+    'tracking': function(slug, tracking_number, fields, callback) {
 
       if (!slug) {
         return 'Missing Required Parameter: slug';
       }
 
-      if (!trackingNumber) {
+      if (!tracking_number) {
         return 'Missing Required Parameter: tracking number';
       }
 
@@ -168,46 +169,46 @@ module.exports = function(key) {
       fields = fields || [];
       if (Array.isArray(fields)) fields = fields.join(',');
 
-      request('GET', '/trackings/' + slug + '/' + trackingNumber, 
-          {fields: fields}, function(err, body) {
+      request('GET', '/trackings/' + slug + '/' + tracking_number,
+        {fields: fields}, function(err, body) {
 
-        if (err) {
-          callback(err);
-          return;
-        }
+          if (err) {
+            callback(err);
+            return;
+          }
 
-        // Check for valid meta code
-        if (!body.meta || !body.meta.code || body.meta.code != 200) {
-          callback(body.meta.code + ': ' + body.meta.error_message);
-          return;
-        }
+          // Check for valid meta code
+          if (!body.meta || !body.meta.code || body.meta.code != 200) {
+            callback(body.meta.code + ': ' + body.meta.error_message);
+            return;
+          }
 
-        // Check for valid data contents
-        if (!body.data || !body.data.tracking || typeof body.data.tracking != 'object') {
-          callback('Invalid response body');
-          return;
-        }
+          // Check for valid data contents
+          if (!body.data || !body.data.tracking || typeof body.data.tracking != 'object') {
+            callback('Invalid response body');
+            return;
+          }
 
-        // Return the time and checkpoints
-        callback(null, body.data.tracking);
-      });
+          // Return the time and checkpoints
+          callback(null, body.data.tracking);
+        });
     },
 
     /**
      * Updates the tracking for an existing number
      * @param {string} slug
-     * @param {string} trackingNumber
+     * @param {string} tracking_number
      * @param {Array} options Fields to update:
      *  https://www.aftership.com/docs/api/3.0/tracking/put-trackings-slug-tracking_number
      * @param {function(?string, Object=)} callback
      */
-    'updateTracking': function(slug, trackingNumber, options, callback) {
+    'updateTracking': function(slug, tracking_number, options, callback) {
 
       if (!slug) {
         return 'Missing Required Parameter: slug';
       }
 
-      if (!trackingNumber) {
+      if (!tracking_number) {
         return 'Missing Required Parameter: tracking number';
       }
 
@@ -217,28 +218,28 @@ module.exports = function(key) {
 
       options = options || {};
 
-      request('PUT', '/trackings/' + slug + '/' + trackingNumber, 
-          {tracking: options}, function(err, body) {
+      request('PUT', '/trackings/' + slug + '/' + tracking_number,
+        {tracking: options}, function(err, body) {
 
-        if (err) {
-          callback(err);
-          return;
-        }
+          if (err) {
+            callback(err);
+            return;
+          }
 
-        // Check for valid meta code
-        if (!body.meta || !body.meta.code || body.meta.code != 200) {
-          callback(body.meta.code + ': ' + body.meta.error_message);
-          return;
-        }
+          // Check for valid meta code
+          if (!body.meta || !body.meta.code || body.meta.code != 200) {
+            callback(body.meta.code + ': ' + body.meta.error_message);
+            return;
+          }
 
-        // Check for valid data contents
-        if (!body.data || !body.data.tracking || typeof body.data.tracking != 'object') {
-          callback('Invalid response body');
-          return;
-        }
+          // Check for valid data contents
+          if (!body.data || !body.data.tracking || typeof body.data.tracking != 'object') {
+            callback('Invalid response body');
+            return;
+          }
 
-        callback(null, body.data.tracking);
-      });
+          callback(null, body.data.tracking);
+        });
     },
 
     /**
@@ -315,19 +316,19 @@ module.exports = function(key) {
     },
 
     /**
-     * Updates the tracking for an existing number
+     * Get the last checkpoint information of a tracking number
      * @param {string} slug
-     * @param {string} trackingNumber
+     * @param {string} tracking_number
      * @param {Array|string} fields Fields to update: https://www.aftership.com/docs/api/3.0/last_checkpoint
      * @param {function(?string, Object=)} callback
      */
-    'checkpoint': function(slug, trackingNumber, fields, callback) {
+    'last_checkpoint': function(slug, tracking_number, fields, callback) {
 
       if (!slug) {
         return 'Missing Required Parameter: slug';
       }
 
-      if (!trackingNumber) {
+      if (!tracking_number) {
         return 'Missing Required Parameter: tracking number';
       }
 
@@ -338,28 +339,28 @@ module.exports = function(key) {
       fields = fields || [];
       if (Array.isArray(fields)) fields = fields.join(',');
 
-      request('GET', '/last_checkpoint/' + slug + '/' + trackingNumber, 
-          {fields: fields}, function(err, body) {
+      request('GET', '/last_checkpoint/' + slug + '/' + tracking_number,
+        {fields: fields}, function(err, body) {
 
-        if (err) {
-          callback(err);
-          return;
-        }
+          if (err) {
+            callback(err);
+            return;
+          }
 
-        // Check for valid meta code
-        if (!body.meta || !body.meta.code || body.meta.code != 200) {
-          callback(body.meta.code + ': ' + body.meta.error_message);
-          return;
-        }
+          // Check for valid meta code
+          if (!body.meta || !body.meta.code || body.meta.code != 200) {
+            callback(body.meta.code + ': ' + body.meta.error_message);
+            return;
+          }
 
-        // Check for valid data contents
-        if (!body.data || !body.data.checkpoint || typeof body.data.checkpoint != 'object') {
-          callback('Invalid response body');
-          return;
-        }
+          // Check for valid data contents
+          if (!body.data || !body.data.checkpoint || typeof body.data.checkpoint != 'object') {
+            callback('Invalid response body');
+            return;
+          }
 
-        callback(null, body.data.tag, body.data.checkpoint);
-      });
+          callback(null, body.data.tag, body.data.checkpoint);
+        });
     }
   };
 };

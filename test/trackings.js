@@ -4,7 +4,7 @@ if (!GLOBAL.apiKey) {
   process.exit(1);
 }
 
-var AS = require('../main.js')(GLOBAL.apiKey);
+var Aftership = require('../main.js')(GLOBAL.apiKey);
 
 
 exports['Track'] = {
@@ -12,28 +12,28 @@ exports['Track'] = {
   'No Slug': function(test) {
     test.expect(1);
 
-    test.equal(AS.track(), 'Missing Required Parameter: slug');
+    test.equal(Aftership.tracking(), 'Missing Required Parameter: slug');
     test.done();
   },
 
   'No Tracking Number': function(test) {
     test.expect(1);
 
-    test.equal(AS.track('ups'), 'Missing Required Parameter: tracking number');
+    test.equal(Aftership.tracking('ups'), 'Missing Required Parameter: tracking number');
     test.done();
   },
 
   'No Callback (no fields)': function(test) {
     test.expect(1);
 
-    test.equal(AS.track('ups', '1234'), 'Missing Required Parameter: callback');
+    test.equal(Aftership.tracking('ups', '1234'), 'Missing Required Parameter: callback');
     test.done();
   },
 
   'No Callback (w/ fields)': function(test) {
     test.expect(1);
 
-    test.equal(AS.track('ups', '1234', []), 'Missing Required Parameter: callback');
+    test.equal(Aftership.tracking('ups', '1234', []), 'Missing Required Parameter: callback');
     test.done();
   },
 
@@ -41,7 +41,7 @@ exports['Track'] = {
     test.expect(6);
 
     // UPS
-    AS.track('ups', GLOBAL.tracking['ups'], null, function(err, tracking) {
+    Aftership.tracking('ups', GLOBAL.tracking['ups'], null, function(err, tracking) {
       test.ok(!err);
       test.equal(typeof tracking, 'object');
       test.equal(tracking.slug, 'ups');
@@ -60,21 +60,21 @@ exports['Trackings'] = {
   'No Callback (no options)': function(test) {
     test.expect(1);
 
-    test.equal(AS.trackings(), 'Missing Required Parameter: callback');
+    test.equal(Aftership.trackings(), 'Missing Required Parameter: callback');
     test.done();
   },
 
   'No Callback (w/ options)': function(test) {
     test.expect(1);
 
-    test.equal(AS.trackings({}), 'Missing Required Parameter: callback');
+    test.equal(Aftership.trackings({}), 'Missing Required Parameter: callback');
     test.done();
   },
 
   'OK': function(test) {
     test.expect(7);
 
-    AS.trackings({}, function(err, meta, trackings) {
+    Aftership.trackings({}, function(err, meta, trackings) {
       test.ok(!err);
       test.equal(typeof meta, 'object');
       test.ok(Array.isArray(trackings));
@@ -97,7 +97,7 @@ exports['Trackings'] = {
   // 'OK (filtering)': function(test) {
   //   test.expect(8);
 
-  //   AS.trackings({limit: 1}, function(err, meta, trackings) {
+  //   Aftership.trackings({limit: 1}, function(err, meta, trackings) {
   //     test.ok(!err);
   //     test.equal(typeof meta, 'object');
   //     test.ok(Array.isArray(trackings));
@@ -125,28 +125,28 @@ exports['Update Tracking'] = {
   'No Slug': function(test) {
     test.expect(1);
 
-    test.equal(AS.updateTracking(), 'Missing Required Parameter: slug');
+    test.equal(Aftership.updateTracking(), 'Missing Required Parameter: slug');
     test.done();
   },
 
   'No Tracking Number': function(test) {
     test.expect(1);
 
-    test.equal(AS.updateTracking('ups'), 'Missing Required Parameter: tracking number');
+    test.equal(Aftership.updateTracking('ups'), 'Missing Required Parameter: tracking number');
     test.done();
   },
 
   'No Callback (no options)': function(test) {
     test.expect(1);
 
-    test.equal(AS.updateTracking('ups', '1234'), 'Missing Required Parameter: callback');
+    test.equal(Aftership.updateTracking('ups', '1234'), 'Missing Required Parameter: callback');
     test.done();
   },
 
   'No Callback (w/ options)': function(test) {
     test.expect(1);
 
-    test.equal(AS.updateTracking('ups', '1234', {}), 'Missing Required Parameter: callback');
+    test.equal(Aftership.updateTracking('ups', '1234', {}), 'Missing Required Parameter: callback');
     test.done();
   },
 
@@ -154,7 +154,7 @@ exports['Update Tracking'] = {
     test.expect(5);
 
     // UPS
-    AS.updateTracking('ups', GLOBAL.tracking['ups'], null, function(err, tracking) {
+    Aftership.updateTracking('ups', GLOBAL.tracking['ups'], null, function(err, tracking) {
       test.ok(!err);
       test.equal(typeof tracking, 'object');
       test.equal(tracking.slug, 'ups');
@@ -169,7 +169,7 @@ exports['Update Tracking'] = {
     test.expect(5);
 
     // UPS
-    AS.updateTracking('ups', GLOBAL.tracking['ups'], {title: 'Foobar'}, function(err, tracking) {
+    Aftership.updateTracking('ups', GLOBAL.tracking['ups'], {title: 'Foobar'}, function(err, tracking) {
       test.ok(!err);
       test.equal(typeof tracking, 'object');
       test.equal(tracking.slug, 'ups');
@@ -187,28 +187,28 @@ exports['Checkpoint'] = {
   'No Slug': function(test) {
     test.expect(1);
 
-    test.equal(AS.checkpoint(), 'Missing Required Parameter: slug');
+    test.equal(Aftership.last_checkpoint(), 'Missing Required Parameter: slug');
     test.done();
   },
 
   'No Tracking Number': function(test) {
     test.expect(1);
 
-    test.equal(AS.checkpoint('ups'), 'Missing Required Parameter: tracking number');
+    test.equal(Aftership.last_checkpoint('ups'), 'Missing Required Parameter: tracking number');
     test.done();
   },
 
   'No Callback (no fields)': function(test) {
     test.expect(1);
 
-    test.equal(AS.checkpoint('ups', '1234'), 'Missing Required Parameter: callback');
+    test.equal(Aftership.last_checkpoint('ups', '1234'), 'Missing Required Parameter: callback');
     test.done();
   },
 
   'No Callback (w/ fields)': function(test) {
     test.expect(1);
 
-    test.equal(AS.checkpoint('ups', '1234', []), 'Missing Required Parameter: callback');
+    test.equal(Aftership.last_checkpoint('ups', '1234', []), 'Missing Required Parameter: callback');
     test.done();
   },
 
@@ -216,7 +216,7 @@ exports['Checkpoint'] = {
     test.expect(4);
 
     // UPS
-    AS.checkpoint('ups', GLOBAL.tracking['ups'], null, function(err, tag, checkpoint) {
+    Aftership.last_checkpoint('ups', GLOBAL.tracking['ups'], null, function(err, tag, checkpoint) {
       test.ok(!err);
       test.equal(typeof tag, 'string');
       test.equal(typeof checkpoint, 'object');
