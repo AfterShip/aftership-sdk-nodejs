@@ -42,24 +42,24 @@ var argv = optimist.usage('\n./tests.js OPTIONS', {
 var reporter;
 if (argv.verbose) {
   reporter = require('nodeunit').reporters.default;
-  
+
   // Add directory to each item
   for (var i=0;i<tests.length;i++) {
     tests[i] = 'test/' + tests[i];
   }
-  
+
 } else {
   reporter = require('nodeunit');
-  
+
   // Add directory to each item
   for (var i=0;i<tests.length;i++) {
     tests[i] = __dirname + '/' + tests[i];
   }
 }
-  
+
 if (argv.verbose) {
   reporter.run(tests, null);
-  
+
 } else {
   reporter.runFiles(tests);
 }
