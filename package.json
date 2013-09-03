@@ -1,7 +1,5 @@
 {
-  "_id": "aftership-node@0.1.0",
-  "_from": "aftership-node@0.1.0",
-  "name": "aftership-nodejs",
+  "name": "aftership",
   "description": "AfterShip API Wrapper",
   "version": "0.1.0",
   "homepage": "https://github.com/AfterShip/aftership-nodejs",
@@ -10,9 +8,9 @@
     "url": "git://github.com/AfterShip/aftership-nodejs.git"
   },
   "engines": {
-    "node": ">= v0.10.0"
+    "node": ">=0.8"
   },
-  "main": "main.js",
+  "main": "./lib/main.js",
   "dependencies": {},
   "devDependencies": {
     "nodeunit": "0.7.4",
@@ -26,6 +24,9 @@
     "test": "node test/tests.js -v"
   },
   "files": ["main.js","test","README.md","LICENSE.md","package.json"],
+  "keywords": [
+    "aftership api", "aftership", "aftership-nodejs"
+  ],
   "author": {
     "name": "Kirk Morales",
     "email": "kirk@intrakr.com",

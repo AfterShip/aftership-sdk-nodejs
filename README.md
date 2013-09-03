@@ -1,7 +1,7 @@
 Installing
 =========
 
-```npm install aftership-nodejs```
+```npm install aftership```
 
 Testing
 =========
@@ -17,7 +17,7 @@ NOTE: Once tracking numbers have been added to your account, the tests in track.
 Use
 =========
 
-Reference the AfterShip library: ```var AS = require('aftership-nodejs')('API KEY');```
+Reference the AfterShip library: ```var AS = require('aftership')('API KEY');```
 
 Couriers
 -
@@ -100,6 +100,5 @@ Contributors
 
   [Kirk Morales]: https://github.com/knation
   [Intrakr]: http://intrakr.com
-  
 
-    
+
