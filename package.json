@@ -1,7 +1,7 @@
 {
   "name": "aftership",
   "description": "AfterShip API Wrapper",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/AfterShip/aftership-nodejs",
   "repository": {
     "type": "git",
@@ -10,29 +10,40 @@
   "engines": {
     "node": ">=0.8"
   },
-  "main": "./lib/main",
   "directories": {
-    "lib": "./lib"
+    "test": "test",
+    "lib": "lib"
   },
   "dependencies": {},
   "devDependencies": {
     "nodeunit": "0.7.4",
     "optimist": "0.3.5"
   },
-  "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/AfterShip/aftership-nodejs/issues"
   },
   "scripts": {
     "test": "node test/tests.js -v"
   },
-  "files": ["main.js","test","README.md","LICENSE.md","package.json"],
-  "keywords": [
-    "aftership api", "aftership", "aftership-nodejs"
+  "files": [
+    "main.js",
+    "test",
+    "README.md",
+    "LICENSE.md",
+    "package.json"
   ],
-  "author": {
-    "name": "Kirk Morales",
-    "email": "kirk@intrakr.com",
-    "url": "http://www.about.me/kirk.morales"
-  }
+  "keywords": [
+    "aftership api",
+    "aftership",
+    "aftership-nodejs"
+  ],
+  "author": "AfterShip",
+  "contributors": [
+    {
+      "name": "Kirk Morales",
+      "email": "kirk@intrakr.com",
+      "url": "http://www.about.me/kirk.morales"
+    }
+  ],
+  "license": "GNU"
 }
