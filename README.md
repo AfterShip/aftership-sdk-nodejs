@@ -159,7 +159,7 @@ Example:
 
 ```
 
-Aftership.track('ups', '1Z21E98F0314447088', [], function(err, tracking) {
+Aftership.tracking('ups', '1Z21E98F0314447088', [], function(err, tracking) {
   if (err) {
     console.log(err);
   } else {
