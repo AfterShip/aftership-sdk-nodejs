@@ -16,6 +16,7 @@ To test, run
 
 ```
 npm test
+
 ```
 
 NOTE: Once tracking numbers have been added to your account, the tests in track.js will fail.
@@ -33,7 +34,6 @@ Reference the AfterShip library:
 ```
 var Aftership = require('aftership')('API KEY');
 
-
 ```
 
 Couriers
@@ -48,7 +48,7 @@ Callback:
 ```
 err: the error message
 count: The number of couriers count
-couriers: the array of available couriers 
+couriers: the array of available couriers
 
 ```
 
@@ -56,9 +56,8 @@ Example:
 
 ```
 Aftership.couriers(function(err, count, couriers) {
-console.log('Support Courier: ' + count);
+  console.log('Support Courier: ' + count);
 });
-
 
 ```
 
@@ -69,33 +68,33 @@ Trackings
 
 #### Create a new tracking number:
 
-You must first create a new tracking number before getting the tracking result. 
+You must first create a new tracking number before getting the tracking result.
 
 Accepts:
 
 ```
 tracking_number: The tracking number to track
-options: An object with options to set 
+options: An object with options to set
 
 https://www.aftership.com/docs/api/3.0/tracking/post-trackings
 
 ```
 
-Callback: 
+Callback:
 
 ```
 function(err, tracking_number, options)
 
 ```
 
-Example: 
+Example:
 
 ```
 Aftership.createTracking('1Z21E98F0314447088', {slug: 'ups'}, function(err, tracking_number, tracking_detail) {
   if (err) {
     console.log(err);
   } else {
-    console.log('Created the tracking: ' + tracking_number)
+    console.log('Created the tracking: ' + tracking_number);
   }
 });
 
@@ -114,31 +113,30 @@ options: An object with options to limit results
 https://www.aftership.com/docs/api/3.0/tracking/get-trackings
 ```
 
-callback: 
+callback:
 
 ```
 function(err, data, trackings)
 
 ```
 
-Example: 
+Example:
 
 ```
-Aftership.trackings({}, function(err, data, trackings){
+Aftership.trackings({}, function(err, data, trackings) {
   if (err) {
     console.log(err);
   } else {
-    console.log('Total Trackings in query: ' data.count);
+    console.log('Total Trackings in query: ' + data.count);
     console.log(trackings);
-  }  
+  }
 });
-
 
 ```
 
 #### Get a specific tracking number in the account
 
-Gets information for a specific tracking number. 
+Gets information for a specific tracking number.
 
 Accepts:
 
@@ -149,7 +147,7 @@ fields: Array of fields to return
 
 ```
 
-callback: 
+callback:
 
 ```
 
@@ -157,24 +155,23 @@ function(err, tracking)
 
 ```
 
-Example: 
+Example:
 
 ```
 
-Aftership.track('ups', '1Z21E98F0314447088', [], function(err, tracking){
+Aftership.track('ups', '1Z21E98F0314447088', [], function(err, tracking) {
   if (err) {
     console.log(err);
   } else {
     console.log(tracking);
   }
-
 });
 
 ```
 
 #### Update a tracking number information
 
-Updates tracking information for an existing tracking number. 
+Updates tracking information for an existing tracking number.
 
 Accepts:
 
@@ -187,7 +184,7 @@ https://www.aftership.com/docs/api/3.0/tracking/put-trackings-slug-tracking_numb
 
 ```
 
-callback: 
+callback:
 
 ```
 function(err, updated_tracking)
@@ -198,21 +195,21 @@ function(err, updated_tracking)
 Example:
 
 ```
-Aftership.updateTracking('ups', '1Z21E98F0314447088', {title: 'My Shipment'}, function(err, updated_tracking){}
-  if (err) {
-    console.log(err);
-  } else {
-    console.log(updated_tracking);
-  }
-
-);
+Aftership.updateTracking('ups', '1Z21E98F0314447088', {title: 'My Shipment'},
+  function(err, updated_tracking) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(updated_tracking);
+    }
+  });
 
 ```
 
 #Last Checkpoint
 -
 
-Gets the last checkpoint for a specific tracking number. 
+Gets the last checkpoint for a specific tracking number.
 
 Accepts:
 
@@ -223,25 +220,23 @@ fields: Array of fields to return
 
 ```
 
-Callback: 
+Callback:
 
 ```
-function(err, tag, checkpoints)
-
-```
-
-Example: 
+function(err, tag, last_checkpoint)
 
 ```
 
-Aftership.checkpoint('ups', '1Z21E98F0314447088', {}, function(err, tag, checkpoints){
+Example:
+
+```
+Aftership.last_checkpoint('ups', '1Z21E98F0314447088', [], function(err, tag, last_checkpoint) {
   if (err) {
     console.log(err);
   } else {
-    console.log(checkpoints);
+    console.log(last_checkpoint);
   }
-})
-
+});
 
 ```
 
