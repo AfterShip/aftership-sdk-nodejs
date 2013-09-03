@@ -4,17 +4,17 @@ if (!GLOBAL.apiKey) {
   process.exit(1);
 }
 
-var AS = require('../lib/main.js')(GLOBAL.apiKey);
+var AS = require('../main.js')(GLOBAL.apiKey);
 
 exports['Couriers'] = {
-  
+
   'No Callback (no options)': function(test) {
     test.expect(1);
 
     test.equal(AS.couriers(), 'Missing Required Parameter: callback');
     test.done();
   },
-  
+
   'OK': function(test) {
     test.expect(5);
 

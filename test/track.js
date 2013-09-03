@@ -4,7 +4,7 @@ if (!GLOBAL.apiKey) {
   process.exit(1);
 }
 
-var AS = require('../lib/main.js')(GLOBAL.apiKey);
+var AS = require('../main.js')(GLOBAL.apiKey);
 
 
 exports['Track'] = {

@@ -10,9 +10,9 @@
   "engines": {
     "node": ">=0.8"
   },
+  "main": "./main",
   "directories": {
-    "test": "test",
-    "lib": "lib"
+    "test": "test"
   },
   "dependencies": {},
   "devDependencies": {
