@@ -18,7 +18,7 @@
   },
   "readmeFilename": "README.md",
   "bugs": {
-    "url": "https://github.com/AfterShip/aftership-nodejs/issuess"
+    "url": "https://github.com/AfterShip/aftership-nodejs/issues"
   },
   "scripts": {
     "test": "node test/tests.js -v"
