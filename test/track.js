@@ -1,4 +1,3 @@
-
 if (!GLOBAL.apiKey) {
   console.log('No API Key Provided');
   process.exit(1);

@@ -1,4 +1,3 @@
-
 /******************************************
  * Set your API key here for testing
  ******************************************/
@@ -48,7 +47,7 @@ if (argv.verbose) {
   reporter = require('nodeunit').reporters.default;
 
   // Add directory to each item
-  for (var i=0;i<tests.length;i++) {
+  for (var i = 0; i < tests.length; i++) {
     tests[i] = 'test/' + tests[i];
   }
 
@@ -56,7 +55,7 @@ if (argv.verbose) {
   reporter = require('nodeunit');
 
   // Add directory to each item
-  for (var i=0;i<tests.length;i++) {
+  for (var i = 0; i < tests.length; i++) {
     tests[i] = __dirname + '/' + tests[i];
   }
 }
