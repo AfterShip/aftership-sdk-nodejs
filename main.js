@@ -7,9 +7,9 @@
  * @license GNU General Public License, version 2 (see LICENSE.md)
  */
 
-"use strict";
 
-var https = require('https');
+var https = require('https'),
+  _ = require('underscore');
 
 /**
  * Hostname for AfterShip API.
@@ -34,7 +34,9 @@ var API_PATH = '/v3';
  */
 module.exports = function(key) {
   // Require API key
-  if (!key) return;
+  if (!key) {
+    return;
+  }
   var apiKey = key;
 
 
@@ -49,7 +51,9 @@ module.exports = function(key) {
   function request(method, path, data, callback) {
 
     // Make sure path starts with a slash
-    if (path.substr(0, 1) != '/') path = '/' + path;
+    if (path.substr(0, 1) != '/') {
+      path = '/' + path;
+    }
 
     data = JSON.stringify(data);
 
@@ -167,7 +171,9 @@ module.exports = function(key) {
 
       // Default to all fields if none are provided
       fields = fields || [];
-      if (Array.isArray(fields)) fields = fields.join(',');
+      if (Array.isArray(fields)) {
+        fields = fields.join(',');
+      }
 
       request('GET', '/trackings/' + slug + '/' + tracking_number,
         {fields: fields}, function(err, body) {
@@ -337,7 +343,9 @@ module.exports = function(key) {
       }
 
       fields = fields || [];
-      if (Array.isArray(fields)) fields = fields.join(',');
+      if (Array.isArray(fields)) {
+        fields = fields.join(',');
+      }
 
       request('GET', '/last_checkpoint/' + slug + '/' + tracking_number,
         {fields: fields}, function(err, body) {

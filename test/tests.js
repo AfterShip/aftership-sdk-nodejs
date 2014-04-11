@@ -2,7 +2,7 @@
 /******************************************
  * Set your API key here for testing
  ******************************************/
-GLOBAL.apiKey = '';
+GLOBAL.apiKey = 'e9f201df-91f2-4f13-9a64-3ad64826d47d';
 
 /******************************************
  * Set tracking numbers here
