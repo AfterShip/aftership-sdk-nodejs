@@ -71,7 +71,7 @@ exports.Trackings = {
   },
 
   'OK': function(test) {
-    test.expect(7);
+    test.expect(5);
 
     Aftership.trackings({}, function(err, results) {
       test.ok(!err);

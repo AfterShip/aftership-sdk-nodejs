@@ -106,7 +106,7 @@ exports.Track = {
 
 
 	'Ok (w/ slug usps)': function(test) {
-		test.expect(2);
+		test.expect(5);
 
 		// usps
 		Aftership.createTracking(GLOBAL.tracking.usps, {slug: 'usps'}, function(err, result) {
