@@ -40,13 +40,13 @@ exports['Track'] = {
     test.expect(6);
 
     // UPS
-    Aftership.tracking('ups', GLOBAL.tracking['ups'], null, function(err, tracking) {
+    Aftership.tracking('ups', GLOBAL.tracking['ups'], null, function(err, result) {
       test.ok(!err);
-      test.equal(typeof tracking, 'object');
-      test.equal(tracking.slug, 'ups');
-      test.equal(tracking.tracking_number, GLOBAL.tracking['ups']);
-      test.ok(tracking.checkpoints);
-      test.notEqual(typeof(tracking.active), 'undefined');
+      test.equal(typeof result.tracking, 'object');
+      test.equal(result.tracking.slug, 'ups');
+      test.equal(result.tracking.tracking_number, GLOBAL.tracking['ups']);
+      test.ok(result.tracking.checkpoints);
+      test.notEqual(typeof(result.tracking.active), 'undefined');
 
       test.done();
     });
@@ -73,20 +73,16 @@ exports['Trackings'] = {
   'OK': function(test) {
     test.expect(7);
 
-    Aftership.trackings({}, function(err, meta, trackings) {
+    Aftership.trackings({}, function(err, results) {
       test.ok(!err);
-      test.equal(typeof meta, 'object');
-      test.ok(Array.isArray(trackings));
-
-      // Make sure trackings array was removed from meta data
-      test.ok(!meta.trackings);
+      test.ok(Array.isArray(results.trackings));
 
       // Check for a few meta parameters
-      test.equal(typeof meta.limit, 'number');
-      test.equal(typeof meta.slug, 'string');
+      test.equal(typeof results.limit, 'number');
+      test.equal(typeof results.slug, 'string');
 
       // We should have at least 1 entry, check it
-      test.equal(typeof trackings[0].tracking_number, 'string');
+      test.equal(typeof results.trackings[0].tracking_number, 'string');
 
       test.done();
 
@@ -153,12 +149,12 @@ exports['Update Tracking'] = {
     test.expect(5);
 
     // UPS
-    Aftership.updateTracking('ups', GLOBAL.tracking['ups'], null, function(err, tracking) {
+    Aftership.updateTracking('ups', GLOBAL.tracking['ups'], null, function(err, result) {
       test.ok(!err);
-      test.equal(typeof tracking, 'object');
-      test.equal(tracking.slug, 'ups');
-      test.equal(tracking.tracking_number, GLOBAL.tracking['ups']);
-      test.notEqual(typeof(tracking.active), 'undefined');
+      test.equal(typeof result, 'object');
+      test.equal(result.tracking.slug, 'ups');
+      test.equal(result.tracking.tracking_number, GLOBAL.tracking['ups']);
+      test.notEqual(typeof(result.tracking.active), 'undefined');
 
       test.done();
     });
@@ -168,12 +164,12 @@ exports['Update Tracking'] = {
     test.expect(5);
 
     // UPS
-    Aftership.updateTracking('ups', GLOBAL.tracking['ups'], {title: 'Foobar'}, function(err, tracking) {
+    Aftership.updateTracking('ups', GLOBAL.tracking['ups'], {title: 'Foobar'}, function(err, result) {
       test.ok(!err);
-      test.equal(typeof tracking, 'object');
-      test.equal(tracking.slug, 'ups');
-      test.equal(tracking.tracking_number, GLOBAL.tracking['ups']);
-      test.equal(tracking.title, 'Foobar');
+      test.equal(typeof result, 'object');
+      test.equal(result.tracking.slug, 'ups');
+      test.equal(result.tracking.tracking_number, GLOBAL.tracking['ups']);
+      test.equal(result.tracking.title, 'Foobar');
 
       test.done();
     });
@@ -215,11 +211,10 @@ exports['Checkpoint'] = {
     test.expect(4);
 
     // UPS
-    Aftership.last_checkpoint('ups', GLOBAL.tracking['ups'], null, function(err, tag, checkpoint) {
+    Aftership.last_checkpoint('ups', GLOBAL.tracking['ups'], null, function(err, result) {
       test.ok(!err);
-      test.equal(typeof tag, 'string');
-      test.equal(typeof checkpoint, 'object');
-      test.equal(typeof checkpoint.tag, 'string');
+      test.equal(typeof result.checkpoint, 'object');
+      test.equal(typeof result.checkpoint.tag, 'string');
 
       test.done();
     });

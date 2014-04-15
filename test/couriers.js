@@ -17,16 +17,13 @@ exports['Couriers'] = {
   'OK': function(test) {
     test.expect(5);
 
-    Aftership.couriers(function(err, length, couriers) {
+    Aftership.couriers(function(err, results) {
       test.ok(!err);
-      test.ok(Array.isArray(couriers));
-      test.equal(typeof length, 'number');
-
-      // Make sure trackings array was removed from meta data
-      test.ok(!couriers.total);
+      test.ok(Array.isArray(results.couriers));
+      test.equal(typeof results.total, 'number');
 
       // We should have at least 1 entry, check it
-      test.equal(typeof couriers[0].slug, 'string');
+      test.equal(typeof results.couriers[0].slug, 'string');
 
       test.done();
     });
