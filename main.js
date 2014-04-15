@@ -172,7 +172,7 @@ module.exports = function(key) {
 
 			// Default to all fields if none are provided
 			fields = fields || [];
-			if (Array.isArray(fields)) {
+			if (_.isArray(fields)) {
 				fields = fields.join(',');
 			}
 

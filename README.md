@@ -17,13 +17,10 @@ To test, run
 ```
 npm test
 
+
 ```
 
-NOTE: Once tracking numbers have been added to your account, the tests in track.js will fail.
-
-If this is the case, you can test everything else by commenting out the ```track.js``` line in ```test/tests.js```
-
-or remove the tracking number in aftership.com account.
+In case there is any fail tests, please make sure to delete the testing tracking numbers from your aftership account before a new test.
 
 
 Use
@@ -47,16 +44,16 @@ Callback:
 
 ```
 err: the error message
-count: The number of couriers count
-couriers: the array of available couriers
+result: the couriers object
 
 ```
 
 Example:
 
 ```
-Aftership.couriers(function(err, count, couriers) {
-  console.log('Support Courier: ' + count);
+Aftership.couriers(function(err, result) {
+  console.log('Support courier count: ' + result.total);
+  console.log('Couriers: ' + result.couriers);
 });
 
 ```
@@ -83,18 +80,18 @@ https://www.aftership.com/docs/api/3.0/tracking/post-trackings
 Callback:
 
 ```
-function(err, tracking_number, options)
+function(err, result)
 
 ```
 
 Example:
 
 ```
-Aftership.createTracking('1Z21E98F0314447088', {slug: 'ups'}, function(err, tracking_number, tracking_detail) {
+Aftership.createTracking('1Z21E98F0314447088', {slug: 'ups'}, function(err, result) {
   if (err) {
     console.log(err);
   } else {
-    console.log('Created the tracking: ' + tracking_number);
+    console.log('Created the tracking: ' + result);
   }
 });
 
@@ -109,26 +106,26 @@ Accepts:
 
 ```
 options: An object with options to limit results
-
+fields: Array of fields to return
 https://www.aftership.com/docs/api/3.0/tracking/get-trackings
 ```
 
 callback:
 
 ```
-function(err, data, trackings)
+function(err, results)
 
 ```
 
 Example:
 
 ```
-Aftership.trackings({}, function(err, data, trackings) {
+Aftership.trackings({}, [], function(err, results) {
   if (err) {
     console.log(err);
   } else {
-    console.log('Total Trackings in query: ' + data.count);
-    console.log(trackings);
+    console.log('Total Trackings in query: ' + results.count);
+    console.log(results);
   }
 });
 
@@ -151,7 +148,7 @@ callback:
 
 ```
 
-function(err, tracking)
+function(err, result)
 
 ```
 
@@ -159,11 +156,11 @@ Example:
 
 ```
 
-Aftership.tracking('ups', '1Z21E98F0314447088', [], function(err, tracking) {
+Aftership.tracking('ups', '1Z21E98F0314447088', ['tracking_number','slug','checkpoints'], function(err, result) {
   if (err) {
     console.log(err);
   } else {
-    console.log(tracking);
+    console.log(result);
   }
 });
 
@@ -187,7 +184,7 @@ https://www.aftership.com/docs/api/3.0/tracking/put-trackings-slug-tracking_numb
 callback:
 
 ```
-function(err, updated_tracking)
+function(err, result)
 
 ```
 
@@ -196,11 +193,11 @@ Example:
 
 ```
 Aftership.updateTracking('ups', '1Z21E98F0314447088', {title: 'My Shipment'},
-  function(err, updated_tracking) {
+  function(err, result) {
     if (err) {
       console.log(err);
     } else {
-      console.log(updated_tracking);
+      console.log(result);
     }
   });
 
@@ -223,18 +220,18 @@ fields: Array of fields to return
 Callback:
 
 ```
-function(err, tag, last_checkpoint)
+function(err, result)
 
 ```
 
 Example:
 
 ```
-Aftership.last_checkpoint('ups', '1Z21E98F0314447088', [], function(err, tag, last_checkpoint) {
+Aftership.last_checkpoint('ups', '1Z21E98F0314447088', ['tracking_number','slug','checkpoints'], function(err, result) {
   if (err) {
     console.log(err);
   } else {
-    console.log(last_checkpoint);
+    console.log(result);
   }
 });
 
@@ -253,5 +250,3 @@ Contributors
 
   [Kirk Morales]: https://github.com/knation
   [Intrakr]: http://intrakr.com
-
-
