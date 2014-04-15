@@ -18,8 +18,8 @@ exports.Couriers = {
 		test.expect(2);
 
 		Aftership.couriers(function(err, result) {
-			test.notEqual(err, null);
-			test.equal(typeof err, 'string');
+			test.equal(err, null);
+			test.equal(typeof result, 'object');
 
 			test.done();
 		});

@@ -113,7 +113,7 @@ module.exports = function(key) {
 				return 'Missing Required Parameter: tracking number';
 			}
 
-			if (typeof callback != 'function') {
+			if (!_.isFunction(callback)) {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -166,7 +166,7 @@ module.exports = function(key) {
 				return 'Missing Required Parameter: tracking number';
 			}
 
-			if (typeof callback != 'function') {
+			if (!_.isFunction(callback)) {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -209,7 +209,7 @@ module.exports = function(key) {
 
 			options = options || {};
 
-			if (typeof callback != 'function') {
+			if (!_.isFunction(callback)) {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -258,7 +258,7 @@ module.exports = function(key) {
 				return 'Missing Required Parameter: tracking number';
 			}
 
-			if (typeof callback != 'function') {
+			if (!_.isFunction(callback)) {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -304,7 +304,7 @@ module.exports = function(key) {
 				return 'Missing Required Parameter: tracking number';
 			}
 
-			if (typeof callback != 'function') {
+			if (!_.isFunction(callback)) {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -340,7 +340,7 @@ module.exports = function(key) {
 		 */
 		'couriers': function(callback) {
 
-			if (typeof callback != 'function') {
+			if (!_.isFunction(callback)) {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -384,7 +384,7 @@ module.exports = function(key) {
 				return 'Missing Required Parameter: tracking number';
 			}
 
-			if (typeof callback != 'function') {
+			if (!_.isFunction(callback)) {
 				return 'Missing Required Parameter: callback';
 			}
 

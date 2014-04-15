@@ -33,7 +33,7 @@ exports.Track = {
 		test.expect(5);
 		// usps
 		Aftership.createTracking(GLOBAL.tracking.usps, {}, function(err, result) {
-			test.ok(!err);
+			test.equal(err, null);
 			test.equal(result.tracking.tracking_number, GLOBAL.tracking.usps);
 			test.equal(typeof result, 'object');
 			test.ok(result.tracking.checkpoints);
@@ -49,7 +49,7 @@ exports.Track = {
 
 		// tnt
 		Aftership.createTracking(GLOBAL.tracking.tnt, {slug: 'tnt'}, function(err, result) {
-			test.ok(!err);
+			test.equal(err, null);
 			test.equal(result.tracking.tracking_number, GLOBAL.tracking.tnt);
 			test.equal(typeof result, 'object');
 			test.ok(result.tracking.checkpoints);
@@ -69,6 +69,21 @@ exports.Track = {
 			test.equal(typeof result, 'object');
 			test.ok(result.tracking.checkpoints);
 			test.equal(result.tracking.slug, 'fedex');
+
+			test.done();
+		});
+	},
+
+	'Ok (w/ slug ups)': function(test) {
+		test.expect(5);
+
+		// Fedex
+		Aftership.createTracking(GLOBAL.tracking.ups, {slug: 'ups'}, function(err, result) {
+			test.equal(err, null);
+			test.equal(result.tracking.tracking_number, GLOBAL.tracking.ups);
+			test.equal(typeof result, 'object');
+			test.ok(result.tracking.checkpoints);
+			test.equal(result.tracking.slug, 'ups');
 
 			test.done();
 		});
