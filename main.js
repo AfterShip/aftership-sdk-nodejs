@@ -335,59 +335,6 @@ module.exports = function(key) {
 
 
 		/**
-		 * Update a specific tracking number info.
-		 * @param {string} slug
-		 * @param {string} tracking_number
-		 * @param {Array|string} fields Fields to return: https://www.aftership.com/docs/api/3.0/tracking/get-trackings-slug-tracking_number
-		 * @param {function(?string, Object=)} callback
-		 */
-		'updateTracking': function(slug, tracking_number, options, callback) {
-
-			if (!slug) {
-				return 'Missing Required Parameter: slug';
-			}
-
-			if (!tracking_number) {
-				return 'Missing Required Parameter: tracking number';
-			}
-
-			if (typeof callback != 'function') {
-				return 'Missing Required Parameter: callback';
-			}
-
-			// Default to all fields if none are provided
-			fields = fields || [];
-			if (Array.isArray(fields)) {
-				fields = fields.join(',');
-			}
-
-			request('DELETE', '/trackings/' + slug + '/' + tracking_number,
-				{fields: fields}, function(err, body) {
-
-					if (err) {
-						callback(err);
-						return;
-					}
-
-					// Check for valid meta code
-					if (!body.meta || !body.meta.code || body.meta.code != 200) {
-						callback(body.meta.code + ': ' + body.meta.error_message, body.data);
-						return;
-					}
-
-					// Check for valid data contents
-					if (!body.data || !body.data.tracking || typeof body.data.tracking != 'object') {
-						callback('Invalid response body');
-						return;
-					}
-
-					// Return the tracking number and slug
-					callback(null, body.data);
-				});
-		},
-
-
-		/**
 		 * Gets all available couriers.
 		 * @param {function(?string, Object=)} callback
 		 */

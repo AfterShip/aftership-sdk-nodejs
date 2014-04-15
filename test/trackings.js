@@ -149,7 +149,7 @@ exports['Update Tracking'] = {
     test.expect(5);
 
     // UPS
-    Aftership.updateTracking('ups', GLOBAL.tracking.ups, null, function(err, result) {
+    Aftership.updateTracking('ups', GLOBAL.tracking.ups, {}, function(err, result) {
       test.ok(!err);
       test.equal(typeof result, 'object');
       test.equal(result.tracking.slug, 'ups');

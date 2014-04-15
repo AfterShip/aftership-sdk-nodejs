@@ -111,8 +111,6 @@ exports.Track = {
 		// usps
 		Aftership.createTracking(GLOBAL.tracking.usps, {slug: 'usps'}, function(err, result) {
 			// as the tracking is already created in w/o slug, there should be error return
-			console.log('resultresultresult');
-			console.log(result);
 			test.notEqual(err, '');
 			test.equal(result.tracking.tracking_number, GLOBAL.tracking.usps);
 			test.equal(typeof result, 'object');
