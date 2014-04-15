@@ -6,7 +6,7 @@ if (!GLOBAL.apiKey) {
 var Aftership = require('../main.js')(GLOBAL.apiKey);
 
 
-exports['Track'] = {
+exports.Track = {
 
   'No Slug': function(test) {
     test.expect(1);
@@ -40,11 +40,11 @@ exports['Track'] = {
     test.expect(6);
 
     // UPS
-    Aftership.tracking('ups', GLOBAL.tracking['ups'], null, function(err, result) {
+    Aftership.tracking('ups', GLOBAL.tracking.ups, null, function(err, result) {
       test.ok(!err);
       test.equal(typeof result.tracking, 'object');
       test.equal(result.tracking.slug, 'ups');
-      test.equal(result.tracking.tracking_number, GLOBAL.tracking['ups']);
+      test.equal(result.tracking.tracking_number, GLOBAL.tracking.ups);
       test.ok(result.tracking.checkpoints);
       test.notEqual(typeof(result.tracking.active), 'undefined');
 
@@ -54,7 +54,7 @@ exports['Track'] = {
 
 };
 
-exports['Trackings'] = {
+exports.Trackings = {
 
   'No Callback (no options)': function(test) {
     test.expect(1);
@@ -149,11 +149,11 @@ exports['Update Tracking'] = {
     test.expect(5);
 
     // UPS
-    Aftership.updateTracking('ups', GLOBAL.tracking['ups'], null, function(err, result) {
+    Aftership.updateTracking('ups', GLOBAL.tracking.ups, null, function(err, result) {
       test.ok(!err);
       test.equal(typeof result, 'object');
       test.equal(result.tracking.slug, 'ups');
-      test.equal(result.tracking.tracking_number, GLOBAL.tracking['ups']);
+      test.equal(result.tracking.tracking_number, GLOBAL.tracking.ups);
       test.notEqual(typeof(result.tracking.active), 'undefined');
 
       test.done();
@@ -164,11 +164,11 @@ exports['Update Tracking'] = {
     test.expect(5);
 
     // UPS
-    Aftership.updateTracking('ups', GLOBAL.tracking['ups'], {title: 'Foobar'}, function(err, result) {
+    Aftership.updateTracking('ups', GLOBAL.tracking.ups, {title: 'Foobar'}, function(err, result) {
       test.ok(!err);
       test.equal(typeof result, 'object');
       test.equal(result.tracking.slug, 'ups');
-      test.equal(result.tracking.tracking_number, GLOBAL.tracking['ups']);
+      test.equal(result.tracking.tracking_number, GLOBAL.tracking.ups);
       test.equal(result.tracking.title, 'Foobar');
 
       test.done();
@@ -177,7 +177,7 @@ exports['Update Tracking'] = {
 };
 
 
-exports['Checkpoint'] = {
+exports.Checkpoint = {
 
   'No Slug': function(test) {
     test.expect(1);
@@ -208,10 +208,10 @@ exports['Checkpoint'] = {
   },
 
   'Ok': function(test) {
-    test.expect(4);
+    test.expect(3);
 
     // UPS
-    Aftership.last_checkpoint('ups', GLOBAL.tracking['ups'], null, function(err, result) {
+    Aftership.last_checkpoint('ups', GLOBAL.tracking.ups, null, function(err, result) {
       test.ok(!err);
       test.equal(typeof result.checkpoint, 'object');
       test.equal(typeof result.checkpoint.tag, 'string');

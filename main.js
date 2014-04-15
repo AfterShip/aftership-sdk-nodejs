@@ -127,7 +127,7 @@ module.exports = function(key) {
 
 				// Check for valid meta code
 				if (!body.meta || !body.meta.code || body.meta.code != 201) {
-					callback(body.meta.code + ': ' + body.meta.error_message);
+					callback(body.meta.code + ': ' + body.meta.error_message, body.data);
 					return;
 				}
 
@@ -186,7 +186,7 @@ module.exports = function(key) {
 
 					// Check for valid meta code
 					if (!body.meta || !body.meta.code || body.meta.code != 200) {
-						callback(body.meta.code + ': ' + body.meta.error_message);
+						callback(body.meta.code + ': ' + body.meta.error_message, body.data);
 						return;
 					}
 
@@ -222,7 +222,7 @@ module.exports = function(key) {
 
 				// Check for valid meta code
 				if (!body.meta || !body.meta.code || body.meta.code != 200) {
-					callback(body.meta.code + ': ' + body.meta.error_message);
+					callback(body.meta.code + ': ' + body.meta.error_message, body.data);
 					return;
 				}
 
@@ -231,9 +231,6 @@ module.exports = function(key) {
 					callback('Invalid response body');
 					return;
 				}
-
-				var trackings = body.data.trackings;
-				delete body.data.trackings;
 
 				// Return the time and checkpoints
 				callback(null, body.data);
@@ -275,7 +272,7 @@ module.exports = function(key) {
 
 					// Check for valid meta code
 					if (!body.meta || !body.meta.code || body.meta.code != 200) {
-						callback(body.meta.code + ': ' + body.meta.error_message);
+						callback(body.meta.code + ': ' + body.meta.error_message, body.data);
 						return;
 					}
 
@@ -321,7 +318,7 @@ module.exports = function(key) {
 
 					// Check for valid meta code
 					if (!body.meta || !body.meta.code || body.meta.code != 200) {
-						callback(body.meta.code + ': ' + body.meta.error_message);
+						callback(body.meta.code + ': ' + body.meta.error_message, body.data);
 						return;
 					}
 
@@ -374,7 +371,7 @@ module.exports = function(key) {
 
 					// Check for valid meta code
 					if (!body.meta || !body.meta.code || body.meta.code != 200) {
-						callback(body.meta.code + ': ' + body.meta.error_message);
+						callback(body.meta.code + ': ' + body.meta.error_message, body.data);
 						return;
 					}
 
@@ -409,7 +406,7 @@ module.exports = function(key) {
 
 				// Check for valid meta code
 				if (!body.meta || !body.meta.code || body.meta.code != 200) {
-					callback(body.meta.code + ': ' + body.meta.error_message);
+					callback(body.meta.code + ': ' + body.meta.error_message, body.data);
 					return;
 				}
 
@@ -459,7 +456,7 @@ module.exports = function(key) {
 
 					// Check for valid meta code
 					if (!body.meta || !body.meta.code || body.meta.code != 200) {
-						callback(body.meta.code + ': ' + body.meta.error_message);
+						callback(body.meta.code + ': ' + body.meta.error_message, body.data);
 						return;
 					}
 
