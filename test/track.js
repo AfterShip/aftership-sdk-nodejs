@@ -64,7 +64,7 @@ exports.Track = {
 
 		// Fedex
 		Aftership.createTracking(GLOBAL.tracking.fedex, {slug: 'fedex'}, function(err, result) {
-			test.ok(!err);
+			test.equal(err, null);
 			test.equal(result.tracking.tracking_number, GLOBAL.tracking.fedex);
 			test.equal(typeof result, 'object');
 			test.ok(result.tracking.checkpoints);
@@ -79,7 +79,7 @@ exports.Track = {
 
 		// toll-global-express
 		Aftership.createTracking(GLOBAL.tracking['toll-global-express'], {slug: 'toll-global-express'}, function(err, result) {
-			test.ok(!err);
+			test.equal(err, null);
 			test.equal(result.tracking.tracking_number, GLOBAL.tracking['toll-global-express']);
 			test.equal(typeof result, 'object');
 			test.ok(result.tracking.checkpoints);
