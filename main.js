@@ -112,7 +112,7 @@ module.exports = function(key) {
 				return 'Missing Required Parameter: tracking number';
 			}
 
-			if (typeof(callback) !== 'function') {
+			if (typeof callback !== 'function') {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -165,18 +165,21 @@ module.exports = function(key) {
 				return 'Missing Required Parameter: tracking number';
 			}
 
-			if (typeof(callback) !== 'function') {
+			if (typeof callback !== 'function') {
 				return 'Missing Required Parameter: callback';
 			}
 
-			// Default to all fields if none are provided
-			fields = fields || [];
 			if (Array.isArray(fields)) {
 				fields = fields.join(',');
+			} else {
+				return 'Invalid Parameter type: fields, expect an Array';
+			}
+			if (fields) {
+				fields = 'fields=' + fields;
 			}
 
-			request('GET', '/trackings/' + slug + '/' + tracking_number,
-				{fields: fields}, function(err, body) {
+			request('GET', '/trackings/' + slug + '/' + tracking_number + '?' + fields,
+				{}, function(err, body) {
 
 					if (err) {
 						callback(err);
@@ -208,7 +211,7 @@ module.exports = function(key) {
 
 			options = options || {};
 
-			if (typeof(callback) !== 'function') {
+			if (typeof callback !== 'function') {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -258,7 +261,7 @@ module.exports = function(key) {
 				return 'Missing Required Parameter: tracking number';
 			}
 
-			if (typeof(callback) !== 'function') {
+			if (typeof callback !== 'function') {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -304,7 +307,7 @@ module.exports = function(key) {
 				return 'Missing Required Parameter: tracking number';
 			}
 
-			if (typeof(callback) !== 'function') {
+			if (typeof callback !== 'function') {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -340,7 +343,7 @@ module.exports = function(key) {
 		 */
 		'couriers': function(callback) {
 
-			if (typeof(callback) !== 'function') {
+			if (typeof callback !== 'function') {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -384,19 +387,22 @@ module.exports = function(key) {
 				return 'Missing Required Parameter: tracking number';
 			}
 
-			if (typeof(callback) !== 'function') {
+			if (typeof callback !== 'function') {
 				return 'Missing Required Parameter: callback';
 			}
 
-			fields = fields || [];
+
 			if (Array.isArray(fields)) {
 				fields = fields.join(',');
+			} else {
+				return 'Invalid Parameter type: fields, expect an Array';
+			}
+			if (fields) {
+				fields = 'fields=' + fields;
 			}
 
-			request('GET', '/last_checkpoint/' + slug + '/' + tracking_number,
-				{fields: fields}, function(err, body) {
-
-					console.log('url url url url url url url');
+			request('GET', '/last_checkpoint/' + slug + '/' + tracking_number + '?' + fields,
+				{}, function(err, body) {
 
 					if (err) {
 						callback(err);
@@ -410,7 +416,7 @@ module.exports = function(key) {
 					}
 
 					// Check for valid data contents
-					if (!body.data || !body.data.checkpoint || typeof(body.data.checkpoint) !== 'object') {
+					if (!body.data || !body.data.checkpoint || typeof body.data.checkpoint !== 'object') {
 						callback('Invalid response body');
 						return;
 					}

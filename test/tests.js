@@ -22,9 +22,7 @@ GLOBAL.tracking = {
 
 var tests = [
 	'couriers.js',
-	'track.js',
-	'trackings.js',
-	'delete_trackings.js'
+	'trackings.js'
 ];
 
 /******************************************
