@@ -8,8 +8,7 @@
  */
 
 
-var https = require('https'),
-	_ = require('underscore');
+var https = require('https');
 
 /**
  * Hostname for AfterShip API.
@@ -113,7 +112,7 @@ module.exports = function(key) {
 				return 'Missing Required Parameter: tracking number';
 			}
 
-			if (!_.isFunction(callback)) {
+			if (!typeof(callback) === ' function') {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -166,13 +165,13 @@ module.exports = function(key) {
 				return 'Missing Required Parameter: tracking number';
 			}
 
-			if (!_.isFunction(callback)) {
+			if (!typeof(callback) === ' function') {
 				return 'Missing Required Parameter: callback';
 			}
 
 			// Default to all fields if none are provided
 			fields = fields || [];
-			if (_.isArray(fields)) {
+			if (Array.isArray(fields)) {
 				fields = fields.join(',');
 			}
 
@@ -209,7 +208,7 @@ module.exports = function(key) {
 
 			options = options || {};
 
-			if (!_.isFunction(callback)) {
+			if (!typeof(callback) === ' function') {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -258,7 +257,7 @@ module.exports = function(key) {
 				return 'Missing Required Parameter: tracking number';
 			}
 
-			if (!_.isFunction(callback)) {
+			if (!typeof(callback) === ' function') {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -304,7 +303,7 @@ module.exports = function(key) {
 				return 'Missing Required Parameter: tracking number';
 			}
 
-			if (!_.isFunction(callback)) {
+			if (!typeof(callback) === ' function') {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -340,7 +339,7 @@ module.exports = function(key) {
 		 */
 		'couriers': function(callback) {
 
-			if (!_.isFunction(callback)) {
+			if (!typeof(callback) === ' function') {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -384,7 +383,7 @@ module.exports = function(key) {
 				return 'Missing Required Parameter: tracking number';
 			}
 
-			if (!_.isFunction(callback)) {
+			if (!typeof(callback) === ' function') {
 				return 'Missing Required Parameter: callback';
 			}
 
