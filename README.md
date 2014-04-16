@@ -10,7 +10,7 @@ Test
 =========
 
 - Paste your API key in ```test/tests.js```
-- If you desire, update test tracking numbers in ```test/test.js```
+- If you desire, update test tracking numbers in ```test/local.js```
 
 To test, run
 

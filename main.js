@@ -34,7 +34,7 @@ var API_PATH = '/v3';
 module.exports = function(key) {
 	// Require API key
 	if (!key) {
-		return;
+		return {};
 	}
 	var apiKey = key;
 
@@ -50,7 +50,7 @@ module.exports = function(key) {
 	function request(method, path, data, callback) {
 
 		// Make sure path starts with a slash
-		if (path.substr(0, 1) != '/') {
+		if (path.substr(0, 1) !== '/') {
 			path = '/' + path;
 		}
 
@@ -112,7 +112,7 @@ module.exports = function(key) {
 				return 'Missing Required Parameter: tracking number';
 			}
 
-			if (!typeof(callback) === ' function') {
+			if (typeof(callback) !== 'function') {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -125,13 +125,13 @@ module.exports = function(key) {
 				}
 
 				// Check for valid meta code
-				if (!body.meta || !body.meta.code || body.meta.code != 201) {
+				if (!body.meta || !body.meta.code || body.meta.code !== 201) {
 					callback(body.meta.code + ': ' + body.meta.error_message, body.data);
 					return;
 				}
 
 				// Check for valid data contents
-				if (!body.data || !body.data.tracking || typeof body.data.tracking != 'object') {
+				if (!body.data || !body.data.tracking || typeof body.data.tracking !== 'object') {
 					callback('Invalid response body');
 					return;
 				}
@@ -165,7 +165,7 @@ module.exports = function(key) {
 				return 'Missing Required Parameter: tracking number';
 			}
 
-			if (!typeof(callback) === ' function') {
+			if (typeof(callback) !== 'function') {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -184,13 +184,13 @@ module.exports = function(key) {
 					}
 
 					// Check for valid meta code
-					if (!body.meta || !body.meta.code || body.meta.code != 200) {
+					if (!body.meta || !body.meta.code || body.meta.code !== 200) {
 						callback(body.meta.code + ': ' + body.meta.error_message, body.data);
 						return;
 					}
 
 					// Check for valid data contents
-					if (!body.data || !body.data.tracking || typeof body.data.tracking != 'object') {
+					if (!body.data || !body.data.tracking || typeof body.data.tracking !== 'object') {
 						callback('Invalid response body');
 						return;
 					}
@@ -208,7 +208,7 @@ module.exports = function(key) {
 
 			options = options || {};
 
-			if (!typeof(callback) === ' function') {
+			if (typeof(callback) !== 'function') {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -220,19 +220,20 @@ module.exports = function(key) {
 				}
 
 				// Check for valid meta code
-				if (!body.meta || !body.meta.code || body.meta.code != 200) {
+				if (!body.meta || !body.meta.code || body.meta.code !== 200) {
 					callback(body.meta.code + ': ' + body.meta.error_message, body.data);
 					return;
 				}
 
 				// Check for valid data contents
-				if (!body.data || typeof body.data != 'object') {
+				if (!body.data || typeof body.data !== 'object') {
 					callback('Invalid response body');
 					return;
 				}
 
 				// Return the time and checkpoints
 				callback(null, body.data);
+				return;
 			});
 		},
 
@@ -257,7 +258,7 @@ module.exports = function(key) {
 				return 'Missing Required Parameter: tracking number';
 			}
 
-			if (!typeof(callback) === ' function') {
+			if (typeof(callback) !== 'function') {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -270,13 +271,13 @@ module.exports = function(key) {
 					}
 
 					// Check for valid meta code
-					if (!body.meta || !body.meta.code || body.meta.code != 200) {
+					if (!body.meta || !body.meta.code || body.meta.code !== 200) {
 						callback(body.meta.code + ': ' + body.meta.error_message, body.data);
 						return;
 					}
 
 					// Check for valid data contents
-					if (!body.data || !body.data.tracking || typeof body.data.tracking != 'object') {
+					if (!body.data || !body.data.tracking || typeof body.data.tracking !== 'object') {
 						callback('Invalid response body');
 						return;
 					}
@@ -303,7 +304,7 @@ module.exports = function(key) {
 				return 'Missing Required Parameter: tracking number';
 			}
 
-			if (!typeof(callback) === ' function') {
+			if (typeof(callback) !== 'function') {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -316,13 +317,13 @@ module.exports = function(key) {
 					}
 
 					// Check for valid meta code
-					if (!body.meta || !body.meta.code || body.meta.code != 200) {
+					if (!body.meta || !body.meta.code || body.meta.code !== 200) {
 						callback(body.meta.code + ': ' + body.meta.error_message, body.data);
 						return;
 					}
 
 					// Check for valid data contents
-					if (!body.data || !body.data.tracking || typeof body.data.tracking != 'object') {
+					if (!body.data || !body.data.tracking || typeof body.data.tracking !== 'object') {
 						callback('Invalid response body');
 						return;
 					}
@@ -339,7 +340,7 @@ module.exports = function(key) {
 		 */
 		'couriers': function(callback) {
 
-			if (!typeof(callback) === ' function') {
+			if (typeof(callback) !== 'function') {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -351,13 +352,13 @@ module.exports = function(key) {
 				}
 
 				// Check for valid meta code
-				if (!body.meta || !body.meta.code || body.meta.code != 200) {
+				if (!body.meta || !body.meta.code || body.meta.code !== 200) {
 					callback(body.meta.code + ': ' + body.meta.error_message, body.data);
 					return;
 				}
 
 				// Check for valid data contents
-				if (!body.data || typeof body.data != 'object') {
+				if (!body.data || typeof body.data !== 'object') {
 					callback('Invalid response body');
 					return;
 				}
@@ -383,7 +384,7 @@ module.exports = function(key) {
 				return 'Missing Required Parameter: tracking number';
 			}
 
-			if (!typeof(callback) === ' function') {
+			if (typeof(callback) !== 'function') {
 				return 'Missing Required Parameter: callback';
 			}
 
@@ -395,19 +396,21 @@ module.exports = function(key) {
 			request('GET', '/last_checkpoint/' + slug + '/' + tracking_number,
 				{fields: fields}, function(err, body) {
 
+					console.log('url url url url url url url');
+
 					if (err) {
 						callback(err);
 						return;
 					}
 
 					// Check for valid meta code
-					if (!body.meta || !body.meta.code || body.meta.code != 200) {
+					if (!body.meta || !body.meta.code || body.meta.code !== 200) {
 						callback(body.meta.code + ': ' + body.meta.error_message, body.data);
 						return;
 					}
 
 					// Check for valid data contents
-					if (!body.data || !body.data.checkpoint || typeof body.data.checkpoint != 'object') {
+					if (!body.data || !body.data.checkpoint || typeof(body.data.checkpoint) !== 'object') {
 						callback('Invalid response body');
 						return;
 					}

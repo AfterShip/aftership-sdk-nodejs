@@ -1,17 +1,25 @@
 {
-  "curly": true,
-  "newcap": true,
-  "noarg": true,
-  "noempty": true,
-  "nonew": true,
-  "quotmark": "single",
-  "regexp": true,
-  "trailing": true,
-
-  "boss": true,
-  "eqnull": true,
-  "expr": true,
-
-  "browser": true,
-  "jquery": true
+	"bitwise": true,
+	"curly": true,
+	"eqeqeq": true,
+	"freeze": true,
+	"immed": true,
+	"indent": 4,
+	"latedef": true,
+	"newcap": true,
+	"noarg": true,
+	"noempty": true,
+	"nonbsp": true,
+	"nonew": true,
+	"quotmark": "single",
+	"undef": true,
+	"unused": true,
+	"trailing": true,
+	// Relaxing options
+	"boss": true,
+	"eqnull": true,
+	// Environments
+	"browser": true,
+	"jquery": true,
+	"node": true
 }
