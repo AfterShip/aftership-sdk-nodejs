@@ -7,20 +7,12 @@ var Aftership = require('../main.js')(GLOBAL.apiKey);
 
 exports.Couriers = {
 
-	'No Callback (no options)': function(test) {
-		test.expect(1);
-
-		test.equal(Aftership.couriers(), 'Missing Required Parameter: callback');
-		test.done();
-	},
-
 	'OK': function(test) {
-		test.expect(2);
+		Aftership.getCouriers(function(err, result) {
+			test.expect(2);
 
-		Aftership.couriers(function(err, result) {
 			test.equal(err, null);
 			test.equal(typeof result, 'object');
-
 			test.done();
 		});
 	}

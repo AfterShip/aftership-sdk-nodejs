@@ -1,7 +1,7 @@
 /******************************************
  * Set your API key here for testing
  ******************************************/
-GLOBAL.apiKey = '9e8639c6-7a83-4123-b61e-c3c3ef6c1da5'; // please use your AfterShip api key
+GLOBAL.apiKey = '415a3fbd-39a9-43e4-80c6-0f361e68af6c'; // please use your AfterShip api key
 
 /******************************************
  * Set tracking numbers here
@@ -41,27 +41,26 @@ var argv = optimist.usage('\n./tests.js OPTIONS', {
 }).argv;
 
 // Choose appropriate reporter
-var reporter;
+var reporter, i;
+
 if (argv.verbose) {
 	reporter = require('nodeunit').reporters.default;
 
 	// Add directory to each item
-	for (var i = 0; i < tests.length; i++) {
+	for (i = 0; i < tests.length; i++) {
 		tests[i] = 'test/' + tests[i];
 	}
-
 } else {
 	reporter = require('nodeunit');
 
 	// Add directory to each item
-	for (var i = 0; i < tests.length; i++) {
+	for (i = 0; i < tests.length; i++) {
 		tests[i] = __dirname + '/' + tests[i];
 	}
 }
 
 if (argv.verbose) {
 	reporter.run(tests, null);
-
 } else {
 	reporter.runFiles(tests);
 }
