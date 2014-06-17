@@ -8,7 +8,7 @@
  */
 
 
-var https = require('https');
+var transport = require('https');
 
 var _ = require('lodash');
 
@@ -26,7 +26,7 @@ var REQUEST_HOSTNAME = 'api.aftership.com';
  * @const
  * @private
  */
-var API_PATH = '/v3';
+var API_PATH = '/v4';
 
 /**
  * Initializes the AfterShip plugin.
@@ -60,8 +60,9 @@ module.exports = function(api_key) {
 
 		// console.log(data);
 
-		var asReq = https.request({
+		var asReq = transport.request({
 			hostname: REQUEST_HOSTNAME,
+			port: 3001,
 			path: API_PATH + path,
 			method: method,
 			headers: {
@@ -180,26 +181,26 @@ module.exports = function(api_key) {
 			fields = 'fields=' + fields;
 
 			request('GET', '/trackings/' + slug + '/' + tracking_number + '?' + fields, {}, function(err, body) {
-					if (err) {
-						callback(err);
-						return;
-					}
+				if (err) {
+					callback(err);
+					return;
+				}
 
-					// Check for valid meta code
-					if (!body.meta || !body.meta.code || body.meta.code !== 200) {
-						callback(body.meta.code + ': ' + body.meta.error_message, body.data);
-						return;
-					}
+				// Check for valid meta code
+				if (!body.meta || !body.meta.code || body.meta.code !== 200) {
+					callback(body.meta.code + ': ' + body.meta.error_message, body.data);
+					return;
+				}
 
-					// Check for valid data contents
-					if (!body.data || !body.data.tracking || typeof body.data.tracking !== 'object') {
-						callback('Invalid response body');
-						return;
-					}
+				// Check for valid data contents
+				if (!body.data || !body.data.tracking || typeof body.data.tracking !== 'object') {
+					callback('Invalid response body');
+					return;
+				}
 
-					// Return the time and checkpoints
-					callback(null, body.data);
-				});
+				// Return the time and checkpoints
+				callback(null, body.data);
+			});
 
 			return null;
 		},
@@ -211,14 +212,12 @@ module.exports = function(api_key) {
 		 * @param {function(string, Object=)=} callback
 		 */
 		'getTrackings': function(options, callback) {
-
 			if (!callback) {
 				callback = options;
 				options = {};
 			}
 
 			request('GET', '/trackings', options, function(err, body) {
-
 				if (err) {
 					callback(err);
 					return;
@@ -306,6 +305,50 @@ module.exports = function(api_key) {
 
 
 		/**
+		 * Get the last checkpoint information of a tracking number
+		 * @param {string} slug
+		 * @param {string} tracking_number
+		 * @param {Array|string|function(string, Object=)} fields Fields to update: https://www.aftership.com/docs/api/3.0/last_checkpoint
+		 * @param {function(string, Object=)} callback
+		 */
+		'getLastCheckpoint': function(slug, tracking_number, fields, callback) {
+
+			if (!callback) {
+				callback = fields;
+				fields = [];
+			}
+
+			if (Array.isArray(fields)) {
+				fields = fields.join(',');
+			}
+
+			fields = 'fields=' + fields;
+
+			request('GET', '/last_checkpoint/' + slug + '/' + tracking_number + '?' + fields, {}, function(err, body) {
+
+				if (err) {
+					callback(err);
+					return;
+				}
+
+				// Check for valid meta code
+				if (!body.meta || !body.meta.code || body.meta.code !== 200) {
+					callback(body.meta.code + ': ' + body.meta.error_message, body.data);
+					return;
+				}
+
+				// Check for valid data contents
+				if (!body.data || !body.data.checkpoint || typeof body.data.checkpoint !== 'object') {
+					callback('Invalid response body');
+					return;
+				}
+
+				callback(null, body.data);
+			});
+		},
+
+
+		/**
 		 * Gets all available couriers.
 		 * @param {function(string, Object=)} callback
 		 */
@@ -332,52 +375,54 @@ module.exports = function(api_key) {
 			});
 		},
 
+
 		/**
-		 * Get the last checkpoint information of a tracking number
-		 * @param {string} slug
-		 * @param {string} tracking_number
-		 * @param {Array|string|function(?string, Object=)} fields Fields to update: https://www.aftership.com/docs/api/3.0/last_checkpoint
-		 * @param {function(?string, Object=)} callback
+		 * Detect the courier for given tracking number
+		 * @param {string} tracking_number - tracking number to be detected
+		 * @param {object|function(string, Object=)} required_fields - optional, hash of required fields
+		 * possible values: {"tracking_account_number": "", "tracking_postal_code": "", "tracking_ship_date": ""}
+		 * @param {string|function(string, Object=)=} detect_mode - optional, accept "strict" or "tracking_number"
+		 * @param {function(string, Object=)=} callback - callback function
 		 */
-		'getLastCheckpoint': function(slug, tracking_number, fields, callback) {
+		'detectCouriers': function(tracking_number, required_fields, detect_mode, callback) {
+			if (!callback) {
+				callback = detect_mode;
+				detect_mode = 'tracking_number';
+			}
 
 			if (!callback) {
-				callback = fields;
-				fields = [];
+				callback = required_fields;
+				required_fields = {};
 			}
 
-			if (Array.isArray(fields)) {
-				fields = fields.join(',');
-			}
+			var param = {
+				tracking_number: tracking_number,
+				tracking_account_number: required_fields.tracking_account_number,
+				tracking_postal_code: required_fields.tracking_postal_code,
+				tracking_ship_date: required_fields.tracking_ship_date,
+				detect_mode: detect_mode
+			};
 
-			fields = 'fields=' + fields;
+			request('POST', '/couriers/detect/', param, function(err, body) {
+				if (err) {
+					callback(err);
+					return;
+				}
 
-			request('GET', '/last_checkpoint/' + slug + '/' + tracking_number + '?' + fields,
-				{}, function(err, body) {
+				// Check for valid meta code
+				if (!body.meta || !body.meta.code || body.meta.code !== 200) {
+					callback(body.meta.code + ': ' + body.meta.error_message, body.data);
+					return;
+				}
 
-					if (err) {
-						callback(err);
-						return;
-					}
+				// Check for valid data contents
+				if (!body.data || !body.data.couriers || typeof body.data.couriers !== 'object') {
+					callback('Invalid response body');
+					return;
+				}
 
-					// Check for valid meta code
-					if (!body.meta || !body.meta.code || body.meta.code !== 200) {
-						callback(body.meta.code + ': ' + body.meta.error_message, body.data);
-						return;
-					}
-
-					// Check for valid data contents
-					if (!body.data || !body.data.checkpoint || typeof body.data.checkpoint !== 'object') {
-						callback('Invalid response body');
-						return;
-					}
-
-					callback(null, body.data);
-				});
-		},
-
-		'detectCourier': function() {
-
+				callback(null, body.data);
+			});
 		}
 	};
 };

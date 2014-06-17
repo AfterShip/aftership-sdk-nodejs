@@ -1,7 +1,7 @@
 /******************************************
  * Set your API key here for testing
  ******************************************/
-GLOBAL.apiKey = '415a3fbd-39a9-43e4-80c6-0f361e68af6c'; // please use your AfterShip api key
+GLOBAL.apiKey = ''; // please use your AfterShip api key
 
 /******************************************
  * Set tracking numbers here
