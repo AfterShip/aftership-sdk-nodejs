@@ -16,7 +16,9 @@ var _ = require('lodash');
  */
 var request_hostname = 'api.aftership.com';
 
-if (process.env.NODE_ENV === 'development') {
+var env = process.env.NODE_ENV;
+
+if (env === 'development') {
 	request_hostname = 'localhost';
 }
 
@@ -27,8 +29,8 @@ if (process.env.NODE_ENV === 'development') {
  */
 var request_post = 443;
 
-if (process.env.NODE_ENV === 'development') {
-	request_post = '3001';
+if (env === 'development') {
+	request_post = 3001;
 }
 
 var transport = require((request_post === 443)?'https':'http');
@@ -142,13 +144,13 @@ module.exports = function(api_key) {
 
 				// Check for valid meta code
 				if (!body.meta || !body.meta.code || body.meta.code !== 201) {
-					callback(body.meta.code + ': ' + body.meta.error_message, body.data);
+					callback(body.meta.code + ': ' + body.meta.message, body.data);
 					return;
 				}
 
 				// Check for valid data contents
 				if (!body.data || !body.data.tracking || typeof body.data.tracking !== 'object') {
-					callback('Invalid response body');
+					callback('500: Invalid response body');
 					return;
 				}
 
@@ -201,13 +203,13 @@ module.exports = function(api_key) {
 
 				// Check for valid meta code
 				if (!body.meta || !body.meta.code || body.meta.code !== 200) {
-					callback(body.meta.code + ': ' + body.meta.error_message, body.data);
+					callback(body.meta.code + ': ' + body.meta.message, body.data);
 					return;
 				}
 
 				// Check for valid data contents
 				if (!body.data || !body.data.tracking || typeof body.data.tracking !== 'object') {
-					callback('Invalid response body');
+					callback('500: Invalid response body');
 					return;
 				}
 
@@ -238,13 +240,13 @@ module.exports = function(api_key) {
 
 				// Check for valid meta code
 				if (!body.meta || !body.meta.code || body.meta.code !== 200) {
-					callback(body.meta.code + ': ' + body.meta.error_message, body.data);
+					callback(body.meta.code + ': ' + body.meta.message, body.data);
 					return;
 				}
 
 				// Check for valid data contents
 				if (!body.data || typeof body.data !== 'object') {
-					callback('Invalid response body');
+					callback('500: Invalid response body');
 					return;
 				}
 
@@ -271,13 +273,13 @@ module.exports = function(api_key) {
 
 				// Check for valid meta code
 				if (!body.meta || !body.meta.code || body.meta.code !== 200) {
-					callback(body.meta.code + ': ' + body.meta.error_message, body.data);
+					callback(body.meta.code + ': ' + body.meta.message, body.data);
 					return;
 				}
 
 				// Check for valid data contents
 				if (!body.data || !body.data.tracking || typeof body.data.tracking !== 'object') {
-					callback('Invalid response body');
+					callback('500: Invalid response body');
 					return;
 				}
 
@@ -307,7 +309,7 @@ module.exports = function(api_key) {
 
 				// Check for valid data contents
 				if (!body.data || !body.data.tracking || typeof body.data.tracking !== 'object') {
-					callback('Invalid response body');
+					callback('500: Invalid response body');
 					return;
 				}
 
@@ -346,13 +348,13 @@ module.exports = function(api_key) {
 
 				// Check for valid meta code
 				if (!body.meta || !body.meta.code || body.meta.code !== 200) {
-					callback(body.meta.code + ': ' + body.meta.error_message, body.data);
+					callback(body.meta.code + ': ' + body.meta.message, body.data);
 					return;
 				}
 
 				// Check for valid data contents
 				if (!body.data || !body.data.checkpoint || typeof body.data.checkpoint !== 'object') {
-					callback('Invalid response body');
+					callback('500: Invalid response body');
 					return;
 				}
 
@@ -374,13 +376,13 @@ module.exports = function(api_key) {
 
 				// Check for valid meta code
 				if (!body.meta || !body.meta.code || body.meta.code !== 200) {
-					callback(body.meta.code + ': ' + body.meta.error_message, body.data);
+					callback(body.meta.code + ': ' + body.meta.message, body.data);
 					return;
 				}
 
 				// Check for valid data contents
 				if (!body.data || typeof body.data !== 'object') {
-					callback('Invalid response body');
+					callback('500: Invalid response body');
 					return;
 				}
 
@@ -424,13 +426,13 @@ module.exports = function(api_key) {
 
 				// Check for valid meta code
 				if (!body.meta || !body.meta.code || body.meta.code !== 200) {
-					callback(body.meta.code + ': ' + body.meta.error_message, body.data);
+					callback(body.meta.code + ': ' + body.meta.message, body.data);
 					return;
 				}
 
 				// Check for valid data contents
 				if (!body.data || !body.data.couriers || typeof body.data.couriers !== 'object') {
-					callback('Invalid response body');
+					callback('500: Invalid response body');
 					return;
 				}
 

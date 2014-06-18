@@ -33,6 +33,20 @@ if (create_tracking) {
 			});
 		},
 
+		'Ok (duplicate)': function(test) {
+			test.expect(3);
+			// usps
+			Aftership.createTracking(GLOBAL.tracking.usps, {}, function(err, result) {
+
+				test.equal(err, '409: Tracking number is already exist.');
+				test.equal(result.tracking.tracking_number, GLOBAL.tracking.usps);
+				test.equal(typeof result, 'object');
+
+				test.done();
+			});
+		},
+
+
 		'Ok (w/ slug tnt)': function(test) {
 			test.expect(5);
 
@@ -125,6 +139,8 @@ if (create_tracking) {
 			});
 		}
 	};
+
+
 }
 
 if (get_tracking) {
