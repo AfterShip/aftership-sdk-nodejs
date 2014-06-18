@@ -8,7 +8,7 @@
  */
 
 
-var transport = require('https');
+var transport = require('http');
 
 var _ = require('lodash');
 
@@ -19,6 +19,8 @@ var _ = require('lodash');
  * @private
  */
 var REQUEST_HOSTNAME = 'api.aftership.com';
+
+var REQUEST_PORT = 443;
 
 /**
  * Path for AfterShip API.
@@ -62,7 +64,7 @@ module.exports = function(api_key) {
 
 		var asReq = transport.request({
 			hostname: REQUEST_HOSTNAME,
-			port: 3001,
+			port: REQUEST_PORT,
 			path: API_PATH + path,
 			method: method,
 			headers: {
