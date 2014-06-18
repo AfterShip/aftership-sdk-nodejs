@@ -105,23 +105,23 @@ module.exports = function(api_key) {
 		/**
 		 * create a new tracking_number.
 		 * @param {string} tracking_number - The number to track. Default: DHL.
-		 * @param {Object|function(string, Array=)} options - Additional options to attach.
+		 * @param {Object|function(string, Array=)} params - Additional options to attach.
 		 * @param {function(string, Array=)=} callback - callback function
 		 */
-		'createTracking': function(tracking_number, options, callback) {
+		'createTracking': function(tracking_number, params, callback) {
 
 			if (!callback) {
-				callback = options;
-				options = {};
+				callback = params;
+				params = {};
 			}
 
 			if (!_.isString(tracking_number)) {
 				callback('Missing Required Parameter: tracking number');
 			}
 
-			options.tracking_number = tracking_number;
+			params.tracking_number = tracking_number;
 
-			request('POST', '/trackings', {tracking: options}, function(err, body) {
+			request('POST', '/trackings', {tracking: params}, function(err, body) {
 				if (err) {
 					callback(err);
 					return;
