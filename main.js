@@ -7,20 +7,31 @@
  * @license GNU General Public License, version 2 (see LICENSE.md)
  */
 
-
-var transport = require('http');
-
 var _ = require('lodash');
 
 /**
  * Hostname for AfterShip API.
  * @type {string}
- * @const
  * @private
  */
-var REQUEST_HOSTNAME = 'api.aftership.com';
+var request_hostname = 'api.aftership.com';
 
-var REQUEST_PORT = 443;
+if (process.env.NODE_ENV === 'development') {
+	request_hostname = 'localhost';
+}
+
+/**
+ * Port for AfterShip API.
+ * @type {number}
+ * @private
+ */
+var request_post = 443;
+
+if (process.env.NODE_ENV === 'development') {
+	request_post = '3001';
+}
+
+var transport = require((request_post === 443)?'https':'http');
 
 /**
  * Path for AfterShip API.
@@ -63,8 +74,8 @@ module.exports = function(api_key) {
 		// console.log(data);
 
 		var asReq = transport.request({
-			hostname: REQUEST_HOSTNAME,
-			port: REQUEST_PORT,
+			hostname: request_hostname,
+			port: request_post,
 			path: API_PATH + path,
 			method: method,
 			headers: {
@@ -290,7 +301,7 @@ module.exports = function(api_key) {
 
 				// Check for valid meta code
 				if (!body.meta || !body.meta.code || body.meta.code !== 200) {
-					callback(body.meta.code + ': ' + body.meta.error_message, body.data);
+					callback(body.meta.code + ': ' + body.meta.message, body.data);
 					return;
 				}
 
