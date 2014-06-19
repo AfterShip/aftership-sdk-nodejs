@@ -149,7 +149,7 @@ if (get_tracking) {
 			test.expect(6);
 
 			// UPS
-			Aftership.getTracking('ups', GLOBAL.tracking.ups, [], function(err, result) {
+			Aftership.getTracking('ups', GLOBAL.tracking.ups, ['slug','tag', 'tracking_number', 'checkpoints', 'active'], function(err, result) {
 				test.equal(err, null);
 				test.equal(typeof result, 'object');
 				test.equal(result.tracking.slug, 'ups');
