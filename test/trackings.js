@@ -5,11 +5,9 @@ if (!GLOBAL.apiKey) {
 
 var Aftership = require('../main.js')(GLOBAL.apiKey);
 
-
-var get_trackings = false; //always false
-
 var create_tracking = true;
 var get_tracking = true;
+var get_trackings = true;
 var update_tracking = true;
 var checkpoint = true;
 var delete_tracking = true;
@@ -38,7 +36,7 @@ if (create_tracking) {
 			// usps
 			Aftership.createTracking(GLOBAL.tracking.usps, {}, function(err, result) {
 
-				test.equal(err, '409: Tracking number is already exist.');
+				test.equal(err.indexOf('409'), 0);
 				test.equal(result.tracking.tracking_number, GLOBAL.tracking.usps);
 				test.equal(typeof result, 'object');
 
@@ -157,7 +155,11 @@ if (get_tracking) {
 				test.ok(result.tracking.checkpoints);
 				test.equal(typeof result.tracking.active, 'boolean');
 
-				test.done();
+				//wait 7 second until testing getTrackings
+				setTimeout(function(){
+					test.done();
+				}, 7000);
+
 			});
 		}
 	};
@@ -170,6 +172,7 @@ if (get_trackings) {
 			test.expect(5);
 
 			Aftership.getTrackings({}, function(err, results) {
+
 				test.equal(err, null);
 				test.ok(Array.isArray(results.trackings));
 
