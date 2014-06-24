@@ -14,24 +14,14 @@ var _ = require('lodash');
  * @type {string}
  * @private
  */
-var request_hostname = 'api.aftership.com';
-
-var env = process.env.NODE_ENV;
-
-if (env === 'development') {
-	request_hostname = 'localhost';
-}
+var request_hostname = process.env.AFTERSHIP_NODEJS_SDK_HOSTNAME || 'api.aftership.com';
 
 /**
  * Port for AfterShip API.
  * @type {number}
  * @private
  */
-var request_post = 443;
-
-if (env === 'development') {
-	request_post = 3001;
-}
+var request_post = process.env.AFTERSHIP_NODEJS_SDK_PORT || 443;
 
 var transport = require((request_post === 443)?'https':'http');
 
