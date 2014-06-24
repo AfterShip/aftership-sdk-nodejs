@@ -1,7 +1,7 @@
 /******************************************
  * Set your API key here for testing
  ******************************************/
-GLOBAL.apiKey = ''; // please use your AfterShip api key
+GLOBAL.apiKey = process.env.AFTERSHIP_NODEJS_SDK_API_KEY || ''; // please use your AfterShip api key
 
 /******************************************
  * Set tracking numbers here
