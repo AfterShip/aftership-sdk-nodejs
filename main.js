@@ -2,7 +2,7 @@
  * NodeJS interface for the AfterShip API.
  * From docs here: https://www.aftership.com/docs/api/4.0
  *
- * @author Kirk Morales (kirk@intrakr.com)
+ * @author Kirk Morales (kirk@intrakr.com), Bossa (github.com/BossaGroove)
  * @copyright Copyright (C) 2013
  * @license GNU General Public License, version 2 (see LICENSE.md)
  */
