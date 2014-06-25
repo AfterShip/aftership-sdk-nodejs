@@ -14,7 +14,7 @@ var _ = require('lodash');
  * @type {string}
  * @private
  */
-var request_hostname = process.env.AFTERSHIP_NODEJS_SDK_HOSTNAME || 'api.aftership.com';
+var request_hostname = process.env.AFTERSHIP_NODEJS_SDK_HOST || 'api.aftership.com';
 
 /**
  * Port for AfterShip API.
