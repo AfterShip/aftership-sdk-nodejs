@@ -85,14 +85,18 @@ module.exports = function(api_key) {
 
 			// Called when request is complete
 			asRes.on('end', function() {
-				body = JSON.parse(body);
+				try {
+					body = JSON.parse(body);
 
-				if (!body || !body.meta) {
+					if (!body || !body.meta) {
+						callback('Could not parse response');
+						return;
+					}
+
+					callback(null, body);
+				} catch (e) {
 					callback('Could not parse response');
-					return;
 				}
-
-				callback(null, body);
 			});
 		});
 
