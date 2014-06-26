@@ -144,12 +144,6 @@ module.exports = function(api_key) {
 					return;
 				}
 
-				// Check that it was activated
-				if (!body.data.tracking.active) {
-					callback('Tracking not active');
-					return;
-				}
-
 				// Return the tracking number and data
 				callback(null, body.data);
 			});
