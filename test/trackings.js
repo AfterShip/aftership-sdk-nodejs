@@ -35,7 +35,6 @@ if (create_tracking) {
 			test.expect(3);
 			// usps
 			Aftership.createTracking(GLOBAL.tracking.usps, {}, function(err, result) {
-				console.log(err);
 				test.equal(err.code, 4003);
 				test.equal(result.tracking.tracking_number, GLOBAL.tracking.usps);
 				test.equal(typeof result, 'object');
