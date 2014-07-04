@@ -7,6 +7,16 @@
  * @license GNU General Public License, version 2 (see LICENSE.md)
  */
 
+
+/**
+ *
+ * Error Type
+ * 600, 'UnhandledError'
+ * 601, 'ParseResponseError', 'Could not parse response.'
+ * 602, 'MissingParameter', 'Missing Required Parameter: tracking number.'
+ * 603, 'ResponseError', 'Invalid response body.'
+ */
+
 var _ = require('lodash');
 
 /**
@@ -23,7 +33,7 @@ var request_hostname = process.env.AFTERSHIP_NODEJS_SDK_HOST || 'api.aftership.c
  */
 var request_post = process.env.AFTERSHIP_NODEJS_SDK_PORT || 443;
 
-var transport = require((request_post === 443)?'https':'http');
+var transport = require((request_post === 443) ? 'https' : 'http');
 
 /**
  * Path for AfterShip API.
@@ -32,6 +42,7 @@ var transport = require((request_post === 443)?'https':'http');
  * @private
  */
 var API_PATH = '/v4';
+
 
 /**
  * Initializes the AfterShip plugin.
@@ -46,12 +57,30 @@ module.exports = function(api_key) {
 		return {};
 	}
 
+
+	/**
+	 * Return the error object for callback use
+	 * @param code {!number} - meta.code
+	 * @param type  {!string}- meta.type
+	 * @param message {!string} - meta.message
+	 * @returns {{code: *, type: *, message: *}}
+	 * @private
+	 */
+	function _getError(code, type, message) {
+		return {
+			code: code,
+			type: type,
+			message: message
+		}
+	}
+
+
 	/**
 	 * Performs an API request.
-	 * @param {string} method The HTTP method.
-	 * @param {string} path The HTTP path to append to the AfterShip default.
-	 * @param {Object} data Body for POST requests.
-	 * @param {function(?string, object=)} callback
+	 * @param method {string} - method The HTTP method.
+	 * @param path {string} - path The HTTP path to append to the AfterShip default.
+	 * @param data {Object} - data Body for POST requests.
+	 * @param callback {function(?Object, ?Object)} - callback
 	 * @private
 	 */
 	function request(method, path, data, callback) {
@@ -89,20 +118,20 @@ module.exports = function(api_key) {
 					body = JSON.parse(body);
 
 					if (!body || !body.meta) {
-						callback('Could not parse response');
+						callback(_getError(601, 'ParseResponseError', 'Could not parse response.'), null);
 						return;
 					}
 
 					callback(null, body);
 				} catch (e) {
-					callback('Could not parse response');
+					callback(_getError(601, 'ParseResponseError', 'Could not parse response.'), null);
 				}
 			});
 		});
 
 		// Capture any errors
 		asReq.on('error', function(e) {
-			callback(e.message);
+			callback(_getError(600, 'UnhandledError', e.message), null);
 		});
 
 		asReq.write(data);
@@ -111,11 +140,13 @@ module.exports = function(api_key) {
 
 	return {
 
+
+
 		/**
-		 * create a new tracking_number.
-		 * @param {string} tracking_number - The number to track. Default: DHL.
-		 * @param {Object|function(string, Array=)} params - Additional options to attach.
-		 * @param {function(string, Array=)=} callback - callback function
+		 * Create a new tracking_number
+		 * @param {string} tracking_number - The tracking number to track.
+		 * @param {Object=} params - Additional options to attach.
+		 * @param {function(?Object, ?Object)} callback - callback function
 		 */
 		'createTracking': function(tracking_number, params, callback) {
 
@@ -125,26 +156,31 @@ module.exports = function(api_key) {
 			}
 
 			if (!_.isString(tracking_number)) {
-				callback('Missing Required Parameter: tracking number');
+				callback(_getError(602, 'MissingParameter', 'Missing Required Parameter: tracking number.'));
 			}
 
 			params.tracking_number = tracking_number;
 
 			request('POST', '/trackings', {tracking: params}, function(err, body) {
 				if (err) {
-					callback(err);
+					callback(err, null);
 					return;
 				}
 
 				// Check for valid meta code
-				if (!body.meta || !body.meta.code || body.meta.code !== 201) {
-					callback(body.meta.code + ': ' + body.meta.message, body.data);
+				if (!body.meta || !body.meta.code) {
+					callback(body.meta, null);
+					return;
+				}
+
+				if (!(body.meta.code === 201 || body.meta.code === 202)) {
+					callback(body.meta, body.data);
 					return;
 				}
 
 				// Check for valid data contents
 				if (!body.data || !body.data.tracking || typeof body.data.tracking !== 'object') {
-					callback('500: Invalid response body');
+					callback(_getError(603, 'ResponseError', 'Invalid response body.'));
 					return;
 				}
 
@@ -158,9 +194,9 @@ module.exports = function(api_key) {
 		 * Get a tracking number
 		 * @param {string} slug - slug of the tracking number
 		 * @param {string} tracking_number    - number to get
-		 * @param {Array|string|function(string, Object=)} fields - Fields to return:
+		 * @param {Array|string|function(?Object, ?Object)} fields - Fields to return:
 		 * https://www.aftership.com/docs/api/3.0/tracking/get-trackings-slug-tracking_number
-		 * @param {function(string, Object=)=} callback - callback function
+		 * @param {function(?Object, ?Object)} callback - callback function
 		 */
 		'getTracking': function(slug, tracking_number, fields, callback) {
 
@@ -170,11 +206,11 @@ module.exports = function(api_key) {
 			}
 
 			if (!_.isString(tracking_number)) {
-				callback('Missing Required Parameter: tracking number');
+				callback(_getError(602, 'MissingParameter', 'Missing Required Parameter: tracking number.'));
 			}
 
 			if (!_.isString(slug)) {
-				callback('Missing Required Parameter: tracking number');
+				callback(_getError(602, 'MissingParameter', 'Missing Required Parameter: tracking number.'));
 			}
 
 			if (Array.isArray(fields)) {
@@ -185,19 +221,24 @@ module.exports = function(api_key) {
 
 			request('GET', '/trackings/' + slug + '/' + tracking_number + '?' + fields, {}, function(err, body) {
 				if (err) {
-					callback(err);
+					callback(err, null);
 					return;
 				}
 
 				// Check for valid meta code
-				if (!body.meta || !body.meta.code || body.meta.code !== 200) {
-					callback(body.meta.code + ': ' + body.meta.message, body.data);
+				if (!body.meta || !body.meta.code) {
+					callback(body.meta, null);
+					return;
+				}
+
+				if (body.meta.code !== 200) {
+					callback(body.meta, body.data);
 					return;
 				}
 
 				// Check for valid data contents
 				if (!body.data || !body.data.tracking || typeof body.data.tracking !== 'object') {
-					callback('500: Invalid response body');
+					callback(_getError(603, 'ResponseError', 'Invalid response body.'));
 					return;
 				}
 
@@ -212,7 +253,7 @@ module.exports = function(api_key) {
 		 * Gets all tracking numbers in account.
 		 * @param {Object|function} options - Defined here:
 		 * https://www.aftership.com/docs/api/3.0/tracking/get-trackings
-		 * @param {function(string, Object=)=} callback
+		 * @param {function(?Object, ?Object)} callback - callback function
 		 */
 		'getTrackings': function(options, callback) {
 			if (!callback) {
@@ -222,19 +263,24 @@ module.exports = function(api_key) {
 
 			request('GET', '/trackings', options, function(err, body) {
 				if (err) {
-					callback(err);
+					callback(err, null);
 					return;
 				}
 
 				// Check for valid meta code
-				if (!body.meta || !body.meta.code || body.meta.code !== 200) {
-					callback(body.meta.code + ': ' + body.meta.message, body.data);
+				if (!body.meta || !body.meta.code) {
+					callback(body.meta, null);
+					return;
+				}
+
+				if (body.meta.code !== 200) {
+					callback(body.meta, body.data);
 					return;
 				}
 
 				// Check for valid data contents
 				if (!body.data || typeof body.data !== 'object') {
-					callback('500: Invalid response body');
+					callback(_getError(603, 'ResponseError', 'Invalid response body.'));
 					return;
 				}
 
@@ -250,24 +296,24 @@ module.exports = function(api_key) {
 		 * @param {string} tracking_number
 		 * @param {Array} options Fields to update:
 		 *  https://www.aftership.com/docs/api/3.0/tracking/put-trackings-slug-tracking_number
-		 * @param {function(string, Object=)} callback
+		 * @param {function(?Object, ?Object)} callback - callback function
 		 */
 		'updateTracking': function(slug, tracking_number, options, callback) {
 			request('PUT', '/trackings/' + slug + '/' + tracking_number, {tracking: options}, function(err, body) {
 				if (err) {
-					callback(err);
+					callback(err, null);
 					return;
 				}
 
 				// Check for valid meta code
 				if (!body.meta || !body.meta.code || body.meta.code !== 200) {
-					callback(body.meta.code + ': ' + body.meta.message, body.data);
+					callback(body.meta, null);
 					return;
 				}
 
 				// Check for valid data contents
 				if (!body.data || !body.data.tracking || typeof body.data.tracking !== 'object') {
-					callback('500: Invalid response body');
+					callback(_getError(603, 'ResponseError', 'Invalid response body.'));
 					return;
 				}
 
@@ -280,24 +326,29 @@ module.exports = function(api_key) {
 		 * Delete a specific tracking number.
 		 * @param {string} slug
 		 * @param {string} tracking_number
-		 * @param {function(string, Object=)} callback
+		 * @param {function(?Object, ?Object)} callback - callback function
 		 */
 		'deleteTracking': function(slug, tracking_number, callback) {
 			request('DELETE', '/trackings/' + slug + '/' + tracking_number, {}, function(err, body) {
 				if (err) {
-					callback(err);
+					callback(err, null);
 					return;
 				}
 
 				// Check for valid meta code
-				if (!body.meta || !body.meta.code || body.meta.code !== 200) {
-					callback(body.meta.code + ': ' + body.meta.message, body.data);
+				if (!body.meta || !body.meta.code) {
+					callback(body.meta, null);
+					return;
+				}
+
+				if (body.meta.code !== 200) {
+					callback(body.meta, body.data);
 					return;
 				}
 
 				// Check for valid data contents
 				if (!body.data || !body.data.tracking || typeof body.data.tracking !== 'object') {
-					callback('500: Invalid response body');
+					callback(_getError(603, 'ResponseError', 'Invalid response body.'));
 					return;
 				}
 
@@ -311,8 +362,8 @@ module.exports = function(api_key) {
 		 * Get the last checkpoint information of a tracking number
 		 * @param {string} slug
 		 * @param {string} tracking_number
-		 * @param {Array|string|function(string, Object=)} fields Fields to update: https://www.aftership.com/docs/api/3.0/last_checkpoint
-		 * @param {function(string, Object=)} callback
+		 * @param {Array|string|function(?Object, ?Object)} fields Fields to update: https://www.aftership.com/docs/api/3.0/last_checkpoint
+		 * @param {function(?Object, ?Object)} callback - callback function
 		 */
 		'getLastCheckpoint': function(slug, tracking_number, fields, callback) {
 
@@ -330,19 +381,24 @@ module.exports = function(api_key) {
 			request('GET', '/last_checkpoint/' + slug + '/' + tracking_number + '?' + fields, {}, function(err, body) {
 
 				if (err) {
-					callback(err);
+					callback(err, null);
 					return;
 				}
 
 				// Check for valid meta code
-				if (!body.meta || !body.meta.code || body.meta.code !== 200) {
-					callback(body.meta.code + ': ' + body.meta.message, body.data);
+				if (!body.meta || !body.meta.code) {
+					callback(body.meta, null);
+					return;
+				}
+
+				if (body.meta.code !== 200) {
+					callback(body.meta, body.data);
 					return;
 				}
 
 				// Check for valid data contents
 				if (!body.data || !body.data.checkpoint || typeof body.data.checkpoint !== 'object') {
-					callback('500: Invalid response body');
+					callback(_getError(603, 'ResponseError', 'Invalid response body.'));
 					return;
 				}
 
@@ -353,24 +409,29 @@ module.exports = function(api_key) {
 
 		/**
 		 * Gets all available couriers.
-		 * @param {function(string, Object=)} callback
+		 * @param {function(?Object, ?Object)} callback - callback function
 		 */
 		'getCouriers': function(callback) {
 			request('GET', '/couriers', {}, function(err, body) {
 				if (err) {
-					callback(err);
+					callback(err, null);
 					return;
 				}
 
 				// Check for valid meta code
-				if (!body.meta || !body.meta.code || body.meta.code !== 200) {
-					callback(body.meta.code + ': ' + body.meta.message, body.data);
+				if (!body.meta || !body.meta.code) {
+					callback(body.meta, null);
+					return;
+				}
+
+				if (body.meta.code !== 200) {
+					callback(body.meta, body.data);
 					return;
 				}
 
 				// Check for valid data contents
 				if (!body.data || typeof body.data !== 'object') {
-					callback('500: Invalid response body');
+					callback(_getError(603, 'ResponseError', 'Invalid response body.'));
 					return;
 				}
 
@@ -382,10 +443,10 @@ module.exports = function(api_key) {
 		/**
 		 * Detect the courier for given tracking number
 		 * @param {string} tracking_number - tracking number to be detected
-		 * @param {object|function(string, Object=)} required_fields - optional, hash of required fields
+		 * @param {Object|function(?Object, ?Object)} required_fields - optional, hash of required fields
 		 * possible values: {"tracking_account_number": "", "tracking_postal_code": "", "tracking_ship_date": ""}
-		 * @param {string|function(string, Object=)=} detect_mode - optional, accept "strict" or "tracking_number"
-		 * @param {function(string, Object=)=} callback - callback function
+		 * @param {string|function(?Object, ?Object)=} detect_mode - optional, accept "strict" or "tracking_number"
+		 * @param {function(?Object, ?Object)} callback - callback function
 		 */
 		'detectCouriers': function(tracking_number, required_fields, detect_mode, callback) {
 			if (!callback) {
@@ -408,25 +469,31 @@ module.exports = function(api_key) {
 
 			request('POST', '/couriers/detect/', param, function(err, body) {
 				if (err) {
-					callback(err);
+					callback(err, null);
 					return;
 				}
 
 				// Check for valid meta code
-				if (!body.meta || !body.meta.code || body.meta.code !== 200) {
-					callback(body.meta.code + ': ' + body.meta.message, body.data);
+				if (!body.meta || !body.meta.code) {
+					callback(body.meta, null);
+					return;
+				}
+
+				if (body.meta.code !== 200) {
+					callback(body.meta, body.data);
 					return;
 				}
 
 				// Check for valid data contents
 				if (!body.data || !body.data.couriers || typeof body.data.couriers !== 'object') {
-					callback('500: Invalid response body');
+					callback(_getError(603, 'ResponseError', 'Invalid response body.'));
 					return;
 				}
 
 				callback(null, body.data);
 			});
 		}
+
 	};
 };
 

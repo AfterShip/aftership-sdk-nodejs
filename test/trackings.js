@@ -35,8 +35,8 @@ if (create_tracking) {
 			test.expect(3);
 			// usps
 			Aftership.createTracking(GLOBAL.tracking.usps, {}, function(err, result) {
-
-				test.equal(err.indexOf('409'), 0);
+				console.log(err);
+				test.equal(err.code, 4003);
 				test.equal(result.tracking.tracking_number, GLOBAL.tracking.usps);
 				test.equal(typeof result, 'object');
 
@@ -261,7 +261,7 @@ if (delete_tracking) {
 
 			// UPS
 			Aftership.deleteTracking('ups', '12345677654', function(err, result) {
-				test.equal(err, '404: Tracking does not exist.');
+				test.equal(err.code, 4004);
 				test.equal(result.tracking.slug, 'ups');
 				test.equal(result.tracking.tracking_number, '12345677654');
 				test.done();
