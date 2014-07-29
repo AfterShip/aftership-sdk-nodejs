@@ -33,7 +33,9 @@ var request_hostname = process.env.AFTERSHIP_NODEJS_SDK_HOST || 'api.aftership.c
  */
 var request_post = process.env.AFTERSHIP_NODEJS_SDK_PORT || 443;
 
-var transport = require((request_post === 443) ? 'https' : 'http');
+var protocol = ((request_post === 443) ? 'https' : 'http');
+
+var request = require('request');
 
 /**
  * Path for AfterShip API.
@@ -43,6 +45,12 @@ var transport = require((request_post === 443) ? 'https' : 'http');
  */
 var API_PATH = '/v4';
 
+/**
+ * timeout of each request in milliseconds
+ * @const
+ * @type {number}
+ */
+var TIMEOUT = 30000;
 
 /**
  * Initializes the AfterShip plugin.
@@ -83,7 +91,7 @@ module.exports = function(api_key) {
 	 * @param callback {function(?Object, ?Object)} - callback
 	 * @private
 	 */
-	function request(method, path, data, callback) {
+	function _call(method, path, data, callback) {
 
 		// Make sure path starts with a slash
 		if (path.substr(0, 1) !== '/') {
@@ -94,48 +102,31 @@ module.exports = function(api_key) {
 
 		// console.log(data);
 
-		var asReq = transport.request({
-			hostname: request_hostname,
-			port: request_post,
-			path: API_PATH + path,
+		var request_option = {
+			url: protocol + '://' + request_hostname + ':' + request_post + API_PATH + path,
 			method: method,
 			headers: {
 				'Content-Type': 'application/json',
-				'Content-Length': data.length,
 				'aftership-api-key': api_key
-			}
-		}, function(asRes) {
-			var body = '';
+			},
+			timeout: TIMEOUT,
+			body: data
+		};
 
-			// Capture the response chunks
-			asRes.on('data', function(chunk) {
-				body += chunk;
-			});
+		request(request_option, function(err, response, body) {
+			try {
+				body = JSON.parse(body);
 
-			// Called when request is complete
-			asRes.on('end', function() {
-				try {
-					body = JSON.parse(body);
-
-					if (!body || !body.meta) {
-						callback(_getError(601, 'ParseResponseError', 'Could not parse response.'), null);
-						return;
-					}
-
-					callback(null, body);
-				} catch (e) {
+				if (!body || !body.meta) {
 					callback(_getError(601, 'ParseResponseError', 'Could not parse response.'), null);
+				} else {
+					callback(null, body);
 				}
-			});
+			} catch (e) {
+				//console.log(e.stack);
+				callback(_getError(601, 'ParseResponseError', 'Could not parse response.'), null);
+			}
 		});
-
-		// Capture any errors
-		asReq.on('error', function(e) {
-			callback(_getError(600, 'UnhandledError', e.message), null);
-		});
-
-		asReq.write(data);
-		asReq.end();
 	}
 
 	return {
@@ -161,7 +152,7 @@ module.exports = function(api_key) {
 
 			params.tracking_number = tracking_number;
 
-			request('POST', '/trackings', {tracking: params}, function(err, body) {
+			_call('POST', '/trackings', {tracking: params}, function(err, body) {
 				if (err) {
 					callback(err, null);
 					return;
@@ -219,7 +210,7 @@ module.exports = function(api_key) {
 
 			fields = 'fields=' + fields;
 
-			request('GET', '/trackings/' + slug + '/' + tracking_number + '?' + fields, {}, function(err, body) {
+			_call('GET', '/trackings/' + slug + '/' + tracking_number + '?' + fields, {}, function(err, body) {
 				if (err) {
 					callback(err, null);
 					return;
@@ -261,7 +252,7 @@ module.exports = function(api_key) {
 				options = {};
 			}
 
-			request('GET', '/trackings', options, function(err, body) {
+			_call('GET', '/trackings', options, function(err, body) {
 				if (err) {
 					callback(err, null);
 					return;
@@ -299,7 +290,7 @@ module.exports = function(api_key) {
 		 * @param {function(?Object, ?Object)} callback - callback function
 		 */
 		'updateTracking': function(slug, tracking_number, options, callback) {
-			request('PUT', '/trackings/' + slug + '/' + tracking_number, {tracking: options}, function(err, body) {
+			_call('PUT', '/trackings/' + slug + '/' + tracking_number, {tracking: options}, function(err, body) {
 				if (err) {
 					callback(err, null);
 					return;
@@ -329,7 +320,8 @@ module.exports = function(api_key) {
 		 * @param {function(?Object, ?Object)} callback - callback function
 		 */
 		'deleteTracking': function(slug, tracking_number, callback) {
-			request('DELETE', '/trackings/' + slug + '/' + tracking_number, {}, function(err, body) {
+			_call('DELETE', '/trackings/' + slug + '/' + tracking_number, {}, function(err, body) {
+
 				if (err) {
 					callback(err, null);
 					return;
@@ -378,7 +370,7 @@ module.exports = function(api_key) {
 
 			fields = 'fields=' + fields;
 
-			request('GET', '/last_checkpoint/' + slug + '/' + tracking_number + '?' + fields, {}, function(err, body) {
+			_call('GET', '/last_checkpoint/' + slug + '/' + tracking_number + '?' + fields, {}, function(err, body) {
 
 				if (err) {
 					callback(err, null);
@@ -412,7 +404,7 @@ module.exports = function(api_key) {
 		 * @param {function(?Object, ?Object)} callback - callback function
 		 */
 		'getCouriers': function(callback) {
-			request('GET', '/couriers', {}, function(err, body) {
+			_call('GET', '/couriers', {}, function(err, body) {
 				if (err) {
 					callback(err, null);
 					return;
@@ -460,14 +452,16 @@ module.exports = function(api_key) {
 			}
 
 			var param = {
-				tracking_number: tracking_number,
-				tracking_account_number: required_fields.tracking_account_number,
-				tracking_postal_code: required_fields.tracking_postal_code,
-				tracking_ship_date: required_fields.tracking_ship_date,
-				detect_mode: detect_mode
+				tracking: {
+					tracking_number: tracking_number,
+					tracking_account_number: required_fields.tracking_account_number,
+					tracking_postal_code: required_fields.tracking_postal_code,
+					tracking_ship_date: required_fields.tracking_ship_date,
+					detect_mode: detect_mode
+				}
 			};
 
-			request('POST', '/couriers/detect/', param, function(err, body) {
+			_call('POST', '/couriers/detect/', param, function(err, body) {
 				if (err) {
 					callback(err, null);
 					return;
