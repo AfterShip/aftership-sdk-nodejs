@@ -208,7 +208,9 @@ module.exports = function(api_key) {
 				fields = fields.join(',');
 			}
 
-			fields = 'fields=' + fields;
+			if (fields.length > 0) {
+				fields = 'fields=' + fields;
+			}
 
 			_call('GET', '/trackings/' + slug + '/' + tracking_number + '?' + fields, {}, function(err, body) {
 				if (err) {
@@ -368,7 +370,9 @@ module.exports = function(api_key) {
 				fields = fields.join(',');
 			}
 
-			fields = 'fields=' + fields;
+			if (fields.length > 0) {
+				fields = 'fields=' + fields;
+			}
 
 			_call('GET', '/last_checkpoint/' + slug + '/' + tracking_number + '?' + fields, {}, function(err, body) {
 
