@@ -114,18 +114,25 @@ module.exports = function(api_key) {
 		};
 
 		request(request_option, function(err, response, body) {
+
+			var return_err = null;
+			var return_body = null;
+
+			//don't put callback inside try catch to prevent catching user's throw
 			try {
 				body = JSON.parse(body);
 
 				if (!body || !body.meta) {
-					callback(_getError(601, 'ParseResponseError', 'Could not parse response.'), null);
+					return_err = _getError(601, 'ParseResponseError', 'Could not parse response.');
 				} else {
-					callback(null, body);
+					return_body = body;
 				}
 			} catch (e) {
 				//console.log(e.stack);
-				callback(_getError(601, 'ParseResponseError', 'Could not parse response.'), null);
+				return_err = _getError(601, 'ParseResponseError', 'Could not parse response.');
 			}
+
+			callback(return_err, return_body);
 		});
 	}
 
