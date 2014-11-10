@@ -31,7 +31,7 @@ if (create_tracking) {
 			});
 		},
 
-		'Ok (duplicate)': function(test) {
+		'Error (duplicate)': function(test) {
 			test.expect(3);
 			// usps
 			Aftership.createTracking(GLOBAL.tracking.usps, {}, function(err, result) {
@@ -120,13 +120,15 @@ if (create_tracking) {
 		},
 
 
-		'Ok (w/ slug usps)': function(test) {
-			test.expect(5);
+		'Error (w/ slug usps)': function(test) {
+			test.expect(6);
 
 			// usps
 			Aftership.createTracking(GLOBAL.tracking.usps, {slug: 'usps'}, function(err, result) {
 				// as the tracking is already created in w/o slug, there should be error return
+
 				test.notEqual(err, '');
+				test.equal(err.code, 4003);
 				test.equal(result.tracking.tracking_number, GLOBAL.tracking.usps);
 				test.equal(typeof result, 'object');
 				test.equal(typeof result.tracking.checkpoints, 'undefined');
@@ -134,19 +136,39 @@ if (create_tracking) {
 
 				test.done();
 			});
+		},
+
+
+		'Ok (w/ slug dx)': function(test) {
+			test.expect(5);
+
+			// usps
+			Aftership.createTracking(GLOBAL.tracking.dx.tracking_number, {slug: 'dx', tracking_postal_code: GLOBAL.tracking.dx.tracking_postal_code}, function(err, result) {
+
+				test.notEqual(err, '');
+				test.equal(result.tracking.tracking_number, GLOBAL.tracking.dx.tracking_number);
+				test.equal(typeof result, 'object');
+				test.ok(result.tracking.checkpoints);
+				test.equal(result.tracking.slug, 'dx');
+
+				//wait 15 seconds for letting crawlers process
+				setTimeout(function(){
+					test.done();
+				}, 10000);
+
+			});
 		}
 	};
-
-
 }
 
 if (get_tracking) {
 	exports.Tracking = {
-		'Ok': function(test) {
+		'Ok ups': function(test) {
 			test.expect(6);
 
 			// UPS
-			Aftership.getTracking('ups', GLOBAL.tracking.ups, ['slug','tag', 'tracking_number', 'checkpoints', 'active'], function(err, result) {
+			Aftership.getTracking('ups', GLOBAL.tracking.ups, {}, function(err, result) {
+
 				test.equal(err, null);
 				test.equal(typeof result, 'object');
 				test.equal(result.tracking.slug, 'ups');
@@ -154,15 +176,66 @@ if (get_tracking) {
 				test.ok(result.tracking.checkpoints);
 				test.equal(typeof result.tracking.active, 'boolean');
 
-				//wait 7 second until testing getTrackings
+				test.done();
+			});
+		},
+
+		'Ok ups limited fields': function(test) {
+			test.expect(6);
+
+			// UPS
+			Aftership.getTracking('ups', GLOBAL.tracking.ups, {fields: ['slug', 'tracking_number']}, function(err, result) {
+
+				test.equal(err, null);
+				test.equal(typeof result, 'object');
+				test.equal(result.tracking.slug, 'ups');
+				test.equal(result.tracking.tracking_number, GLOBAL.tracking.ups);
+				test.equal(typeof result.tracking.checkpoints, 'undefined');
+				test.equal(typeof result.tracking.active, 'undefined');
+
+				test.done();
+			});
+		},
+
+		'Ok ups limited fields 2': function(test) {
+			test.expect(6);
+
+			// UPS
+			Aftership.getTracking('ups', GLOBAL.tracking.ups, {fields: 'slug,tracking_number'}, function(err, result) {
+
+				test.equal(err, null);
+				test.equal(typeof result, 'object');
+				test.equal(result.tracking.slug, 'ups');
+				test.equal(result.tracking.tracking_number, GLOBAL.tracking.ups);
+				test.equal(typeof result.tracking.checkpoints, 'undefined');
+				test.equal(typeof result.tracking.active, 'undefined');
+
+				test.done();
+			});
+		},
+
+
+		'OK (DX)': function(test) {
+			test.expect(6);
+
+			Aftership.getTracking('dx', GLOBAL.tracking.dx.tracking_number, { tracking_postal_code: GLOBAL.tracking.dx.tracking_postal_code }, function(err, result) {
+
+				test.equal(err, null);
+				test.equal(typeof result, 'object');
+				test.equal(result.tracking.slug, 'dx');
+				test.equal(result.tracking.tracking_number, GLOBAL.tracking.dx.tracking_number);
+				test.ok(result.tracking.checkpoints);
+				test.equal(typeof result.tracking.active, 'boolean');
+
+				//wait 7 seconds for algolia
 				setTimeout(function(){
 					test.done();
 				}, 7000);
-
 			});
 		}
 	};
 }
+
 
 if (get_trackings) {
 	exports.Trackings = {
@@ -344,6 +417,22 @@ if (delete_tracking) {
 				test.equal(typeof result.tracking, 'object');
 				test.equal(result.tracking.slug, 'usps');
 				test.equal(result.tracking.tracking_number, GLOBAL.tracking.usps);
+
+				test.done();
+			});
+		},
+
+		'Ok Delete dx': function(test) {
+			test.expect(5);
+
+			// usps
+			Aftership.deleteTracking('dx', GLOBAL.tracking.dx.tracking_number, {tracking_postal_code: GLOBAL.tracking.dx.tracking_postal_code}, function(err, result) {
+
+				test.equal(err, null);
+				test.equal(typeof result.tracking, 'object');
+				test.equal(result.tracking.slug, 'dx');
+				test.equal(result.tracking.tracking_number, GLOBAL.tracking.dx.tracking_number);
+				test.equal(result.tracking.tracking_postal_code, GLOBAL.tracking.dx.tracking_postal_code);
 
 				test.done();
 			});

@@ -8,12 +8,16 @@ GLOBAL.apiKey = process.env.AFTERSHIP_NODEJS_SDK_API_KEY || ''; // please use yo
  ******************************************/
 
 GLOBAL.tracking = {
-	'dhl': '2798713875',
-	'fedex': '614250480620',
-	'tnt': 'GD693099514WWW',
-	'toll-global-express': '200927473106',
-	'ups': '1ZE8316Y0340536688',
-	'usps': '9410809699938642831030'
+	'dhl': '1100677045',
+	'fedex': '618320505092',
+	'tnt': 'GE171378685WW',
+	'toll-global-express': '813007861271',
+	'ups': '1Z01Y69E6644338280',
+	'usps': '9374869903500183656767',
+	'dx': {
+		tracking_number: '1551540939',
+		tracking_postal_code: 'NR172BS'
+	}
 };
 
 /******************************************

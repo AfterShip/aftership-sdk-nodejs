@@ -82,13 +82,27 @@ module.exports = function(api_key) {
 		}
 	}
 
+	/**
+	 * serial object to url query string
+	 * @param obj {Object} - hash
+	 * @returns {string} - output serialized string
+	 * @private
+	 */
+	function _serialize(obj) {
+		var str = [];
+		for(var key in obj)
+			if (obj.hasOwnProperty(key)) {
+				str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
+			}
+		return str.join("&");
+	}
 
 	/**
 	 * Performs an API request.
 	 * @param method {string} - method The HTTP method.
 	 * @param path {string} - path The HTTP path to append to the AfterShip default.
 	 * @param data {Object} - data Body for POST requests.
-	 * @param callback {function(?Object, ?Object)} - callback
+	 * @param callback {function(Object, Object=)} - callback
 	 * @private
 	 */
 	function _call(method, path, data, callback) {
@@ -144,7 +158,7 @@ module.exports = function(api_key) {
 		 * Create a new tracking_number
 		 * @param {string} tracking_number - The tracking number to track.
 		 * @param {Object=} params - Additional options to attach.
-		 * @param {function(?Object, ?Object)} callback - callback function
+		 * @param {function(Object, Object=)} callback - callback function
 		 */
 		'createTracking': function(tracking_number, params, callback) {
 
@@ -187,20 +201,20 @@ module.exports = function(api_key) {
 			});
 		},
 
-
 		/**
-		 * Get a tracking number
+		 * Get a tracking number with options
 		 * @param {string} slug - slug of the tracking number
 		 * @param {string} tracking_number    - number to get
-		 * @param {Array|string|function(?Object, ?Object)} fields - Fields to return:
+		 * @param {Object|function(Object, Object=)} options hash
 		 * https://www.aftership.com/docs/api/3.0/tracking/get-trackings-slug-tracking_number
-		 * @param {function(?Object, ?Object)} callback - callback function
+		 *
+		 * @param {function(Object, Object=)} callback - callback function
 		 */
-		'getTracking': function(slug, tracking_number, fields, callback) {
+		'getTracking': function(slug, tracking_number, options, callback) {
 
 			if (!callback) {
-				callback = fields;
-				fields = [];
+				callback = options;
+				options = {};
 			}
 
 			if (!_.isString(tracking_number)) {
@@ -211,15 +225,11 @@ module.exports = function(api_key) {
 				callback(_getError(602, 'MissingParameter', 'Missing Required Parameter: tracking number.'));
 			}
 
-			if (Array.isArray(fields)) {
-				fields = fields.join(',');
+			if (Array.isArray(options.fields)) {
+				options.fields = options.fields.join(',');
 			}
 
-			if (fields.length > 0) {
-				fields = 'fields=' + fields;
-			}
-
-			_call('GET', '/trackings/' + slug + '/' + tracking_number + '?' + fields, {}, function(err, body) {
+			_call('GET', '/trackings/' + slug + '/' + tracking_number + '?' + _serialize(options), {}, function(err, body) {
 				if (err) {
 					callback(err, null);
 					return;
@@ -253,7 +263,7 @@ module.exports = function(api_key) {
 		 * Gets all tracking numbers in account.
 		 * @param {Object|function} options - Defined here:
 		 * https://www.aftership.com/docs/api/3.0/tracking/get-trackings
-		 * @param {function(?Object, ?Object)} callback - callback function
+		 * @param {function(Object, Object=)} callback - callback function
 		 */
 		'getTrackings': function(options, callback) {
 			if (!callback) {
@@ -296,7 +306,7 @@ module.exports = function(api_key) {
 		 * @param {string} tracking_number
 		 * @param {Array} options Fields to update:
 		 *  https://www.aftership.com/docs/api/3.0/tracking/put-trackings-slug-tracking_number
-		 * @param {function(?Object, ?Object)} callback - callback function
+		 * @param {function(Object, Object=)} callback - callback function
 		 */
 		'updateTracking': function(slug, tracking_number, options, callback) {
 			_call('PUT', '/trackings/' + slug + '/' + tracking_number, {tracking: options}, function(err, body) {
@@ -326,10 +336,17 @@ module.exports = function(api_key) {
 		 * Delete a specific tracking number.
 		 * @param {string} slug
 		 * @param {string} tracking_number
-		 * @param {function(?Object, ?Object)} callback - callback function
+		 * @param {Object|function(Object, Object=)} required_fields - required fields object
+		 * @param {function(Object, Object=)} callback - callback function
 		 */
-		'deleteTracking': function(slug, tracking_number, callback) {
-			_call('DELETE', '/trackings/' + slug + '/' + tracking_number, {}, function(err, body) {
+		'deleteTracking': function(slug, tracking_number, required_fields, callback) {
+
+			if (!callback) {
+				callback = required_fields;
+				required_fields = {};
+			}
+
+			_call('DELETE', '/trackings/' + slug + '/' + tracking_number + '?' + _serialize(required_fields), {}, function(err, body) {
 
 				if (err) {
 					callback(err, null);
@@ -363,8 +380,8 @@ module.exports = function(api_key) {
 		 * Get the last checkpoint information of a tracking number
 		 * @param {string} slug
 		 * @param {string} tracking_number
-		 * @param {Array|string|function(?Object, ?Object)} fields Fields to update: https://www.aftership.com/docs/api/3.0/last_checkpoint
-		 * @param {function(?Object, ?Object)} callback - callback function
+		 * @param {Array|string|function(Object, Object=)} fields Fields to update: https://www.aftership.com/docs/api/3.0/last_checkpoint
+		 * @param {function(Object, Object=)} callback - callback function
 		 */
 		'getLastCheckpoint': function(slug, tracking_number, fields, callback) {
 
@@ -412,7 +429,7 @@ module.exports = function(api_key) {
 
 		/**
 		 * Gets all available couriers.
-		 * @param {function(?Object, ?Object)} callback - callback function
+		 * @param {function(Object, Object=)} callback - callback function
 		 */
 		'getCouriers': function(callback) {
 			_call('GET', '/couriers', {}, function(err, body) {
@@ -446,10 +463,10 @@ module.exports = function(api_key) {
 		/**
 		 * Detect the courier for given tracking number
 		 * @param {string} tracking_number - tracking number to be detected
-		 * @param {Object|function(?Object, ?Object)} required_fields - optional, hash of required fields
+		 * @param {Object|function(Object, Object=)} required_fields - optional, hash of required fields
 		 * possible values: {"tracking_account_number": "", "tracking_postal_code": "", "tracking_ship_date": ""}
-		 * @param {string|function(?Object, ?Object)=} detect_mode - optional, accept "strict" or "tracking_number"
-		 * @param {function(?Object, ?Object)} callback - callback function
+		 * @param {string|function(Object, Object=)=} detect_mode - optional, accept "strict" or "tracking_number"
+		 * @param {function(Object, Object=)} callback - callback function
 		 */
 		'detectCouriers': function(tracking_number, required_fields, detect_mode, callback) {
 			if (!callback) {

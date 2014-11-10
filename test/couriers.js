@@ -22,7 +22,7 @@ exports.Couriers = {
 			test.expect(2);
 
 			test.equal(err, null);
-			test.equal(result.total, 30);
+			test.equal(result.total, 33);
 			test.done();
 		});
 	},
@@ -32,7 +32,7 @@ exports.Couriers = {
 			test.expect(2);
 
 			test.equal(err, null);
-			test.equal(result.total, 30);
+			test.equal(result.total, 33);
 			test.done();
 		});
 	},
@@ -42,7 +42,7 @@ exports.Couriers = {
 			test.expect(2);
 
 			test.equal(err, null);
-			test.equal(result.total, 30);
+			test.equal(result.total, 33);
 			test.done();
 		});
 	}
