@@ -30,13 +30,18 @@ var API_PATH = '/v3';
 /**
  * Initializes the AfterShip plugin.
  * @param {string} key
+ * @param {?object=} options
  * @return {Object.<string,function>}
  */
-module.exports = function(key) {
+module.exports = function(key, options) {
   // Require API key
   if (!key) return;
-  var apiKey = key;
+  var apiKey = key
+      , opt = {};
 
+  // Set options provided
+  options = options || {};
+  if (!isNaN(options.timeout) && options.timeout > 0) opt.timeout = options.timeout;
 
   /**
    * Performs an API request.
@@ -84,6 +89,11 @@ module.exports = function(key) {
         callback(null, body);
       });   
     });
+
+    // Set timeout, if applicable
+    if (opt.timeout) {
+      asReq.setTimeout(opt.timeout);
+    }
 
     // Capture any errors
     asReq.on('error', function(e) { callback(e.message); });
