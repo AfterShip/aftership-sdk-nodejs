@@ -333,6 +333,38 @@ module.exports = function(api_key) {
 
 
 		/**
+		 * Retrack an expired tracking once.
+		 * @param {string} slug
+		 * @param {string} tracking_number
+		 * @param {Array} options Fields to update:
+		 *  https://www.aftership.com/docs/api/3.0/tracking/put-trackings-slug-tracking_number
+		 * @param {function(Object, Object=)} callback - callback function
+		 */
+		'retrackTracking': function(slug, tracking_number, callback) {
+			_call('POST', '/trackings/' + slug + '/' + tracking_number + '/retrack', function(err, body) {
+				if (err) {
+					callback(err, null);
+					return;
+				}
+
+				// Check for valid meta code
+				if (!body.meta || !body.meta.code || body.meta.code !== 200) {
+					callback(body.meta, null);
+					return;
+				}
+
+				// Check for valid data contents
+				if (!body.data || !body.data.tracking || typeof body.data.tracking !== 'object') {
+					callback(_getError(603, 'ResponseError', 'Invalid response body.'));
+					return;
+				}
+
+				callback(null, body.data);
+			});
+		},
+
+
+		/**
 		 * Delete a specific tracking number.
 		 * @param {string} slug
 		 * @param {string} tracking_number
