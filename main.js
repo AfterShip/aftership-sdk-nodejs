@@ -340,8 +340,8 @@ module.exports = function(api_key) {
 		 *  https://www.aftership.com/docs/api/3.0/tracking/put-trackings-slug-tracking_number
 		 * @param {function(Object, Object=)} callback - callback function
 		 */
-		'retrackTracking': function(slug, tracking_number, callback) {
-			_call('POST', '/trackings/' + slug + '/' + tracking_number + '/retrack', {}, function(err, body) {
+		'retrackTracking': function(slug, tracking_number, options, callback) {
+			_call('POST', '/trackings/' + slug + '/' + tracking_number + '/retrack', {tracking: options}, function(err, body) {
 				if (err) {
 					callback(err, null);
 					return;
