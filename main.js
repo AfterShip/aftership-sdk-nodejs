@@ -341,7 +341,7 @@ module.exports = function(api_key) {
 		 * @param {function(Object, Object=)} callback - callback function
 		 */
 		'retrackTracking': function(slug, tracking_number, callback) {
-			_call('POST', '/trackings/' + slug + '/' + tracking_number + '/retrack', function(err, body) {
+			_call('POST', '/trackings/' + slug + '/' + tracking_number + '/retrack', {}, function(err, body) {
 				if (err) {
 					callback(err, null);
 					return;
