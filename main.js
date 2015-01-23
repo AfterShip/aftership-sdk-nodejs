@@ -485,6 +485,7 @@ module.exports = function(api_key) {
 					tracking_account_number: required_fields.tracking_account_number,
 					tracking_postal_code: required_fields.tracking_postal_code,
 					tracking_ship_date: required_fields.tracking_ship_date,
+					tracking_key: required_fields.tracking_key,
 					detect_mode: detect_mode
 				}
 			};
