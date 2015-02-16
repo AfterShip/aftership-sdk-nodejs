@@ -79,7 +79,7 @@ module.exports = function(api_key) {
 			code: code,
 			type: type,
 			message: message
-		}
+		};
 	}
 
 	/**
@@ -90,11 +90,12 @@ module.exports = function(api_key) {
 	 */
 	function _serialize(obj) {
 		var str = [];
-		for(var key in obj)
+		for (var key in obj) {
 			if (obj.hasOwnProperty(key)) {
-				str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
+				str.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
 			}
-		return str.join("&");
+		}
+		return str.join('&');
 	}
 
 	/**
@@ -106,9 +107,6 @@ module.exports = function(api_key) {
 	 * @private
 	 */
 	function _call(method, path, post_body, callback) {
-
-		console.log('---------------------------');
-		console.log(path);
 
 		// Make sure path starts with a slash
 		if (path.substr(0, 1) !== '/') {
@@ -144,7 +142,6 @@ module.exports = function(api_key) {
 					return_body = body;
 				}
 			} catch (e) {
-				//console.log(e.stack);
 				return_err = _getError(601, 'ParseResponseError', 'Could not parse response.');
 			}
 
@@ -153,7 +150,6 @@ module.exports = function(api_key) {
 	}
 
 	return {
-
 
 
 		/**

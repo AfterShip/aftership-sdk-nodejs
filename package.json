@@ -1,7 +1,7 @@
 {
 	"name": "aftership",
 	"description": "AfterShip NodeJS API Wrapper",
-	"version": "4.1.3",
+	"version": "4.1.4",
 	"homepage": "https://github.com/AfterShip/aftership-nodejs",
 	"repository": {
 		"type": "git",
