@@ -101,20 +101,22 @@ module.exports = function(api_key) {
 	 * Performs an API request.
 	 * @param method {string} - method The HTTP method.
 	 * @param path {string} - path The HTTP path to append to the AfterShip default.
-	 * @param data {Object} - data Body for POST requests.
+	 * @param post_body {Object} - post data body for POST requests.
 	 * @param callback {function(Object, Object=)} - callback
 	 * @private
 	 */
-	function _call(method, path, data, callback) {
+	function _call(method, path, post_body, callback) {
+
+		console.log('---------------------------');
+		console.log(path);
 
 		// Make sure path starts with a slash
 		if (path.substr(0, 1) !== '/') {
 			path = '/' + path;
 		}
 
-		data = JSON.stringify(data);
+		post_body = JSON.stringify(post_body);
 
-		// console.log(data);
 
 		var request_option = {
 			url: protocol + '://' + request_hostname + ':' + request_post + API_PATH + path,
@@ -124,7 +126,7 @@ module.exports = function(api_key) {
 				'aftership-api-key': api_key
 			},
 			timeout: TIMEOUT,
-			body: data
+			body: post_body
 		};
 
 		request(request_option, function(err, response, body) {
@@ -271,7 +273,7 @@ module.exports = function(api_key) {
 				options = {};
 			}
 
-			_call('GET', '/trackings', options, function(err, body) {
+			_call('GET', '/trackings' + '?' + _serialize(options), {}, function(err, body) {
 				if (err) {
 					callback(err, null);
 					return;
