@@ -117,10 +117,10 @@ function(err, results)
 
 ```
 
-Example:
+Example get all trackings with courier: ups
 
 ```
-Aftership.trackings({}, [], function(err, results) {
+Aftership.getTrackings({slug: 'ups'}, function(err, results) {
   if (err) {
     console.log(err);
   } else {
