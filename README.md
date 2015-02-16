@@ -29,7 +29,7 @@ Use
 Reference the AfterShip library:
 
 ```
-var Aftership = require('aftership')('API KEY');
+var Aftership = require('aftership')('API_KEY');
 
 ```
 
@@ -51,7 +51,7 @@ result: the couriers object
 Example:
 
 ```
-Aftership.couriers(function(err, result) {
+Aftership.getCouriers(function(err, result) {
   console.log('Support courier count: ' + result.total);
   console.log('Couriers: ' + result.couriers);
 });
