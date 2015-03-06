@@ -1,91 +1,242 @@
-Installing
+Install
 =========
 
-```npm install aftership-nodejs```
+```
+npm install aftership
 
-Testing
+```
+
+Test
 =========
 
 - Paste your API key in ```test/tests.js```
-- If you desire, update test tracking numbers in ```test/test.js```
+- If you desire, update test tracking numbers in ```test/local.js```
 
-To test, run ```npm test```
+To test, run
 
-NOTE: Once tracking numbers have been added to your account, the tests in track.js will fail. If this is the case, you can test everything else by commenting out the ```track.js``` line in ```test/tests.js```
+```
+npm test
+
+
+```
+
+In case there is any fail tests, please make sure to delete the testing tracking numbers from your aftership account before a new test.
 
 
 Use
 =========
 
-Reference the AfterShip library: ```var AS = require('aftership-nodejs')('API KEY');```
+Reference the AfterShip library:
+
+```
+var Aftership = require('aftership')('API_KEY');
+
+```
 
 Couriers
 -
 
-Gets a list of available couriers. Returns the total number of couriers along with an array of available couriers. Accepts:
+Gets a list of available couriers. Returns the total number of couriers along with an array of available couriers.
 
-- callback: ```function(err, length, couriers)```
+#### Get couriers:
 
-Example: ```AS.couriers(callback)```
+Callback:
+
+```
+err: the error message
+result: the couriers object
+
+```
+
+Example:
+
+```
+Aftership.getCouriers(function(err, result) {
+  console.log('Support courier count: ' + result.total);
+  console.log('Couriers: ' + result.couriers);
+});
+
+```
 
 
-Begin Tracking
+
+Trackings
 -
 
-Starts tracking a new tracking number. Accepts:
+#### Create a new tracking number:
 
-- trackingNumber: The number to track
-- options: An object with options to set (https://www.aftership.com/docs/api/3.0/tracking/post-trackings)
-- callback: ```function(err, trackingNumber, trackingInfo)```
+You must first create a new tracking number before getting the tracking result.
 
-Example: ```AS.startTracking('1Z21E98F0314447088', {slug: 'ups'}, callback);```
+Accepts:
 
-Get All Trackings
--
+```
+tracking_number: The tracking number to track
+options: An object with options to set
+
+https://www.aftership.com/docs/api/3.0/tracking/post-trackings
+
+```
+
+Callback:
+
+```
+function(err, result)
+
+```
+
+Example:
+
+```
+Aftership.createTracking('1Z21E98F0314447088', {slug: 'ups'}, function(err, result) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('Created the tracking: ' + result);
+  }
+});
+
+```
+
+
+#### Get all trackings number in the acccount
 
 Returns all available trackings from your account. Accepts:
 
-- options: An object with options to limit results (https://www.aftership.com/docs/api/3.0/tracking/get-trackings)
-- callback: ```function(err, metaData, trackings)```
+Accepts:
 
-Example: ```AS.trackings({}, callback);```
+```
+options: An object with options to limit results
+fields: Array of fields to return
+https://www.aftership.com/docs/api/3.0/tracking/get-trackings
+```
 
-Get Specific Tracking Information
--
+callback:
 
-Gets information for a specific tracking number. Accepts:
+```
+function(err, results)
 
-- slug: The slug for the tracking number, e.g., 'ups'
-- trackingNumber: The tracking number to retrieve.
-- fields: Array of fields to return
-- callback: ```function(err, trackingInfo)```
+```
 
-Example: ```AS.track('ups', '1Z21E98F0314447088', [], callback);```
+Example get all trackings with courier: ups
 
-Update Tracking Information
--
+```
+Aftership.getTrackings({slug: 'ups'}, function(err, results) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('Total Trackings in query: ' + results.count);
+    console.log(results);
+  }
+});
 
-Updates tracking information for an existing tracking number. Accepts:
+```
 
-- slug: The slug for the tracking number, e.g., 'ups'
-- trackingNumber: The tracking number to retrieve.
-- options: Object of fields to update (https://www.aftership.com/docs/api/3.0/tracking/put-trackings-slug-tracking_number)
-- callback: ```function(err, trackingInfo)```
+#### Get a specific tracking number in the account
+
+Gets information for a specific tracking number.
+
+Accepts:
+
+```
+slug: The slug for the tracking number, e.g., 'ups'
+tracking_number: The tracking number to retrieve.
+fields: Array of fields to return
+
+```
+
+callback:
+
+```
+
+function(err, result)
+
+```
 
 Example:
-```AS.updateTracking('ups', '1Z21E98F0314447088', {title: 'My Shipment'}, callback);```
 
-Get Last Checkpoint
+```
+
+Aftership.tracking('ups', '1Z21E98F0314447088', ['tracking_number','slug','checkpoints'], function(err, result) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(result);
+  }
+});
+
+```
+
+#### Update a tracking number information
+
+Updates tracking information for an existing tracking number.
+
+Accepts:
+
+```
+slug: The slug for the tracking number, e.g., 'ups'
+tracking_number: The tracking number to retrieve.
+options: Object of fields to update
+
+https://www.aftership.com/docs/api/3.0/tracking/put-trackings-slug-tracking_number
+
+```
+
+callback:
+
+```
+function(err, result)
+
+```
+
+
+Example:
+
+```
+Aftership.updateTracking('ups', '1Z21E98F0314447088', {title: 'My Shipment'},
+  function(err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(result);
+    }
+  });
+
+```
+
+#Last Checkpoint
 -
 
-Gets the last checkpoint for a specific tracking number. Accepts:
+Gets the last checkpoint for a specific tracking number.
 
-- slug: The slug for the tracking number, e.g., 'ups'
-- trackingNumber: The tracking number to retrieve.
-- fields: Array of fields to return
-- callback: ```function(err, tag, checkpoints)```
+Accepts:
 
-Example: ```AS.checkpoint('ups', '1Z21E98F0314447088', {}, callback)```
+```
+slug: The slug for the tracking number, e.g., 'ups'
+tracking_number: The tracking number to retrieve.
+fields: Array of fields to return
+
+```
+
+Callback:
+
+```
+function(err, result)
+
+```
+
+Example:
+
+```
+Aftership.last_checkpoint('ups', '1Z21E98F0314447088', ['tracking_number','slug','checkpoints'], function(err, result) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(result);
+  }
+});
+
+```
+
 
 
 License
@@ -100,6 +251,3 @@ Contributors
 
   [Kirk Morales]: https://github.com/knation
   [Intrakr]: http://intrakr.com
-  
-
-    

@@ -1,34 +1,57 @@
 {
-  "_id": "aftership-node@0.1.0",
-  "_from": "aftership-node@0.1.0",
-  "name": "aftership-nodejs",
-  "description": "AfterShip API Wrapper",
-  "version": "0.1.0",
-  "homepage": "https://github.com/AfterShip/aftership-nodejs",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/AfterShip/aftership-nodejs.git"
-  },
-  "engines": {
-    "node": ">= v0.10.0"
-  },
-  "main": "main.js",
-  "dependencies": {},
-  "devDependencies": {
-    "nodeunit": "0.7.4",
-    "optimist": "0.3.5"
-  },
-  "readmeFilename": "README.md",
-  "bugs": {
-    "url": "https://github.com/AfterShip/aftership-nodejs/issuess"
-  },
-  "scripts": {
-    "test": "node test/tests.js -v"
-  },
-  "files": ["main.js","test","README.md","LICENSE.md","package.json"],
-  "author": {
-    "name": "Kirk Morales",
-    "email": "kirk@kirkmorales.com",
-    "url": "http://www.kirkmorales.com"
-  }
+	"name": "aftership",
+	"description": "AfterShip NodeJS API Wrapper",
+	"version": "4.1.4",
+	"homepage": "https://github.com/AfterShip/aftership-nodejs",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/AfterShip/aftership-nodejs.git"
+	},
+	"engines": {
+		"node": ">=0.8"
+	},
+	"main": "./main",
+	"directories": {
+		"test": "test"
+	},
+	"dependencies": {
+		"lodash": "2.4.1",
+		"request": "2.39.0"
+	},
+	"devDependencies": {
+		"nodeunit": "0.7.4",
+		"optimist": "0.3.5"
+	},
+	"bugs": {
+		"url": "https://github.com/AfterShip/aftership-nodejs/issues"
+	},
+	"scripts": {
+		"test": "node test/tests.js -v"
+	},
+	"files": [
+		"main.js",
+		"test",
+		"README.md",
+		"LICENSE.md",
+		"package.json"
+	],
+	"keywords": [
+		"aftership api",
+		"aftership",
+		"aftership-nodejs"
+	],
+	"author": "AfterShip",
+	"contributors": [
+		{
+			"name": "Kirk Morales",
+			"email": "kirk@kirkmorales.com",
+			"url": "http://www.kirkmorales.com"
+		},
+		{
+			"name": "AfterShip",
+			"email": "support@aftership.com",
+			"url": "https://www.aftership.com"
+		}
+	],
+	"license": "GNU"
 }

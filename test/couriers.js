@@ -1,35 +1,49 @@
-
 if (!GLOBAL.apiKey) {
-  console.log('No API Key Provided');
-  process.exit(1);
+	console.log('No API Key Provided');
+	process.exit(1);
 }
 
-var AS = require('../lib/main.js')(GLOBAL.apiKey);
+var Aftership = require('../main.js')(GLOBAL.apiKey);
 
-exports['Couriers'] = {
-  
-  'No Callback (no options)': function(test) {
-    test.expect(1);
+exports.Couriers = {
 
-    test.equal(AS.couriers(), 'Missing Required Parameter: callback');
-    test.done();
-  },
-  
-  'OK': function(test) {
-    test.expect(5);
+	'OK': function(test) {
+		Aftership.getCouriers(function(err, result) {
+			test.expect(2);
 
-    AS.couriers(function(err, length, couriers) {
-      test.ok(!err);
-      test.ok(Array.isArray(couriers));
-      test.equal(typeof length, 'number');
+			test.equal(err, null);
+			test.equal(typeof result, 'object');
+			test.done();
+		});
+	},
 
-      // Make sure trackings array was removed from meta data
-      test.ok(!couriers.total);
+	'Detect Courier': function(test) {
+		Aftership.detectCouriers('906587618687', function(err, result) {
+			test.expect(2);
 
-      // We should have at least 1 entry, check it
-      test.equal(typeof couriers[0].slug, 'string');
+			test.equal(err, null);
+			test.equal(result.total, 33);
+			test.done();
+		});
+	},
 
-      test.done();
-    });
-  }
+	'Detect Courier strict': function(test) {
+		Aftership.detectCouriers('906587618687', {}, 'strict', function(err, result) {
+			test.expect(2);
+
+			test.equal(err, null);
+			test.equal(result.total, 33);
+			test.done();
+		});
+	},
+
+	'Detect Courier strict with postal code': function(test) {
+		Aftership.detectCouriers('906587618687', {'tracking_postal_code': 'DA15BU'}, 'strict', function(err, result) {
+			test.expect(2);
+
+			test.equal(err, null);
+			test.equal(result.total, 33);
+			test.done();
+		});
+	}
 };
