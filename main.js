@@ -55,9 +55,10 @@ var TIMEOUT = 30000;
 /**
  * Initializes the AfterShip plugin.
  * @param {string} api_key - AfterShip api key
+ * @param {?object=} options
  * @return {Object.<string,function>}
  */
-module.exports = function(api_key) {
+module.exports = function(api_key, options) {
 	'use strict';
 
 	// Require API key
@@ -65,6 +66,9 @@ module.exports = function(api_key) {
 		return {};
 	}
 
+  // Set options
+  options = options || {};
+  if (!isNaN(options.timeout) && options.timeout > 0) TIMEOUT = parseInt(options.timeout);
 
 	/**
 	 * Return the error object for callback use
