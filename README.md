@@ -73,7 +73,7 @@ Accepts:
 tracking_number: The tracking number to track
 options: An object with options to set
 
-https://www.aftership.com/docs/api/3.0/tracking/post-trackings
+https://www.aftership.com/docs/api/4/tracking/post-trackings
 
 ```
 
@@ -107,7 +107,7 @@ Accepts:
 ```
 options: An object with options to limit results
 fields: Array of fields to return
-https://www.aftership.com/docs/api/3.0/tracking/get-trackings
+https://www.aftership.com/docs/api/4/tracking/get-trackings
 ```
 
 callback:
@@ -177,7 +177,7 @@ slug: The slug for the tracking number, e.g., 'ups'
 tracking_number: The tracking number to retrieve.
 options: Object of fields to update
 
-https://www.aftership.com/docs/api/3.0/tracking/put-trackings-slug-tracking_number
+https://www.aftership.com/docs/api/4/tracking/put-trackings-slug-tracking_number
 
 ```
 
