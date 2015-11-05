@@ -47,10 +47,9 @@ var API_PATH = '/v4';
 
 /**
  * timeout of each request in milliseconds
- * @const
  * @type {number}
  */
-var TIMEOUT = 30000;
+var timeout = 30000;
 
 /**
  * Initializes the AfterShip plugin.
@@ -68,7 +67,7 @@ module.exports = function(api_key, options) {
 
   // Set options
   options = options || {};
-  if (!isNaN(options.timeout) && options.timeout > 0) TIMEOUT = parseInt(options.timeout);
+  if (!isNaN(options.timeout) && options.timeout > 0) timeout = parseInt(options.timeout);
 
 	/**
 	 * Return the error object for callback use
@@ -127,7 +126,7 @@ module.exports = function(api_key, options) {
 				'Content-Type': 'application/json',
 				'aftership-api-key': api_key
 			},
-			timeout: TIMEOUT,
+			timeout: timeout,
 			body: post_body
 		};
 
