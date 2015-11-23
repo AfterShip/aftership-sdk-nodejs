@@ -1,57 +1,36 @@
 {
-	"name": "aftership",
-	"description": "AfterShip NodeJS API Wrapper",
-	"version": "4.2.0",
-	"homepage": "https://github.com/AfterShip/aftership-nodejs",
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/AfterShip/aftership-nodejs.git"
-	},
-	"engines": {
-		"node": ">=0.8"
-	},
-	"main": "./main",
-	"directories": {
-		"test": "test"
-	},
-	"dependencies": {
-		"lodash": "2.4.1",
-		"request": "2.39.0"
-	},
-	"devDependencies": {
-		"nodeunit": "0.7.4",
-		"optimist": "0.3.5"
-	},
-	"bugs": {
-		"url": "https://github.com/AfterShip/aftership-nodejs/issues"
-	},
-	"scripts": {
-		"test": "node test/tests.js -v"
-	},
-	"files": [
-		"main.js",
-		"test",
-		"README.md",
-		"LICENSE.md",
-		"package.json"
-	],
-	"keywords": [
-		"aftership api",
-		"aftership",
-		"aftership-nodejs"
-	],
-	"author": "AfterShip",
-	"contributors": [
-		{
-			"name": "Kirk Morales",
-			"email": "kirk@kirkmorales.com",
-			"url": "http://www.kirkmorales.com"
-		},
-		{
-			"name": "AfterShip",
-			"email": "support@aftership.com",
-			"url": "https://www.aftership.com"
-		}
-	],
-	"license": "GNU"
+  "name": "aftership-nodejs",
+  "description": "node.js SDK for AfterShip API",
+  "version": "2.0.0",
+  "homepage": "https://github.com/chiulam/aftership-nodejs",
+  "author": {
+    "name": "Chiu Lam",
+    "email": "support@aftership.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chiulam/aftership-nodejs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chiulam/aftership-nodejs/issues"
+  },
+  "main": "index.js",
+  "engines": {
+    "node": "4.2.2"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^1.6.0",
+    "eslint-config-aftership": "^1.1.0",
+    "grunt": "^0.4.5",
+    "grunt-eslint": "^17.0.0",
+    "grunt-mocha-istanbul": "^3.0.1",
+    "istanbul": "^0.3.22",
+    "mocha": "^2.3.3"
+  },
+  "keywords": [
+    "aftership"
+  ],
+  "license": "MIT",
+  "private": false
 }
