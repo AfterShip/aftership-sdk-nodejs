@@ -2,8 +2,8 @@
 
 const chai = require('chai');
 const expect = chai.expect;
+const Aftership = require('./../../index');
 
-let Aftership = require('./../../index');
 let api_key = 'SOME_API_KEY';
 let default_endpoint = 'https://api.aftership.com/v4';
 let default_proxy = null;
