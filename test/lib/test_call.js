@@ -25,7 +25,7 @@ describe('Test call method', function () {
 	describe('Test correct cases', function () {
 		it('should work with call(method, path)', function (done) {
 			// Construct with valid api_key
-			let aftership = new Aftership(api_key);
+			let aftership = Aftership(api_key);
 			aftership.call('GET', '/couriers/all', function (err, result) {
 				expect(err).to.equal(null);
 				expect(result.meta.code).to.equal(200);
@@ -36,7 +36,7 @@ describe('Test call method', function () {
 
 		it('should work with call(method, path, body)', function (done) {
 			// Construct with valid api_key
-			let aftership = new Aftership(api_key);
+			let aftership = Aftership(api_key);
 			// Body
 			let body = {
 				tracking: {
@@ -53,7 +53,7 @@ describe('Test call method', function () {
 
 		it('should work with call(method, path, body, query)', function (done) {
 			// Construct with valid api_key
-			let aftership = new Aftership(api_key);
+			let aftership = Aftership(api_key);
 			let query = {
 				fields: 'slug,name'
 			};
@@ -67,7 +67,7 @@ describe('Test call method', function () {
 
 		it('should work with call(..., raw = true)', function (done) {
 			// Construct with valid api_key
-			let aftership = new Aftership(api_key);
+			let aftership = Aftership(api_key);
 			aftership.call('GET', '/couriers/all', null, null, null, true, function (err, result) {
 				expect(err).to.equal(null);
 				expect(_.isString(result)).to.equal(true);
@@ -78,7 +78,7 @@ describe('Test call method', function () {
 
 	describe('Test Proxy method', function () {
 		it('should work with handler.GET(...)', function (done) {
-			let aftership = new Aftership(api_key);
+			let aftership = Aftership(api_key);
 			aftership.GET('/couriers/all', function (err, result) {
 				expect(err).to.equal(null);
 				expect(result.meta.code).to.equal(200);
@@ -89,7 +89,7 @@ describe('Test call method', function () {
 
 		it('should work with handler.POST(...)', function (done) {
 			// Construct with valid api_key
-			let aftership = new Aftership(api_key);
+			let aftership = Aftership(api_key);
 			// Body
 			let body = {
 				tracking: {
@@ -105,7 +105,7 @@ describe('Test call method', function () {
 		});
 
 		it('should work with handler.PUT(...) and handler.DELETE(...)', function (done) {
-			let aftership = new Aftership(api_key);
+			let aftership = Aftership(api_key);
 			let post_body = {
 				tracking: {
 					slug: 'dhl',
@@ -121,7 +121,7 @@ describe('Test call method', function () {
 			};
 			let put_body = {
 				tracking: {
-					title: 'New Title'
+					title: 'Title'
 				}
 			};
 			aftership.POST('/trackings', post_body, function (post_err, post_result) {
@@ -141,7 +141,7 @@ describe('Test call method', function () {
 		it('should callback with response error, if response code != 200', function (done) {
 			let expected_message = 'Invalid API key.';
 			// Construct with invalid api_key
-			let aftership = new Aftership('');
+			let aftership = Aftership('');
 			aftership.call('GET', '/couriers/all', function (err) {
 				expect(err.message).to.equal(expected_message);
 				done();
@@ -149,8 +149,8 @@ describe('Test call method', function () {
 		});
 
 		it('should callback with response error, if request throw', function (done) {
-			let expected_error = new Error('Some error');
-			let aftership = new Aftership(api_key);
+			let expected_error = Error('Some error');
+			let aftership = Aftership(api_key);
 			// Stub request to throw
 			sandbox.stub(aftership, 'request', function (request_object, callback) {
 				callback(expected_error);
@@ -163,8 +163,8 @@ describe('Test call method', function () {
 
 		it('should callback with response error, if method is invalid', function (done) {
 			let method = 'invalid';
-			let expected_error = new Error('HandlerError: Invalid Method value');
-			let aftership = new Aftership(api_key);
+			let expected_error = Error('HandlerError: Invalid Method value');
+			let aftership = Aftership(api_key);
 			aftership.call(method, '/couriers/all', function (err) {
 				expect(err.message).to.equal(expected_error.message);
 				done();
@@ -172,8 +172,8 @@ describe('Test call method', function () {
 		});
 
 		it('should callback with response error, if path is invalid', function (done) {
-			let expected_error = new Error('HandlerError: Invalid Path value');
-			let aftership = new Aftership(api_key);
+			let expected_error = Error('HandlerError: Invalid Path value');
+			let aftership = Aftership(api_key);
 			aftership.call('GET', null, function (err) {
 				expect(err.message).to.equal(expected_error.message);
 				done();
@@ -181,8 +181,8 @@ describe('Test call method', function () {
 		});
 
 		it('should callback with response error, if body is invalid', function (done) {
-			let expected_error = new Error('HandlerError: Invalid Body value');
-			let aftership = new Aftership(api_key);
+			let expected_error = Error('HandlerError: Invalid Body value');
+			let aftership = Aftership(api_key);
 			aftership.call('GET', '/couriers/all', 'body', function (err, res) {
 				expect(err.message).to.equal(expected_error.message);
 				done();
@@ -190,8 +190,8 @@ describe('Test call method', function () {
 		});
 
 		it('should callback with response error, if query is invalid', function (done) {
-			let expected_error = new Error('HandlerError: Invalid Query value');
-			let aftership = new Aftership(api_key);
+			let expected_error = Error('HandlerError: Invalid Query value');
+			let aftership = Aftership(api_key);
 			aftership.call('GET', '/couriers/all', null, 'query', function (err, res) {
 				expect(err.message).to.equal(expected_error.message);
 				done();
@@ -199,8 +199,8 @@ describe('Test call method', function () {
 		});
 
 		it('should callback with response error, if retry is invalid', function (done) {
-			let expected_error = new Error('HandlerError: Invalid Retry value');
-			let aftership = new Aftership(api_key);
+			let expected_error = Error('HandlerError: Invalid Retry value');
+			let aftership = Aftership(api_key);
 			aftership.call('GET', '/couriers/all', null, null, 'retry', function (err, res) {
 				expect(err.message).to.equal(expected_error.message);
 				done();
@@ -208,8 +208,8 @@ describe('Test call method', function () {
 		});
 
 		it('should callback with response error, if raw is invalid', function (done) {
-			let expected_error = new Error('HandlerError: Invalid Raw value');
-			let aftership = new Aftership(api_key);
+			let expected_error = Error('HandlerError: Invalid Raw value');
+			let aftership = Aftership(api_key);
 			aftership.call('GET', '/couriers/all', null, null, false, 'raw', function (err, res) {
 				expect(err.message).to.equal(expected_error.message);
 				done();
