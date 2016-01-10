@@ -10,7 +10,7 @@ let default_proxy = null;
 let default_retry = true;
 
 describe('Test constructor', function () {
-	describe('Test construct correctly', function () {
+	describe('Test construct correct cases', function () {
 		it('should construct with api_key correctly', function () {
 			let aftership = new Aftership(api_key);
 			expect(aftership.api_key).to.equal(api_key);
