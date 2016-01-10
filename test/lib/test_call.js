@@ -76,6 +76,67 @@ describe('Test call method', function () {
 		});
 	});
 
+	describe('Test Proxy method', function () {
+		it('should work with handler.GET(...)', function (done) {
+			let aftership = new Aftership(api_key);
+			aftership.GET('/couriers/all', function (err, result) {
+				expect(err).to.equal(null);
+				expect(result.meta.code).to.equal(200);
+				expect(result.data.total).to.be.greaterThan(300);
+				done();
+			});
+		});
+
+		it('should work with handler.POST(...)', function (done) {
+			// Construct with valid api_key
+			let aftership = new Aftership(api_key);
+			// Body
+			let body = {
+				tracking: {
+					tracking_number: '1111111111'
+				}
+			};
+			aftership.POST('/couriers/detect', body, function (err, result) {
+				expect(err).to.equal(null);
+				expect(result.meta.code).to.equal(200);
+				expect(result.data).to.contains.all.keys(['total', 'couriers']);
+				done();
+			});
+		});
+
+		it('should work with handler.PUT(...) and handler.DELETE(...)', function (done) {
+			let aftership = new Aftership(api_key);
+			let post_body = {
+				tracking: {
+					slug: 'dhl',
+					tracking_number: '1234567890',
+					title: 'Title Name',
+					order_id: 'ID 1234',
+					order_id_path: 'http://www.aftership.com/order_id=1234',
+					custom_fields: {
+						'product_name': 'iPhone Case',
+						'product_price': 'USD19.99'
+					}
+				}
+			};
+			let put_body = {
+				tracking: {
+					title: 'New Title'
+				}
+			};
+			aftership.POST('/trackings', post_body, function (post_err, post_result) {
+				expect(post_err).to.equal(null);
+				aftership.PUT('/trackings/dhl/1234567890', put_body, function (put_err, put_result) {
+					expect(put_err).to.equal(null);
+					aftership.DELETE('/trackings/dhl/1234567890', function (delete_err, delete_result) {
+						expect(delete_err).to.equal(null);
+						done();
+					});
+				});
+			});
+		});
+	});
+
 	describe('Test error handling', function () {
 		it('should callback with response error, if response code != 200', function (done) {
 			let expected_message = 'Invalid API key.';
