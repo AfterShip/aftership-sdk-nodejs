@@ -109,7 +109,7 @@ describe('Test call method', function () {
 			let post_body = {
 				tracking: {
 					slug: 'dhl',
-					tracking_number: '1234567890',
+					tracking_number: '0000000000',
 					title: 'Title Name',
 					order_id: 'ID 1234',
 					order_id_path: 'http://www.aftership.com/order_id=1234',
@@ -124,13 +124,17 @@ describe('Test call method', function () {
 					title: 'Title'
 				}
 			};
-			aftership.POST('/trackings', post_body, function (post_err, post_result) {
-				expect(post_err).to.equal(null);
-				aftership.PUT('/trackings/dhl/1234567890', put_body, function (put_err, put_result) {
-					expect(put_err).to.equal(null);
-					aftership.DELETE('/trackings/dhl/1234567890', function (delete_err, delete_result) {
-						expect(delete_err).to.equal(null);
-						done();
+
+			// DELETE tracking first
+			aftership.DELETE('/trackings/dhl/0000000000', function () {
+				aftership.POST('/trackings', post_body, function (post_err, post_result) {
+					expect(post_err).to.equal(null);
+					aftership.PUT('/trackings/dhl/0000000000', put_body, function (put_err, put_result) {
+						expect(put_err).to.equal(null);
+						aftership.DELETE('/trackings/dhl/0000000000', function (delete_err, delete_result) {
+							expect(delete_err).to.equal(null);
+							done();
+						});
 					});
 				});
 			});

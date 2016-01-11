@@ -2,6 +2,8 @@
 
 const chai = require('chai');
 const expect = chai.expect;
+const http = require('http');
+const request = require('request');
 const Aftership = require('./../../index');
 
 let api_key = 'SOME_API_KEY';
