@@ -1,7 +1,17 @@
-# aftership-nodejs [![Build Status](https://secure.travis-ci.org/chiulam/aftership-nodejs.png?branch=master)](http://travis-ci.org/chiulam/aftership-nodejs)
+# aftership-sdk-node
+
+[![Build Status](https://travis-ci.org/chiulam/aftership-sdk-nodejs.svg?branch=master)](https://travis-ci.org/chiulam/aftership-sdk-nodejs)
+[![codecov.io](https://codecov.io/github/chiulam/aftership-sdk-nodejs/coverage.svg?branch=master)](https://codecov.io/github/chiulam/aftership-sdk-nodejs?branch=master)
+[![Dependency Status](https://gemnasium.com/chiulam/aftership-sdk-nodejs.svg)](https://gemnasium.com/chiulam/aftership-sdk-nodejs)
+
+[![node](https://img.shields.io/node/v/aftership-sdk-node.svg)]()
+[![npm](https://img.shields.io/npm/v/aftership-sdk-node.svg)]()
+[![npm](https://img.shields.io/npm/dm/aftership-sdk-node.svg)]()
+[![npm](https://img.shields.io/npm/l/aftership-sdk-node.svg)]()
+
+![codecov.io](http://codecov.io/github/chiulam/aftership-sdk-nodejs/branch.svg?branch=master)
 
 node.js SDK for AfterShip API
-
 ## Installation
 ```
 npm install aftership
@@ -45,5 +55,6 @@ Aftership.call('GET', '/couriers/all', function (err, result) {
 	- /notifications
 
 ## License
-Copyright (c) 2015 Chiu Lam  
+Copyright (c) 2016 AfterShip
+
 Licensed under the MIT license.

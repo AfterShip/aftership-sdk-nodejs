@@ -1,42 +1,28 @@
 'use strict';
 
-module.exports = function (grunt) {
-	// Project configuration.
-	grunt.initConfig({
-		eslint: {
-			options: {
-				configFile: '.eslintrc'
-			},
-			target: ['**/*.js', '!coverage/**', '!**/node_modules/**']
-		},
+const loadGruntConfig = require('load-grunt-config');
+const path = require('path');
 
-		istanbul_check_coverage: {
-			default: {
-				options: {
-					coverageFolder: 'coverage'
-				}
-			}
-		},
+module.exports = (grunt) => {
+	loadGruntConfig(grunt, {
+		pkg: grunt.file.readJSON('package.json'), // Loads grunt tasks defined in package.json
+		configPath: path.join(process.cwd(), 'grunt-config'), // path to task.js files, defaults to grunt dir
+		init: true, // auto grunt.initConfig
 
-		mocha_istanbul: {
-			coverage: {
-				src: ['test/**.js'],
-				options: {
-					coverage: true,
-					reporter: 'spec'
-				}
-			}
+		config: {
+			// additional config vars
+		},
+		loadGruntTasks: {
+			pattern: ['grunt-*', '@*/grunt-*']
 		}
 	});
 
-	// These plugins provide necessary tasks.
-	grunt.loadNpmTasks('grunt-eslint');
-	grunt.loadNpmTasks('grunt-mocha-istanbul');
-
-	// Default task.
-	grunt.registerTask('default', []);
+	// Tasks
 
 	grunt.registerTask('coverage', ['mocha_istanbul:coverage']);
 
 	grunt.registerTask('lint', ['eslint']);
+
+	// Default task
+	grunt.registerTask('default', []);
 };

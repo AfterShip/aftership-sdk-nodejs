@@ -1,43 +1,50 @@
 {
-  "name": "aftership-nodejs",
+  "name": "aftership-sdk-node",
   "description": "node.js SDK for AfterShip API",
   "version": "2.0.0",
-  "homepage": "https://github.com/chiulam/aftership-nodejs",
+  "homepage": "https://github.com/chiulam/aftership-sdk-nodejs",
   "author": {
-    "name": "Chiu Lam",
+    "name": "AfterShip",
     "email": "support@aftership.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/chiulam/aftership-nodejs.git"
+    "url": "git://github.com/chiulam/aftership-sdk-nodejs.git"
   },
   "bugs": {
-    "url": "https://github.com/chiulam/aftership-nodejs/issues"
+    "url": "https://github.com/chiulam/aftership-sdk-nodejs/issues"
   },
   "main": "index.js",
   "engines": {
     "node": "4.2.3"
   },
+  "scripts": {
+    "lint": "grunt lint",
+    "test": "grunt lint && grunt coverage"
+  },
   "dependencies": {
-    "bluebird": "^3.1.1",
-    "co": "^4.6.0",
     "lodash": "^3.10.1",
     "request": "^2.67.0"
   },
   "devDependencies": {
-	"sinon": "^1.17.2",
     "chai": "^3.4.1",
-    "eslint": "^1.6.0",
-    "eslint-config-aftership": "^1.1.0",
+    "eslint": "^1.10.3",
+    "eslint-config-aftership": "^1.5.0",
     "grunt": "^0.4.5",
-    "grunt-eslint": "^17.0.0",
+    "grunt-eslint": "^17.3.1",
     "grunt-mocha-istanbul": "^3.0.1",
-    "istanbul": "^0.3.22",
-    "mocha": "^2.3.3"
+    "istanbul": "^0.4.1",
+    "load-grunt-config": "^0.19.1",
+    "mocha": "^2.3.4",
+    "pre-commit": "^1.1.2",
+    "sinon": "^1.17.2"
   },
   "keywords": [
     "aftership"
   ],
   "license": "MIT",
+  "pre-commit": [
+    "lint"
+  ],
   "private": false
 }
