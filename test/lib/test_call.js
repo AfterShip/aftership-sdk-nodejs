@@ -76,6 +76,39 @@ describe('Test call method', function () {
 		});
 	});
 
+	describe('Test RateLimit', function () {
+		it('should request again until reset timestamp', function (done) {
+			let now = Math.ceil(Date.now() / 1000);
+			let mock_req = {
+				headers: {
+					'x-ratelimit-limit': 600,
+					'x-ratelimit-remaining': 0,
+					'x-ratelimit-reset': now + 5
+				}
+			};
+			let mock_result = {
+				meta: {
+					code: 200
+				},
+				data: {}
+			};
+			// Construct with valid api_key
+			let aftership = Aftership(api_key);
+			// Stub request to throw
+			sandbox.stub(aftership, 'request', function (request_object, callback) {
+				callback(null, mock_req, mock_result);
+			});
+			aftership.call('GET', '/couriers/all', function (first_err, first_result) {
+				aftership.call('GET', '/couriers/all', function (second_err, second_result) {
+					let diff = Math.ceil(Date.now() / 1000) - now;
+					expect(diff).to.be.gte(5);
+
+					done();
+				});
+			});
+		});
+	});
+
 	describe('Test retry', function () {
 		describe('Test retry with ConnectionTimeout', function () {
 			it('should retry with call() with default retry = true, if request return ETIMEDOUT', function (done) {
@@ -96,10 +129,14 @@ describe('Test call method', function () {
 		});
 
 		describe('Test retry with InternalError', function () {
-			it('should retry with call() with default retry = true, if Aftership return InternalError 500', function (done) {
-				// Construct with valid api_key
-				let aftership = Aftership(api_key);
-				let expected_error = {
+			let mock_req;
+			let expected_error;
+
+			before(function () {
+				mock_req = {
+					headers: {}
+				};
+				expected_error = {
 					meta: {
 						code: 500,
 						message: 'Something went wrong on AfterShip\'s end.',
@@ -107,9 +144,14 @@ describe('Test call method', function () {
 					},
 					data: {}
 				};
+			});
+
+			it('should retry with call() with default retry = true, if Aftership return InternalError 500', function (done) {
+				// Construct with valid api_key
+				let aftership = Aftership(api_key);
 				// Stub request to throw
 				sandbox.stub(aftership, 'request', function (request_object, callback) {
-					callback(null, null, expected_error);
+					callback(null, mock_req, expected_error);
 				});
 				aftership.call('GET', '/couriers/all', function (err, result) {
 					expect(err.type).to.equal(expected_error.meta.type);
@@ -121,17 +163,9 @@ describe('Test call method', function () {
 			it('should retry with call(..., retry = true), if Aftership return InternalError 500', function (done) {
 				// Construct with valid api_key
 				let aftership = Aftership(api_key, null, null, false);
-				let expected_error = {
-					meta: {
-						code: 500,
-						message: 'Something went wrong on AfterShip\'s end.',
-						type: 'InternalError'
-					},
-					data: {}
-				};
 				// Stub request to throw
 				sandbox.stub(aftership, 'request', function (request_object, callback) {
-					callback(null, null, expected_error);
+					callback(null, mock_req, expected_error);
 				});
 				aftership.call('GET', '/couriers/all', null, null, true, function (err, result) {
 					expect(err.type).to.equal(expected_error.meta.type);
@@ -143,17 +177,9 @@ describe('Test call method', function () {
 			it('should not retry with call() with default retry = false, if Aftership return InternalError 500', function (done) {
 				// Construct with valid api_key
 				let aftership = Aftership(api_key, null, null, false);
-				let expected_error = {
-					meta: {
-						code: 500,
-						message: 'Something went wrong on AfterShip\'s end.',
-						type: 'InternalError'
-					},
-					data: {}
-				};
 				// Stub request to throw
 				sandbox.stub(aftership, 'request', function (request_object, callback) {
-					callback(null, null, expected_error);
+					callback(null, mock_req, expected_error);
 				});
 				aftership.call('GET', '/couriers/all', function (err, result) {
 					expect(err.type).to.equal(expected_error.meta.type);
@@ -165,17 +191,9 @@ describe('Test call method', function () {
 			it('should not retry with call(..., retry = false), if Aftership return InternalError 500', function (done) {
 				// Construct with valid api_key
 				let aftership = Aftership(api_key);
-				let expected_error = {
-					meta: {
-						code: 500,
-						message: 'Something went wrong on AfterShip\'s end.',
-						type: 'InternalError'
-					},
-					data: {}
-				};
 				// Stub request to throw
 				sandbox.stub(aftership, 'request', function (request_object, callback) {
-					callback(null, null, expected_error);
+					callback(null, mock_req, expected_error);
 				});
 				aftership.call('GET', '/couriers/all', null, null, false, function (err, result) {
 					expect(err.type).to.equal(expected_error.meta.type);
