@@ -76,6 +76,116 @@ describe('Test call method', function () {
 		});
 	});
 
+	describe('Test retry', function () {
+		describe('Test retry with ConnectionTimeout', function () {
+			it('should retry with call() with default retry = true, if request return ETIMEDOUT', function (done) {
+				// Construct with valid api_key
+				let aftership = Aftership(api_key);
+				let expected_error = new Error();
+				expected_error.code = 'ETIMEDOUT';
+				// Stub request to throw
+				sandbox.stub(aftership, 'request', function (request_object, callback) {
+					callback(expected_error);
+				});
+				aftership.call('GET', '/couriers/all', function (err, result) {
+					expect(err.type).to.equal('ETIMEDOUT');
+					expect(err.retry_count).to.equal(5);
+					done();
+				});
+			});
+		});
+
+		describe('Test retry with InternalError', function () {
+			it('should retry with call() with default retry = true, if Aftership return InternalError 500', function (done) {
+				// Construct with valid api_key
+				let aftership = Aftership(api_key);
+				let expected_error = {
+					meta: {
+						code: 500,
+						message: 'Something went wrong on AfterShip\'s end.',
+						type: 'InternalError'
+					},
+					data: {}
+				};
+				// Stub request to throw
+				sandbox.stub(aftership, 'request', function (request_object, callback) {
+					callback(null, null, expected_error);
+				});
+				aftership.call('GET', '/couriers/all', function (err, result) {
+					expect(err.type).to.equal(expected_error.meta.type);
+					expect(err.retry_count).to.equal(5);
+					done();
+				});
+			});
+
+			it('should retry with call(..., retry = true), if Aftership return InternalError 500', function (done) {
+				// Construct with valid api_key
+				let aftership = Aftership(api_key, null, null, false);
+				let expected_error = {
+					meta: {
+						code: 500,
+						message: 'Something went wrong on AfterShip\'s end.',
+						type: 'InternalError'
+					},
+					data: {}
+				};
+				// Stub request to throw
+				sandbox.stub(aftership, 'request', function (request_object, callback) {
+					callback(null, null, expected_error);
+				});
+				aftership.call('GET', '/couriers/all', null, null, true, function (err, result) {
+					expect(err.type).to.equal(expected_error.meta.type);
+					expect(err.retry_count).to.equal(5);
+					done();
+				});
+			});
+
+			it('should not retry with call() with default retry = false, if Aftership return InternalError 500', function (done) {
+				// Construct with valid api_key
+				let aftership = Aftership(api_key, null, null, false);
+				let expected_error = {
+					meta: {
+						code: 500,
+						message: 'Something went wrong on AfterShip\'s end.',
+						type: 'InternalError'
+					},
+					data: {}
+				};
+				// Stub request to throw
+				sandbox.stub(aftership, 'request', function (request_object, callback) {
+					callback(null, null, expected_error);
+				});
+				aftership.call('GET', '/couriers/all', function (err, result) {
+					expect(err.type).to.equal(expected_error.meta.type);
+					expect(err.retry_count).to.equal(undefined);
+					done();
+				});
+			});
+
+			it('should not retry with call(..., retry = false), if Aftership return InternalError 500', function (done) {
+				// Construct with valid api_key
+				let aftership = Aftership(api_key);
+				let expected_error = {
+					meta: {
+						code: 500,
+						message: 'Something went wrong on AfterShip\'s end.',
+						type: 'InternalError'
+					},
+					data: {}
+				};
+				// Stub request to throw
+				sandbox.stub(aftership, 'request', function (request_object, callback) {
+					callback(null, null, expected_error);
+				});
+				aftership.call('GET', '/couriers/all', null, null, false, function (err, result) {
+					expect(err.type).to.equal(expected_error.meta.type);
+					expect(err.retry_count).to.equal(undefined);
+					done();
+				});
+			});
+		});
+	});
+
 	describe('Test Proxy method', function () {
 		it('should work with handler.GET(...)', function (done) {
 			let aftership = Aftership(api_key);
@@ -165,59 +275,65 @@ describe('Test call method', function () {
 			});
 		});
 
-		it('should callback with response error, if method is invalid', function (done) {
+		it('should callback with response error, if method is invalid', function () {
 			let method = 'invalid';
 			let expected_error = Error('HandlerError: Invalid Method value');
 			let aftership = Aftership(api_key);
-			aftership.call(method, '/couriers/all', function (err) {
-				expect(err.message).to.equal(expected_error.message);
-				done();
-			});
+			try {
+				aftership.call(method, '/couriers/all', null);
+			} catch (e) {
+				expect(e.message).to.equal(expected_error.message);
+			}
 		});
 
-		it('should callback with response error, if path is invalid', function (done) {
+		it('should callback with response error, if path is invalid', function () {
 			let expected_error = Error('HandlerError: Invalid Path value');
 			let aftership = Aftership(api_key);
-			aftership.call('GET', null, function (err) {
-				expect(err.message).to.equal(expected_error.message);
-				done();
-			});
+			try {
+				aftership.call('GET', null);
+			} catch (e) {
+				expect(e.message).to.equal(expected_error.message);
+			}
 		});
 
-		it('should callback with response error, if body is invalid', function (done) {
+		it('should callback with response error, if body is invalid', function () {
 			let expected_error = Error('HandlerError: Invalid Body value');
 			let aftership = Aftership(api_key);
-			aftership.call('GET', '/couriers/all', 'body', function (err, res) {
-				expect(err.message).to.equal(expected_error.message);
-				done();
-			});
+			try {
+				aftership.call('GET', '/couriers/all', 'body');
+			} catch (e) {
+				expect(e.message).to.equal(expected_error.message);
+			}
 		});
 
-		it('should callback with response error, if query is invalid', function (done) {
+		it('should callback with response error, if query is invalid', function () {
 			let expected_error = Error('HandlerError: Invalid Query value');
 			let aftership = Aftership(api_key);
-			aftership.call('GET', '/couriers/all', null, 'query', function (err, res) {
-				expect(err.message).to.equal(expected_error.message);
-				done();
-			});
+			try {
+				aftership.call('GET', '/couriers/all', null, 'query');
+			} catch (e) {
+				expect(e.message).to.equal(expected_error.message);
+			}
 		});
 
-		it('should callback with response error, if retry is invalid', function (done) {
+		it('should callback with response error, if retry is invalid', function () {
 			let expected_error = Error('HandlerError: Invalid Retry value');
 			let aftership = Aftership(api_key);
-			aftership.call('GET', '/couriers/all', null, null, 'retry', function (err, res) {
-				expect(err.message).to.equal(expected_error.message);
-				done();
-			});
+			try {
+				aftership.call('GET', '/couriers/all', null, null, 'retry');
+			} catch (e) {
+				expect(e.message).to.equal(expected_error.message);
+			}
 		});
 
-		it('should callback with response error, if raw is invalid', function (done) {
+		it('should callback with response error, if raw is invalid', function () {
 			let expected_error = Error('HandlerError: Invalid Raw value');
 			let aftership = Aftership(api_key);
-			aftership.call('GET', '/couriers/all', null, null, false, 'raw', function (err, res) {
-				expect(err.message).to.equal(expected_error.message);
-				done();
-			});
+			try {
+				aftership.call('GET', '/couriers/all', null, null, false, 'raw');
+			} catch (e) {
+				expect(e.message).to.equal(expected_error.message);
+			}
 		});
 	});
 });
