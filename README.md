@@ -22,14 +22,15 @@ Aftership.call('GET', '/couriers/all', function (err, result) {
 
 /** Console
 { meta: { code: 200 },
-  data: 
+  data:
    { total: 335,
-     couriers: 
+     couriers:
       [ ... ]
    }
 }
 */
 ```
+
 
 ## Table of contents
 
