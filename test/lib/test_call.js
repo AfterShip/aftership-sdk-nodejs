@@ -6,6 +6,8 @@ const _ = require('lodash');
 const chai = require('chai');
 const expect = chai.expect;
 const sinon = require('sinon');
+const http = require('http');
+const httpProxy = require('http-proxy');
 const Aftership = require('./../../index');
 
 describe('Test call method', function () {
@@ -20,6 +22,46 @@ describe('Test call method', function () {
 	beforeEach(function () {
 		sandbox.reset();
 		sandbox.restore();
+	});
+
+	describe('Test proxy', function () {
+		let proxy;
+		let server;
+		let expected_result = {
+			meta: {
+				code: 200
+			},
+			message: 'proxied!'
+		};
+
+		before(function () {
+			proxy = httpProxy.createProxyServer({
+				target: 'http://localhost:9000'
+			}).listen(8000);
+
+			server = http.createServer(function (req, res) {
+				res.writeHead(200, {
+					'Content-Type': 'application/json'
+				});
+				res.write(JSON.stringify(expected_result));
+				res.end();
+			}).listen(9000);
+		});
+
+		after(function () {
+			proxy.close();
+			server.close();
+		});
+
+		it('should return proxied result', function (done) {
+			// Construct with valid api_key
+			let aftership = Aftership(api_key, 'http://google.com', 'http://localhost:8000');
+			aftership.call('GET', '/couriers/all', function (err, result) {
+				expect(err).to.equal(null);
+				expect(result).to.deep.equal(expected_result);
+				done();
+			});
+		});
 	});
 
 	describe('Test correct cases', function () {

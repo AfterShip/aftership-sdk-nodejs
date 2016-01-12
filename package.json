@@ -23,6 +23,7 @@
     "test": "grunt lint && grunt coverage"
   },
   "dependencies": {
+    "http-proxy": "^1.12.0",
     "lodash": "^3.10.1",
     "request": "^2.67.0"
   },
