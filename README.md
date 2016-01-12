@@ -43,8 +43,8 @@ Aftership.call('GET', '/couriers/all', function (err, result) {
 
 ## Table of contents
 
-- Constructor
-- Call(...)
+- [Constructor(api_key, options)](#constructorapi_key-options)
+- Call(method, path, options, callback)
 - RESTful call - GET, POST, PUT, DELETE
 - Error Handling
 - Example
@@ -61,7 +61,7 @@ Create AfterShip instance with options
 - `options` - **Optional** - object of request options
 	- `endpoint` - *string*, AfterShip endpoint, default 'https://api.aftership.com/v4'
 	- `proxy` - *string*, proxy, default is `null`
-	- `retry` - *boolean*, retry if fail, default is `true`
+	- `retry` - *boolean*, retry if fail? default is `true`
 
 Example: 
 ```javascript
@@ -77,6 +77,17 @@ Aftership.call('GET', '/couriers/all', function (err, result) {
 	// ...
 });
 ```
+
+## Call(method, path, options, callback)
+Make request with option
+- `method` - **Require** - Either `get`, `post`, `put` or `delete`, case insensitive
+- `path` - **Require** path, *string*, start with `/`, see available path [here](https://www.aftership.com/docs/api/4)
+- `options` - **Optional** - object of request options
+	- `body` - *object*, `POST` body
+	- `query` - *object*, `query` object
+	- `retry` - *boolean*, retry if fail? override `default retry` if set
+	- `raw` - *boolean*, if `true`, return result as `string`, else return as `object`, default is `false`
+- `callback`
 
 
 ## License
