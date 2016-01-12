@@ -53,6 +53,32 @@ Aftership.call('GET', '/couriers/all', function (err, result) {
 	- /last_checkpoint
 	- /notifications
 
+## Constructor(api_key, options)
+
+Create AfterShip instance with options
+
+- `api_key` - **Require** - your Aftership API key
+- `options` - **Optional** - object of request options
+	- `endpoint` - *string*, AfterShip endpoint, default 'https://api.aftership.com/v4'
+	- `proxy` - *string*, proxy, default is `null`
+	- `retry` - *boolean*, retry if fail, default is `true`
+
+Example: 
+```javascript
+// Construct with options
+const Aftership = require('aftership')('YOUR_API_KEY', {
+	endpoint: 'https://api.aftership.com/OLDER_VERSION',
+	proxy: 'http://username:password@my.proxy.com',
+	retry: false
+});
+
+// Make your call
+Aftership.call('GET', '/couriers/all', function (err, result) {
+	// ...
+});
+```
+
+
 ## License
 Copyright (c) 2016 AfterShip
 
