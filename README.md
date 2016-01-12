@@ -41,7 +41,6 @@ Aftership.call('GET', '/couriers/all', function (err, result) {
 */
 ```
 
-
 ## Table of contents
 
 - Constructor
