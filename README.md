@@ -44,7 +44,7 @@ Aftership.call('GET', '/couriers/all', function (err, result) {
 ## Table of contents
 
 - [Constructor(api_key, options)](#constructorapi_key-options)
-- Call(method, path, options, callback)
+- [call(method, path, options, callback)](#callmethod-path-options-callback)
 - RESTful call - GET, POST, PUT, DELETE
 - Error Handling
 - Example
@@ -78,7 +78,7 @@ Aftership.call('GET', '/couriers/all', function (err, result) {
 });
 ```
 
-## Call(method, path, options, callback)
+## call(method, path, options, callback)
 Make request with option
 - `method` - **Require** - Either `get`, `post`, `put` or `delete`, case insensitive
 - `path` - **Require** path, *string*, start with `/`, see available path [here](https://www.aftership.com/docs/api/4)
