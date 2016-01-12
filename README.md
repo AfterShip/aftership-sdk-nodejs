@@ -64,6 +64,8 @@ Create AfterShip instance with options
 	- `proxy` - *string*, proxy, default is `null`
 	- `retry` - *boolean*, retry if fail? default is `true`
 
+> Retry Policy: Retry after 1 second. Maximum 5 times
+
 Example:
 ```javascript
 // Construct with options
