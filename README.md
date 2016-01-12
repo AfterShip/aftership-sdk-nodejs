@@ -282,7 +282,7 @@ There are also interface `GET`, `POST`, `PUT`, `DELETE` which are proxy to `Afte
 ```javascript
 Aftership.call('GET', '/path', options, callback);
 // is equivalent to
-Aftership.GET('path', options, callback);
+Aftership.GET('/path', options, callback);
 
 // So as `POST`, `PUT` and `DELETE`
 ```
