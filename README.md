@@ -45,13 +45,13 @@ Aftership.call('GET', '/couriers/all', function (err, result) {
 
 - [Constructor(api_key, options)](#constructorapi_key-options)
 - [call(method, path, options, callback)](#callmethod-path-options-callback)
-- Examples
-	- /couriers
-	- /trackings
-	- /last_checkpoint
-	- /notifications
-- Proxy Method
-- Error Handling
+- [Examples](#examples)
+	- [/couriers](#couriers)
+	- [/trackings](#trackings)
+	- [/last_checkpoint](#last_checkpoint)
+	- [/notifications](#notifications)
+- [Proxy Method](#proxy-method)
+- [Error Handling](#error-handling)
 
 ## Constructor(api_key, options)
 
@@ -179,7 +179,7 @@ Aftership.call('GET', '/trackings', {
 
 ### /last_checkpoint
 
-GET /last_checkpoint/:slug/:tracking_number
+##### GET /last_checkpoint/:slug/:tracking_number
 ```javascript
 Aftership.call('GET', '/last_checkpoint/ups/1234567890', function (err, result) {
 	// Your code here
@@ -188,12 +188,17 @@ Aftership.call('GET', '/last_checkpoint/ups/1234567890', function (err, result) 
 
 ### /notifications
 
-GET /notifications/:slug/:tracking_number
+##### GET /notifications/:slug/:tracking_number
 ```javascript
 Aftership.call('GET', '/notifications/ups/1234567890', function (err, result) {
 	// Your code here
 });
 ```
+
+## Proxy Method
+
+## Error Handling
+
 
 ## License
 Copyright (c) 2016 AfterShip
