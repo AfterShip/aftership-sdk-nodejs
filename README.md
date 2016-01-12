@@ -91,7 +91,8 @@ Make request with option
 
 ## Examples
 ### /couriers
-##### GET /couriers
+> GET /couriers
+
 ```javascript
 // GET /couriers
 Aftership.call('GET', '/couriers', function (err, result) {
@@ -99,7 +100,8 @@ Aftership.call('GET', '/couriers', function (err, result) {
 });
 ```
 
-##### GET /couriers/all
+> GET /couriers/all
+
 ```javascript
 // GET /couriers
 Aftership.call('GET', '/couriers/all', function (err, result) {
@@ -107,7 +109,8 @@ Aftership.call('GET', '/couriers/all', function (err, result) {
 });
 ```
 
-##### POST /couriers/detect
+> POST /couriers/detect
+
 ```javascript
 // GET /couriers
 let body = {
@@ -128,7 +131,8 @@ Aftership.call('POST', '/couriers', {
 
 ### /trackings
 
-##### POST /trackings
+> POST /trackings
+
 ```javascript
 let body = {
     'tracking': {
@@ -158,14 +162,16 @@ Aftership.call('POST', '/trackings', {
 });
 ```
 
-##### DELETE /trackings/:slug/:tracking_number
+> DELETE /trackings/:slug/:tracking_number
+
 ```javascript
 Aftership.call('DELETE', '/trackings/ups/1234567890', function (err, result) {
 	// Your code here
 });
 ```
 
-##### GET /trackings
+> GET /trackings
+
 ```javascript
 let query = {
 	slug: 'dhl,ups,usps'
@@ -177,9 +183,49 @@ Aftership.call('GET', '/trackings', {
 });
 ```
 
+> GET /trackings/exports
+
+```javascript
+Aftership.call('GET', '/trackings/exports', function (err, result) {
+	// Your code here
+});
+```
+
+> GET /trackings/:slug/:tracking_number
+
+```javascript
+Aftership.call('GET', '/trackings/ups/1234567890', function (err, result) {
+	// Your code here
+});
+```
+
+> GET /trackings/:slug/:tracking_number
+
+```javascript
+let body = {
+	'tracking': {
+		'title': 'New Title'
+	}
+};
+Aftership.call('PUT', '/trackings/ups/1234567890', {
+	body: body
+}, function (err, result) {
+	// Your code here
+});
+```
+
+> POST /trackings/:slug/:tracking_number/retrack
+
+```javascript
+Aftership.call('POST', '/trackings/ups/1234567890/retrack', function (err, result) {
+	// Your code here
+});
+```
+
 ### /last_checkpoint
 
-##### GET /last_checkpoint/:slug/:tracking_number
+> GET /last_checkpoint/:slug/:tracking_number
+
 ```javascript
 Aftership.call('GET', '/last_checkpoint/ups/1234567890', function (err, result) {
 	// Your code here
@@ -188,14 +234,58 @@ Aftership.call('GET', '/last_checkpoint/ups/1234567890', function (err, result) 
 
 ### /notifications
 
-##### GET /notifications/:slug/:tracking_number
+> GET /notifications/:slug/:tracking_number
+
 ```javascript
 Aftership.call('GET', '/notifications/ups/1234567890', function (err, result) {
 	// Your code here
 });
 ```
 
+> POST /notifications/:slug/:tracking_number/add
+
+```javascript
+let body = {
+	'notification': {
+		'emails': ['user1@gmail.com','user2@gmail.com','invalid EMail @ Gmail. com'],
+		'smses': ['+85291239123', '+85261236123', 'Invalid Mobile Phone Number']
+	}
+};
+Aftership.call('POST', '/notifications/ups/1234567890/add', {
+	body: body
+}, function (err, result) {
+	// Your code here
+});
+```
+
+
+> POST /notifications/:slug/:tracking_number/remove
+
+```javascript
+let body = {
+	'notification': {
+		'emails': ['user1@gmail.com','user2@gmail.com','invalid EMail @ Gmail. com'],
+		'smses': ['+85291239123', '+85261236123', 'Invalid Mobile Phone Number']
+	}
+};
+Aftership.call('POST', '/notifications/ups/1234567890/remove', {
+	body: body
+}, function (err, result) {
+	// Your code here
+});
+```
+
 ## Proxy Method
+
+There are also interface `GET`, `POST`, `PUT`, `DELETE` which are proxy to `Aftership.call(...)`
+
+```javascript
+Aftership.call('GET', '/path', options, callback);
+// is equivalent to
+Aftership.GET('path', options, callback);
+
+// So as `POST`, `PUT` and `DELETE`
+```
 
 ## Error Handling
 
