@@ -55,7 +55,10 @@ describe('Test call method', function () {
 
 		it('should return proxied result', function (done) {
 			// Construct with valid api_key
-			let aftership = Aftership(api_key, 'http://google.com', 'http://localhost:8000');
+			let aftership = Aftership(api_key, {
+				endpoint: 'http://google.com',
+				proxy: 'http://localhost:8000'
+			});
 			aftership.call('GET', '/couriers/all', function (err, result) {
 				expect(err).to.equal(null);
 				expect(result).to.deep.equal(expected_result);
@@ -76,7 +79,7 @@ describe('Test call method', function () {
 			});
 		});
 
-		it('should work with call(method, path, body)', function (done) {
+		it('should work with call(method, path, {body})', function (done) {
 			// Construct with valid api_key
 			let aftership = Aftership(api_key);
 			// Body
@@ -85,7 +88,9 @@ describe('Test call method', function () {
 					tracking_number: '1111111111'
 				}
 			};
-			aftership.call('POST', '/couriers/detect', body, function (err, result) {
+			aftership.call('POST', '/couriers/detect', {
+				body: body
+			}, function (err, result) {
 				expect(err).to.equal(null);
 				expect(result.meta.code).to.equal(200);
 				expect(result.data).to.contains.all.keys(['total', 'couriers']);
@@ -93,13 +98,15 @@ describe('Test call method', function () {
 			});
 		});
 
-		it('should work with call(method, path, body, query)', function (done) {
+		it('should work with call(method, path, {body, query})', function (done) {
 			// Construct with valid api_key
 			let aftership = Aftership(api_key);
 			let query = {
 				fields: 'slug,name'
 			};
-			aftership.call('GET', '/couriers/all', null, query, function (err, result) {
+			aftership.call('GET', '/couriers/all', {
+				query: query
+			}, function (err, result) {
 				expect(err).to.equal(null);
 				expect(result.meta.code).to.equal(200);
 				expect(result.data.couriers[0]).to.have.all.keys('slug', 'name');
@@ -107,10 +114,12 @@ describe('Test call method', function () {
 			});
 		});
 
-		it('should work with call(..., raw = true)', function (done) {
+		it('should work with call(method, path, {raw = true})', function (done) {
 			// Construct with valid api_key
 			let aftership = Aftership(api_key);
-			aftership.call('GET', '/couriers/all', null, null, null, true, function (err, result) {
+			aftership.call('GET', '/couriers/all', {
+				raw: true
+			}, function (err, result) {
 				expect(err).to.equal(null);
 				expect(_.isString(result)).to.equal(true);
 				done();
@@ -202,14 +211,18 @@ describe('Test call method', function () {
 				});
 			});
 
-			it('should retry with call(..., retry = true), if Aftership return InternalError 500', function (done) {
+			it('should retry with call(..., {retry = true}), if Aftership return InternalError 500', function (done) {
 				// Construct with valid api_key
-				let aftership = Aftership(api_key, null, null, false);
+				let aftership = Aftership(api_key, {
+					retry: false
+				});
 				// Stub request to throw
 				sandbox.stub(aftership, 'request', function (request_object, callback) {
 					callback(null, mock_req, expected_error);
 				});
-				aftership.call('GET', '/couriers/all', null, null, true, function (err, result) {
+				aftership.call('GET', '/couriers/all', {
+					retry: true
+				}, function (err, result) {
 					expect(err.type).to.equal(expected_error.meta.type);
 					expect(err.retry_count).to.equal(5);
 					done();
@@ -218,7 +231,9 @@ describe('Test call method', function () {
 
 			it('should not retry with call() with default retry = false, if Aftership return InternalError 500', function (done) {
 				// Construct with valid api_key
-				let aftership = Aftership(api_key, null, null, false);
+				let aftership = Aftership(api_key, {
+					retry: false
+				});
 				// Stub request to throw
 				sandbox.stub(aftership, 'request', function (request_object, callback) {
 					callback(null, mock_req, expected_error);
@@ -230,14 +245,16 @@ describe('Test call method', function () {
 				});
 			});
 
-			it('should not retry with call(..., retry = false), if Aftership return InternalError 500', function (done) {
+			it('should not retry with call(..., {retry = false}), if Aftership return InternalError 500', function (done) {
 				// Construct with valid api_key
 				let aftership = Aftership(api_key);
 				// Stub request to throw
 				sandbox.stub(aftership, 'request', function (request_object, callback) {
 					callback(null, mock_req, expected_error);
 				});
-				aftership.call('GET', '/couriers/all', null, null, false, function (err, result) {
+				aftership.call('GET', '/couriers/all', {
+					retry: false
+				}, function (err, result) {
 					expect(err.type).to.equal(expected_error.meta.type);
 					expect(err.retry_count).to.equal(undefined);
 					done();
@@ -266,7 +283,9 @@ describe('Test call method', function () {
 					tracking_number: '1111111111'
 				}
 			};
-			aftership.POST('/couriers/detect', body, function (err, result) {
+			aftership.POST('/couriers/detect', {
+				body: body
+			}, function (err, result) {
 				expect(err).to.equal(null);
 				expect(result.meta.code).to.equal(200);
 				expect(result.data).to.contains.all.keys(['total', 'couriers']);
@@ -275,6 +294,8 @@ describe('Test call method', function () {
 		});
 
 		it('should work with handler.PUT(...) and handler.DELETE(...)', function (done) {
+			this.timeout(25000);
+
 			let aftership = Aftership(api_key);
 			let post_body = {
 				tracking: {
@@ -297,9 +318,9 @@ describe('Test call method', function () {
 
 			// DELETE tracking first
 			aftership.DELETE('/trackings/dhl/0000000000', function () {
-				aftership.POST('/trackings', post_body, function (post_err, post_result) {
+				aftership.POST('/trackings', {body: post_body}, function (post_err, post_result) {
 					expect(post_err).to.equal(null);
-					aftership.PUT('/trackings/dhl/0000000000', put_body, function (put_err, put_result) {
+					aftership.PUT('/trackings/dhl/0000000000', {body: put_body}, function (put_err, put_result) {
 						expect(put_err).to.equal(null);
 						aftership.DELETE('/trackings/dhl/0000000000', function (delete_err, delete_result) {
 							expect(delete_err).to.equal(null);
@@ -360,7 +381,9 @@ describe('Test call method', function () {
 			let expected_error = Error('HandlerError: Invalid Body value');
 			let aftership = Aftership(api_key);
 			try {
-				aftership.call('GET', '/couriers/all', 'body');
+				aftership.call('GET', '/couriers/all', {
+					body: 'body'
+				});
 			} catch (e) {
 				expect(e.message).to.equal(expected_error.message);
 			}
@@ -370,7 +393,9 @@ describe('Test call method', function () {
 			let expected_error = Error('HandlerError: Invalid Query value');
 			let aftership = Aftership(api_key);
 			try {
-				aftership.call('GET', '/couriers/all', null, 'query');
+				aftership.call('GET', '/couriers/all', {
+					query: 'query'
+				});
 			} catch (e) {
 				expect(e.message).to.equal(expected_error.message);
 			}
@@ -380,7 +405,9 @@ describe('Test call method', function () {
 			let expected_error = Error('HandlerError: Invalid Retry value');
 			let aftership = Aftership(api_key);
 			try {
-				aftership.call('GET', '/couriers/all', null, null, 'retry');
+				aftership.call('GET', '/couriers/all', {
+					retry: 'retry'
+				});
 			} catch (e) {
 				expect(e.message).to.equal(expected_error.message);
 			}
@@ -390,7 +417,9 @@ describe('Test call method', function () {
 			let expected_error = Error('HandlerError: Invalid Raw value');
 			let aftership = Aftership(api_key);
 			try {
-				aftership.call('GET', '/couriers/all', null, null, false, 'raw');
+				aftership.call('GET', '/couriers/all', {
+					raw: 'raw'
+				});
 			} catch (e) {
 				expect(e.message).to.equal(expected_error.message);
 			}

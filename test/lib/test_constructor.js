@@ -29,7 +29,9 @@ describe('Test constructor', function () {
 
 		it('should construct with api_key and endpoint correctly', function () {
 			let endpoint = 'https://api.aftership.com/v3';
-			let aftership = Aftership(api_key, endpoint);
+			let aftership = Aftership(api_key, {
+				endpoint: endpoint
+			});
 			expect(aftership.api_key).to.equal(api_key);
 			expect(aftership.endpoint).to.equal(endpoint);
 			expect(aftership.proxy).to.equal(default_proxy);
@@ -38,7 +40,9 @@ describe('Test constructor', function () {
 
 		it('should construct with api_key and proxy correctly', function () {
 			let proxy = '127.0.0.1';
-			let aftership = Aftership(api_key, null, proxy, null);
+			let aftership = Aftership(api_key, {
+				proxy: proxy
+			});
 			expect(aftership.api_key).to.equal(api_key);
 			expect(aftership.endpoint).to.equal(default_endpoint);
 			expect(aftership.proxy).to.equal(proxy);
@@ -46,7 +50,9 @@ describe('Test constructor', function () {
 		});
 
 		it('should construct with api_key and retry correctly', function () {
-			let aftership = Aftership(api_key, null, null, false);
+			let aftership = Aftership(api_key, {
+				retry: false
+			});
 			expect(aftership.api_key).to.equal(api_key);
 			expect(aftership.endpoint).to.equal(default_endpoint);
 			expect(aftership.proxy).to.equal(default_proxy);
@@ -80,51 +86,77 @@ describe('Test constructor', function () {
 		it('should return error, if endpoint is defined but not string', function () {
 			let expected_error = 'Invalid Endpoint';
 			expect(function () {
-				return Aftership(api_key, 999);
+				return Aftership(api_key, {
+					endpoint: 999
+				});
 			}).to.throw(expected_error);
 			expect(function () {
-				return Aftership(api_key, true);
+				return Aftership(api_key, {
+					endpoint: true
+				});
 			}).to.throw(expected_error);
 			expect(function () {
-				return Aftership(api_key, false);
+				return Aftership(api_key, {
+					endpoint: false
+				});
 			}).to.throw(expected_error);
 			expect(function () {
-				return Aftership(api_key, {});
+				return Aftership(api_key, {
+					endpoint: {}
+				});
 			}).to.throw(expected_error);
 		});
 
 		it('should return error, if proxy is defined but not string', function () {
 			let expected_error = 'Invalid Proxy';
 			expect(function () {
-				return Aftership(api_key, null, 999);
+				return Aftership(api_key, {
+					proxy: 999
+				});
 			}).to.throw(expected_error);
 			expect(function () {
-				return Aftership(api_key, null, true);
+				return Aftership(api_key, {
+					proxy: true
+				});
 			}).to.throw(expected_error);
 			expect(function () {
-				return Aftership(api_key, null, false);
+				return Aftership(api_key, {
+					proxy: false
+				});
 			}).to.throw(expected_error);
 			expect(function () {
-				return Aftership(api_key, null, {});
+				return Aftership(api_key, {
+					proxy: {}
+				});
 			}).to.throw(expected_error);
 		});
 
 		it('should return error, if retry is defined but not boolean', function () {
 			let expected_error = 'Invalid Retry value';
 			expect(function () {
-				return Aftership(api_key, null, null, 999);
+				return Aftership(api_key, {
+					retry: 999
+				});
 			}).to.throw(expected_error);
 			expect(function () {
-				return Aftership(api_key, null, null, 0);
+				return Aftership(api_key, {
+					retry: 0
+				});
 			}).to.throw(expected_error);
 			expect(function () {
-				return Aftership(api_key, null, null, 1);
+				return Aftership(api_key, {
+					retry: 1
+				});
 			}).to.throw(expected_error);
 			expect(function () {
-				return Aftership(api_key, null, null, {});
+				return Aftership(api_key, {
+					retry: {}
+				});
 			}).to.throw(expected_error);
 			expect(function () {
-				return Aftership(api_key, null, null, '');
+				return Aftership(api_key, {
+					retry: ''
+				});
 			}).to.throw(expected_error);
 		});
 	});
