@@ -63,7 +63,7 @@ Create AfterShip instance with options
 	- `proxy` - *string*, proxy, default is `null`
 	- `retry` - *boolean*, retry if fail? default is `true`
 
-Example: 
+Example:
 ```javascript
 // Construct with options
 const Aftership = require('aftership')('YOUR_API_KEY', {
@@ -91,7 +91,7 @@ Make request with option
 
 ## Examples
 ### /couriers
-> GET /couriers
+**GET** /couriers
 
 ```javascript
 // GET /couriers
@@ -100,7 +100,7 @@ Aftership.call('GET', '/couriers', function (err, result) {
 });
 ```
 
-> GET /couriers/all
+**GET** /couriers/all
 
 ```javascript
 // GET /couriers
@@ -109,7 +109,7 @@ Aftership.call('GET', '/couriers/all', function (err, result) {
 });
 ```
 
-> POST /couriers/detect
+**POST** /couriers/detect
 
 ```javascript
 // GET /couriers
@@ -131,7 +131,7 @@ Aftership.call('POST', '/couriers', {
 
 ### /trackings
 
-> POST /trackings
+**POST** /trackings
 
 ```javascript
 let body = {
@@ -162,7 +162,7 @@ Aftership.call('POST', '/trackings', {
 });
 ```
 
-> DELETE /trackings/:slug/:tracking_number
+**DELETE** /trackings/:slug/:tracking_number
 
 ```javascript
 Aftership.call('DELETE', '/trackings/ups/1234567890', function (err, result) {
@@ -170,7 +170,7 @@ Aftership.call('DELETE', '/trackings/ups/1234567890', function (err, result) {
 });
 ```
 
-> GET /trackings
+**GET** /trackings
 
 ```javascript
 let query = {
@@ -183,7 +183,7 @@ Aftership.call('GET', '/trackings', {
 });
 ```
 
-> GET /trackings/exports
+**GET** /trackings/exports
 
 ```javascript
 Aftership.call('GET', '/trackings/exports', function (err, result) {
@@ -191,7 +191,7 @@ Aftership.call('GET', '/trackings/exports', function (err, result) {
 });
 ```
 
-> GET /trackings/:slug/:tracking_number
+**GET** /trackings/:slug/:tracking_number
 
 ```javascript
 Aftership.call('GET', '/trackings/ups/1234567890', function (err, result) {
@@ -199,7 +199,7 @@ Aftership.call('GET', '/trackings/ups/1234567890', function (err, result) {
 });
 ```
 
-> GET /trackings/:slug/:tracking_number
+**GET** /trackings/:slug/:tracking_number
 
 ```javascript
 let body = {
@@ -214,7 +214,7 @@ Aftership.call('PUT', '/trackings/ups/1234567890', {
 });
 ```
 
-> POST /trackings/:slug/:tracking_number/retrack
+**POST** /trackings/:slug/:tracking_number/retrack
 
 ```javascript
 Aftership.call('POST', '/trackings/ups/1234567890/retrack', function (err, result) {
@@ -224,7 +224,7 @@ Aftership.call('POST', '/trackings/ups/1234567890/retrack', function (err, resul
 
 ### /last_checkpoint
 
-> GET /last_checkpoint/:slug/:tracking_number
+**GET** /last_checkpoint/:slug/:tracking_number
 
 ```javascript
 Aftership.call('GET', '/last_checkpoint/ups/1234567890', function (err, result) {
@@ -234,7 +234,7 @@ Aftership.call('GET', '/last_checkpoint/ups/1234567890', function (err, result) 
 
 ### /notifications
 
-> GET /notifications/:slug/:tracking_number
+**GET** /notifications/:slug/:tracking_number
 
 ```javascript
 Aftership.call('GET', '/notifications/ups/1234567890', function (err, result) {
@@ -242,7 +242,7 @@ Aftership.call('GET', '/notifications/ups/1234567890', function (err, result) {
 });
 ```
 
-> POST /notifications/:slug/:tracking_number/add
+**POST** /notifications/:slug/:tracking_number/add
 
 ```javascript
 let body = {
@@ -259,7 +259,7 @@ Aftership.call('POST', '/notifications/ups/1234567890/add', {
 ```
 
 
-> POST /notifications/:slug/:tracking_number/remove
+**POST** /notifications/:slug/:tracking_number/remove
 
 ```javascript
 let body = {
