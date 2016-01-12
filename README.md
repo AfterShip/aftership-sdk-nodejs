@@ -45,13 +45,13 @@ Aftership.call('GET', '/couriers/all', function (err, result) {
 
 - [Constructor(api_key, options)](#constructorapi_key-options)
 - [call(method, path, options, callback)](#callmethod-path-options-callback)
-- RESTful call - GET, POST, PUT, DELETE
-- Error Handling
-- Example
+- Examples
 	- /couriers
 	- /trackings
 	- /last_checkpoint
 	- /notifications
+- Proxy Method
+- Error Handling
 
 ## Constructor(api_key, options)
 
@@ -81,14 +81,119 @@ Aftership.call('GET', '/couriers/all', function (err, result) {
 ## call(method, path, options, callback)
 Make request with option
 - `method` - **Require** - Either `get`, `post`, `put` or `delete`, case insensitive
-- `path` - **Require** path, *string*, start with `/`, see available path [here](https://www.aftership.com/docs/api/4)
+- `path` - **Require** *string*, start with `/`, see available path [here](https://www.aftership.com/docs/)
 - `options` - **Optional** - object of request options
 	- `body` - *object*, `POST` body
 	- `query` - *object*, `query` object
 	- `retry` - *boolean*, retry if fail? override `default retry` if set
 	- `raw` - *boolean*, if `true`, return result as `string`, else return as `object`, default is `false`
-- `callback`
+- `callback` - the callback to handle error and result, the result is the response body of the request
 
+## Examples
+### /couriers
+##### GET /couriers
+```javascript
+// GET /couriers
+Aftership.call('GET', '/couriers', function (err, result) {
+	// Your code here
+});
+```
+
+##### GET /couriers/all
+```javascript
+// GET /couriers
+Aftership.call('GET', '/couriers/all', function (err, result) {
+	// Your code here
+});
+```
+
+##### POST /couriers/detect
+```javascript
+// GET /couriers
+let body = {
+	'tracking': {
+		'tracking_number': '906587618687',
+		'tracking_postal_code': 'DA15BU',
+		'tracking_ship_date': '20131231',
+		'tracking_account_number': '1234567890',
+		'slug': ['dhl', 'ups', 'fedex']
+	}
+};
+Aftership.call('POST', '/couriers', {
+	body: body
+}, function (err, result) {
+	// Your code here
+});
+```
+
+### /trackings
+
+##### POST /trackings
+```javascript
+let body = {
+    'tracking': {
+        'slug': 'dhl',
+        'tracking_number': '123456789',
+        'title': 'Title Name',
+        'smses': [
+            '+18555072509',
+            '+18555072501'
+        ],
+        'emails': [
+            'email@yourdomain.com',
+            'another_email@yourdomain.com'
+        ],
+        'order_id': 'ID 1234',
+        'order_id_path': 'http://www.aftership.com/order_id=1234',
+        'custom_fields': {
+            'product_name': 'iPhone Case',
+            'product_price': 'USD19.99'
+        }
+    }
+};
+Aftership.call('POST', '/trackings', {
+	body: body
+}, function (err, result) {
+	// Your code here
+});
+```
+
+##### DELETE /trackings/:slug/:tracking_number
+```javascript
+Aftership.call('DELETE', '/trackings/ups/1234567890', function (err, result) {
+	// Your code here
+});
+```
+
+##### GET /trackings
+```javascript
+let query = {
+	slug: 'dhl,ups,usps'
+};
+Aftership.call('GET', '/trackings', {
+	query: query
+}, function (err, result) {
+	// Your code here
+});
+```
+
+### /last_checkpoint
+
+GET /last_checkpoint/:slug/:tracking_number
+```javascript
+Aftership.call('GET', '/last_checkpoint/ups/1234567890', function (err, result) {
+	// Your code here
+});
+```
+
+### /notifications
+
+GET /notifications/:slug/:tracking_number
+```javascript
+Aftership.call('GET', '/notifications/ups/1234567890', function (err, result) {
+	// Your code here
+});
+```
 
 ## License
 Copyright (c) 2016 AfterShip
