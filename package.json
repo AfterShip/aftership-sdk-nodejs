@@ -1,18 +1,18 @@
 {
-  "name": "aftership-sdk-node",
+  "name": "aftership",
   "description": "node.js SDK for AfterShip API",
-  "version": "2.0.0",
-  "homepage": "https://github.com/chiulam/aftership-sdk-nodejs",
+  "version": "5.0.0",
+  "homepage": "https://github.com/aftership/aftership-sdk-nodejs",
   "author": {
     "name": "AfterShip",
     "email": "support@aftership.com"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/chiulam/aftership-sdk-nodejs.git"
+    "url": "git://github.com/aftership/aftership-sdk-nodejs.git"
   },
   "bugs": {
-    "url": "https://github.com/chiulam/aftership-sdk-nodejs/issues"
+    "url": "https://github.com/aftership/aftership-sdk-nodejs/issues"
   },
   "main": "index.js",
   "engines": {
@@ -23,11 +23,11 @@
     "test": "grunt lint && grunt coverage"
   },
   "dependencies": {
-    "http-proxy": "^1.12.0",
     "lodash": "^3.10.1",
     "request": "^2.67.0"
   },
   "devDependencies": {
+	"http-proxy": "^1.12.0",
     "chai": "^3.4.1",
     "eslint": "^1.10.3",
     "eslint-config-aftership": "^1.5.0",

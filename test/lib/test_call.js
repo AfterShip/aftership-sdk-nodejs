@@ -7,7 +7,7 @@ const chai = require('chai');
 const expect = chai.expect;
 const sinon = require('sinon');
 const http = require('http');
-const httpProxy = require('http-proxy');
+const http_proxy = require('http-proxy');
 const Aftership = require('./../../index');
 
 describe('Test call method', function () {
@@ -35,7 +35,7 @@ describe('Test call method', function () {
 		};
 
 		before(function () {
-			proxy = httpProxy.createProxyServer({
+			proxy = http_proxy.createProxyServer({
 				target: 'http://localhost:9000'
 			}).listen(8000);
 
