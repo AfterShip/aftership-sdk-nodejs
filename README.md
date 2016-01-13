@@ -1,15 +1,15 @@
 # aftership-sdk-node
 
-[![Build Status](https://travis-ci.org/aftership/aftership-sdk-nodejs.svg?branch=master)](https://travis-ci.org/aftership/aftership-sdk-nodejs)
-[![codecov.io](https://codecov.io/github/aftership/aftership-sdk-nodejs/coverage.svg?branch=master)](https://codecov.io/github/aftership/aftership-sdk-nodejs?branch=master)
-[![Dependency Status](https://gemnasium.com/aftership/aftership-sdk-nodejs.svg)](https://gemnasium.com/aftership/aftership-sdk-nodejs)
+[![Build Status](https://travis-ci.org/AfterShip/aftership-sdk-nodejs.svg?branch=master)](https://travis-ci.org/AfterShip/aftership-sdk-nodejs)
+[![codecov.io](https://codecov.io/github/AfterShip/aftership-sdk-nodejs/coverage.svg?branch=master)](https://codecov.io/github/AfterShip/aftership-sdk-nodejs?branch=master)
+[![Dependency Status](https://gemnasium.com/AfterShip/aftership-sdk-nodejs.svg)](https://gemnasium.com/AfterShip/aftership-sdk-nodejs)
 
 [![node](https://img.shields.io/node/v/aftership-sdk-node.svg)]()
 [![npm](https://img.shields.io/npm/v/aftership-sdk-node.svg)]()
 [![npm](https://img.shields.io/npm/dm/aftership-sdk-node.svg)]()
 [![npm](https://img.shields.io/npm/l/aftership-sdk-node.svg)]()
 
-![codecov.io](http://codecov.io/github/aftership/aftership-sdk-nodejs/branch.svg?branch=master)
+![codecov.io](http://codecov.io/github/AfterShip/aftership-sdk-nodejs/branch.svg?branch=master)
 
 node.js SDK for AfterShip API
 ## Installation
