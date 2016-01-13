@@ -5,7 +5,7 @@ sudo: false
 
 notifications:
   email:
-    - support@aftership.com
+    - chiu@aftership.com
 env:
   - CACHE_DIR=cache
 cache:
