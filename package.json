@@ -1,57 +1,51 @@
 {
-	"name": "aftership",
-	"description": "AfterShip NodeJS API Wrapper",
-	"version": "4.2.0",
-	"homepage": "https://github.com/AfterShip/aftership-nodejs",
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/AfterShip/aftership-nodejs.git"
-	},
-	"engines": {
-		"node": ">=0.8"
-	},
-	"main": "./main",
-	"directories": {
-		"test": "test"
-	},
-	"dependencies": {
-		"lodash": "2.4.1",
-		"request": "2.39.0"
-	},
-	"devDependencies": {
-		"nodeunit": "0.7.4",
-		"optimist": "0.3.5"
-	},
-	"bugs": {
-		"url": "https://github.com/AfterShip/aftership-nodejs/issues"
-	},
-	"scripts": {
-		"test": "node test/tests.js -v"
-	},
-	"files": [
-		"main.js",
-		"test",
-		"README.md",
-		"LICENSE.md",
-		"package.json"
-	],
-	"keywords": [
-		"aftership api",
-		"aftership",
-		"aftership-nodejs"
-	],
-	"author": "AfterShip",
-	"contributors": [
-		{
-			"name": "Kirk Morales",
-			"email": "kirk@kirkmorales.com",
-			"url": "http://www.kirkmorales.com"
-		},
-		{
-			"name": "AfterShip",
-			"email": "support@aftership.com",
-			"url": "https://www.aftership.com"
-		}
-	],
-	"license": "GNU"
+  "name": "aftership",
+  "description": "node.js SDK for AfterShip API",
+  "version": "5.0.0",
+  "homepage": "https://github.com/aftership/aftership-sdk-nodejs",
+  "author": {
+    "name": "AfterShip",
+    "email": "support@aftership.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aftership/aftership-sdk-nodejs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aftership/aftership-sdk-nodejs/issues"
+  },
+  "main": "index.js",
+  "engines": {
+    "node": "4.2.3"
+  },
+  "scripts": {
+    "lint": "grunt lint",
+    "test": "grunt lint && grunt coverage"
+  },
+  "dependencies": {
+    "lodash": "^3.10.1",
+    "request": "^2.67.0"
+  },
+  "devDependencies": {
+	"http-proxy": "^1.12.0",
+    "chai": "^3.4.1",
+    "eslint": "^1.10.3",
+    "eslint-config-aftership": "^1.5.0",
+    "grunt": "^0.4.5",
+    "grunt-eslint": "^17.3.1",
+    "grunt-mocha-istanbul": "^3.0.1",
+    "istanbul": "^0.4.1",
+    "load-grunt-config": "^0.19.1",
+    "mocha": "^2.3.4",
+    "pre-commit": "^1.1.2",
+    "sinon": "^1.17.2"
+  },
+  "keywords": [
+    "aftership"
+  ],
+  "license": "MIT",
+  "pre-commit": [
+    "lint"
+  ],
+  "private": false
 }
