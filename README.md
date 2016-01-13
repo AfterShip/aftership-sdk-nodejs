@@ -4,10 +4,10 @@
 [![codecov.io](https://codecov.io/github/AfterShip/aftership-sdk-nodejs/coverage.svg?branch=master)](https://codecov.io/github/AfterShip/aftership-sdk-nodejs?branch=master)
 [![Dependency Status](https://gemnasium.com/AfterShip/aftership-sdk-nodejs.svg)](https://gemnasium.com/AfterShip/aftership-sdk-nodejs)
 
-[![node](https://img.shields.io/node/v/aftership-sdk-node.svg)]()
-[![npm](https://img.shields.io/npm/v/aftership-sdk-node.svg)]()
-[![npm](https://img.shields.io/npm/dm/aftership-sdk-node.svg)]()
-[![npm](https://img.shields.io/npm/l/aftership-sdk-node.svg)]()
+[![node](https://img.shields.io/node/v/aftership.svg)]()
+[![npm](https://img.shields.io/npm/v/aftership.svg)]()
+[![npm](https://img.shields.io/npm/dm/aftership.svg)]()
+[![npm](https://img.shields.io/npm/l/aftership.svg)]()
 
 ![codecov.io](http://codecov.io/github/AfterShip/aftership-sdk-nodejs/branch.svg?branch=master)
 
