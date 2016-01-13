@@ -41,6 +41,11 @@ Aftership.call('GET', '/couriers/all', function (err, result) {
 */
 ```
 
+## Test
+```
+mocha --recursive
+```
+
 ## Table of contents
 
 - [Constructor(api_key, options)](#constructorapi_key-options)
@@ -52,7 +57,6 @@ Aftership.call('GET', '/couriers/all', function (err, result) {
 	- [/notifications](#notifications)
 - [Proxy Method](#proxy-method)
 - [Error Handling](#error-handling)
-- [Test](#test)
 
 ## Constructor(api_key, options)
 
@@ -291,12 +295,6 @@ Aftership.GET('/path', options, callback);
 ```
 
 ## Error Handling
-
-## Test
-The unit test need AfterShip API key in env `$AFTERSHIP_NODEJS_SDK_API_KEY`
-```
-AFTERSHIP_NODEJS_SDK_API_KEY=YOUR_API_KEY mocha --recursive
-```
 
 ## License
 Copyright (c) 2016 AfterShip
