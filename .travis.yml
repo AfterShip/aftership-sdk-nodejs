@@ -5,7 +5,7 @@ sudo: false
 
 notifications:
   email:
-    - happylam23@gmail.com
+    - support@aftership.com
 env:
   - CACHE_DIR=cache
 cache:
