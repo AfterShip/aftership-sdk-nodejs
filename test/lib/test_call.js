@@ -458,7 +458,7 @@ describe('Test call method', function () {
 			// Construct with invalid api_key
 			let aftership = Aftership('');
 			sandbox.stub(aftership, 'request', function (request_object, callback) {
-				callback(null, mock_req, result)
+				callback(null, mock_req, result);
 			});
 			aftership.call('GET', '/couriers/all', function (err) {
 				expect(err.message).to.equal(expected_message);
