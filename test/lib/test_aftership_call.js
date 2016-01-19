@@ -229,6 +229,7 @@ describe('Test call method', function () {
 					callback(expected_error);
 				});
 				aftership.call('GET', '/couriers/all', function (err, result) {
+					console.log(err);
 					expect(err.type).to.equal('ETIMEDOUT');
 					expect(err.retry_count).to.equal(5);
 					done();
