@@ -6,7 +6,7 @@ module.exports = {
 		options: {
 			coverage: true,
 			reporter: 'spec',
-			istanbulOptions: ['--include-all-sources', '-x', '**/grunt-config/**', '-x', 'Gruntfile.js']
+			istanbulOptions: ['--include-all-sources', '-x', '**/grunt-config/**', '-x', 'Gruntfile.js', '-x', '**/example/**']
 		}
 	}
 };

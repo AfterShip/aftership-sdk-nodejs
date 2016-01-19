@@ -101,7 +101,6 @@ Make request with option
 **GET** /couriers
 
 ```javascript
-// GET /couriers
 Aftership.call('GET', '/couriers', function (err, result) {
 	// Your code here
 });
@@ -110,7 +109,6 @@ Aftership.call('GET', '/couriers', function (err, result) {
 **GET** /couriers/all
 
 ```javascript
-// GET /couriers
 Aftership.call('GET', '/couriers/all', function (err, result) {
 	// Your code here
 });
@@ -119,7 +117,6 @@ Aftership.call('GET', '/couriers/all', function (err, result) {
 **POST** /couriers/detect
 
 ```javascript
-// GET /couriers
 let body = {
 	'tracking': {
 		'tracking_number': '906587618687',

@@ -12,3 +12,4 @@ Gruntfile.js
 log
 scripts/ci
 test
+example
