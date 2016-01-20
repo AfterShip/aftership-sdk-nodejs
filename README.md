@@ -51,7 +51,7 @@ mocha --recursive
 - [Constructor(api_key, options)](#constructorapi_key-options)
 - [call(method, path, options, callback)](#callmethod-path-options-callback)
 - [Rate Limiter](#rate-limiter)
-- [Retry policy]
+- [Retry policy](#retry-policy)
 - [Error Handling](#error-handling)
 - [Examples](#examples)
 	- [/couriers](#couriers)
@@ -122,27 +122,28 @@ Aftership.call('GET', '/couriers', function (err, result) {
 ```
 
 When the API response with `429 Too Many request error`
-- If `rate` is `true`, it wont throw, will retry until it get a proper response.
-- If `rate` is `false`, it will return `429 Too Many request error` to the callback
+- if `rate` is `true`, it wont throw, will delay the job, retry when the rate limit is reset.
+- if `rate` is `false`, it will return `429 Too Many request error` to the callback
 
 ## Retry policy
 
 To understand error of AfterShip, please see https://www.aftership.com/docs/api/4/errors
 
-For this SDK, error with 
-- `code >= 500` or 
-- `ETIMEDOUT`/`ECONNRESET`/`ECONNREFUSED`
-are retriable.
+For this SDK, errors below are retriable.
+- `code >= 500` from API
+- `ETIMEDOUT`/`ECONNRESET`/`ECONNREFUSED` from node.js
 
 You can set the `retry` flag
 - in constructor as default `retry` flag
 - specify in `options` of `call()` method
 
-When an retriable error come
-- If `retry` is `true`, 
-	- If `retry_count < 5`, use the same payload to retry after 1 second
-	- If `retry_count == 5`, return the error to the callback, with `retry_count`
-- If `retry` is `false`, return the error to the callback
+When an retriable error comes, 
+- if `retry` is `true`, 
+	- if `retry_count < 5`, use the same payload to retry after 1 second
+	- if `retry_count == 5`, return the error to the callback, with `retry_count`
+- if `retry` is `false`, return the error to the callback
+
+## Error Handling
 
 ## Examples
 ### /couriers
@@ -338,8 +339,6 @@ Aftership.GET('/path', options, callback);
 
 // So as `POST`, `PUT` and `DELETE`
 ```
-
-## Error Handling
 
 ## License
 Copyright (c) 2016 AfterShip
