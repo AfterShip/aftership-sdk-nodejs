@@ -69,8 +69,8 @@ Create AfterShip instance with options
 - `options` - **Optional** - object of request options
 	- `endpoint` - *string*, AfterShip endpoint, default 'https://api.aftership.com/v4'
 	- `proxy` - *string*, proxy, default is `null`
-	- `retry` - *boolean*, retry if fail? default is `true`
-	- `rate` - *boolean*, retry if response with `429 Too Many request error`
+	- `retry` - *boolean*, retry if fail? default is `true`, see [Retry policy](#retry-policy)
+	- `rate` - *boolean*, retry if response with `429 Too Many request error` see [Rate Limiter](#rate-limiter)
 
 
 Example:
@@ -95,7 +95,7 @@ Make request with option
 - `options` - **Optional** - object of request options
 	- `body` - *object*, `POST` body
 	- `query` - *object*, `query` object
-	- `retry` - *boolean*, retry if fail? override `default retry` if set
+	- `retry` - *boolean*, retry if fail? override `default retry` if set, see [Retry policy](#retry-policy)
 	- `raw` - *boolean*, if `true`, return result as `string`, else return as `object`, default is `false`
 - `callback` - the callback to handle error and result, the result is the response body of the request
 
