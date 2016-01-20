@@ -10,7 +10,7 @@ const http = require('http');
 const http_proxy = require('http-proxy');
 const Aftership = require('./../../index');
 
-describe('Test aftership.call', function () {
+describe('Test aftership.call()', function () {
 	this.timeout(10000);
 
 	let sandbox;
@@ -414,7 +414,42 @@ describe('Test aftership.call', function () {
 	});
 
 	describe('Test RateLimit', function () {
-		it('should request again until reset timestamp', function (done) {
+		it('should request again until reset timestamp, if return 429 and rate is true', function (done) {
+			let now = Math.ceil(Date.now() / 1000);
+			let mock_req = {
+				headers: {
+					'x-ratelimit-limit': 600,
+					'x-ratelimit-remaining': 0,
+					'x-ratelimit-reset': now + 5
+				}
+			};
+			let mock_result1 = {
+				meta: {
+					code: 429
+				},
+				data: {}
+			};
+			let mock_result2 = {
+				meta: {
+					code: 200
+				},
+				data: {}
+			};
+			// Construct with valid api_key
+			let aftership = Aftership(api_key);
+			// Stub request to throw
+			let request = sandbox.stub(aftership, 'request');
+			request.onCall(0).callsArgWith(1, null, mock_req, mock_result1);
+			request.onCall(1).callsArgWith(1, null, mock_req, mock_result2);
+
+			aftership.call('GET', '/couriers/all', function (first_err, first_result) {
+				let diff = Math.ceil(Date.now() / 1000) - now;
+				expect(diff).to.be.gte(5);
+				done();
+			});
+		});
+
+		it('should not request again, if return 429 and rate is false', function (done) {
 			let now = Math.ceil(Date.now() / 1000);
 			let mock_req = {
 				headers: {
@@ -425,23 +460,23 @@ describe('Test aftership.call', function () {
 			};
 			let mock_result = {
 				meta: {
-					code: 200
+					code: 429
 				},
 				data: {}
 			};
 			// Construct with valid api_key
-			let aftership = Aftership(api_key);
-			// Stub request to throw
-			sandbox.stub(aftership, 'request', function (request_object, callback) {
-				callback(null, mock_req, mock_result);
+			let aftership = Aftership(api_key, {
+				rate: false
 			});
-			aftership.call('GET', '/couriers/all', function (first_err, first_result) {
-				aftership.call('GET', '/couriers/all', function (second_err, second_result) {
-					let diff = Math.ceil(Date.now() / 1000) - now;
-					expect(diff).to.be.gte(5);
+			// Stub request to throw
+			let request = sandbox.stub(aftership, 'request');
+			request.onCall(0).callsArgWith(1, null, mock_req, mock_result);
 
-					done();
-				});
+			aftership.call('GET', '/couriers/all', function (err, result) {
+				let diff = Math.ceil(Date.now() / 1000) - now;
+				expect(diff).to.be.lte(1);
+				expect(err.code).to.equal(mock_result.meta.code);
+				done();
 			});
 		});
 	});
@@ -492,6 +527,24 @@ describe('Test aftership.call', function () {
 				aftership.call('GET', '/couriers/all', function (err, result) {
 					expect(err.type).to.equal('ECONNREFUSED');
 					expect(err.retry_count).to.equal(5);
+					done();
+				});
+			});
+
+			it('should not retry with call() with retry = false, if request return ECONNREFUSED', function (done) {
+				// Construct with valid api_key
+				let aftership = Aftership(api_key, {
+					retry: false
+				});
+				let expected_error = new Error();
+				expected_error.code = 'ECONNREFUSED';
+				// Stub request to throw
+				sandbox.stub(aftership, 'request', function (request_object, callback) {
+					callback(expected_error);
+				});
+				aftership.call('GET', '/couriers/all', function (err, result) {
+					expect(err.type).to.equal('ECONNREFUSED');
+					expect(err.retry_count).to.equal(undefined);
 					done();
 				});
 			});

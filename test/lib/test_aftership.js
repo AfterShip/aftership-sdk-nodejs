@@ -195,5 +195,34 @@ describe('Test constructor', function () {
 				expect(e.message).to.equal(expected_error);
 			}
 		});
+
+		it('should return error, if rate is defined but not boolean', function () {
+			let expected_error = 'ConstructorError: Invalid Rate value';
+			try {
+				Aftership(api_key, {rate: 999});
+			} catch (e) {
+				expect(e.message).to.equal(expected_error);
+			}
+			try {
+				Aftership(api_key, {rate: 0});
+			} catch (e) {
+				expect(e.message).to.equal(expected_error);
+			}
+			try {
+				Aftership(api_key, {rate: 1});
+			} catch (e) {
+				expect(e.message).to.equal(expected_error);
+			}
+			try {
+				Aftership(api_key, {rate: {}});
+			} catch (e) {
+				expect(e.message).to.equal(expected_error);
+			}
+			try {
+				Aftership(api_key, {rate: ''});
+			} catch (e) {
+				expect(e.message).to.equal(expected_error);
+			}
+		});
 	});
 });
