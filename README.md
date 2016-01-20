@@ -50,13 +50,16 @@ mocha --recursive
 
 - [Constructor(api_key, options)](#constructorapi_key-options)
 - [call(method, path, options, callback)](#callmethod-path-options-callback)
+- [Rate Limiter](#rate-limiter)
+- [Retry policy]
+- [Error Handling](#error-handling)
 - [Examples](#examples)
 	- [/couriers](#couriers)
 	- [/trackings](#trackings)
 	- [/last_checkpoint](#last_checkpoint)
 	- [/notifications](#notifications)
 - [Proxy Method](#proxy-method)
-- [Error Handling](#error-handling)
+
 
 ## Constructor(api_key, options)
 
@@ -67,8 +70,8 @@ Create AfterShip instance with options
 	- `endpoint` - *string*, AfterShip endpoint, default 'https://api.aftership.com/v4'
 	- `proxy` - *string*, proxy, default is `null`
 	- `retry` - *boolean*, retry if fail? default is `true`
+	- `rate` - *boolean*, retry if response with `429 Too Many request error`
 
-> Retry Policy: Retry after 1 second. Maximum 5 times
 
 Example:
 ```javascript
@@ -95,6 +98,51 @@ Make request with option
 	- `retry` - *boolean*, retry if fail? override `default retry` if set
 	- `raw` - *boolean*, if `true`, return result as `string`, else return as `object`, default is `false`
 - `callback` - the callback to handle error and result, the result is the response body of the request
+
+## Rate Limiter
+
+To understand AfterShip rate limit policy, please see `limit` session in https://www.aftership.com/docs/api/4
+
+You can get the recent rate limit by `aftership.rate_limit`. Initially all value are `null`.
+```javascript
+const Aftership = require('aftership')('YOUR_API_KEY');
+console.log(Aftership.rate_limit);
+
+// console output
+// { reset: null, limit: null, remaining: null }
+```
+After making an API call, it will be set.
+```javascript
+Aftership.call('GET', '/couriers', function (err, result) {
+	console.log(Aftership.rate_limit);
+});
+
+// console output
+// { limit: 600, remaining: 599, reset: 1453281417 }
+```
+
+When the API response with `429 Too Many request error`
+- If `rate` is `true`, it wont throw, will retry until it get a proper response.
+- If `rate` is `false`, it will return `429 Too Many request error` to the callback
+
+## Retry policy
+
+To understand error of AfterShip, please see https://www.aftership.com/docs/api/4/errors
+
+For this SDK, error with 
+- `code >= 500` or 
+- `ETIMEDOUT`/`ECONNRESET`/`ECONNREFUSED`
+are retriable.
+
+You can set the `retry` flag
+- in constructor as default `retry` flag
+- specify in `options` of `call()` method
+
+When an retriable error come
+- If `retry` is `true`, 
+	- If `retry_count < 5`, use the same payload to retry after 1 second
+	- If `retry_count == 5`, return the error to the callback, with `retry_count`
+- If `retry` is `false`, return the error to the callback
 
 ## Examples
 ### /couriers
