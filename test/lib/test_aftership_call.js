@@ -97,7 +97,7 @@ describe('Test aftership.call()', function () {
 			aftership.request.reset();
 		});
 
-		it('should work with call(method, path)', function (done) {
+		it('should work with call(method, path) with callback', function (done) {
 			aftership.call('GET', '/couriers/all', function (err, result) {
 				let request_object = {
 					headers: {
@@ -110,11 +110,12 @@ describe('Test aftership.call()', function () {
 					json: true
 				};
 				expect(aftership.request.args[0][0]).to.deep.equal(request_object);
+				expect(result).to.deep.equal(expected_result);
 				done();
 			});
 		});
 
-		it('should work with call(method, path, {body})', function (done) {
+		it('should work with call(method, path, {body}) with callback', function (done) {
 			// Body
 			let body = {
 				tracking: {
@@ -136,6 +137,52 @@ describe('Test aftership.call()', function () {
 					json: true
 				};
 				expect(aftership.request.args[0][0]).to.deep.equal(request_object);
+				expect(result).to.deep.equal(expected_result);
+				done();
+			});
+		});
+
+		it('should work with call(method, path) with promise', function (done) {
+			aftership.call('GET', '/couriers/all').then(function (result) {
+				let request_object = {
+					headers: {
+						'aftership-api-key': api_key,
+						'Content-Type': 'application/json',
+						'x-aftership-agent': 'LANGUAGE-sdk-VERSION'
+					},
+					url: 'https://api.aftership.com/v4/couriers/all',
+					method: 'GET',
+					json: true
+				};
+				expect(aftership.request.args[0][0]).to.deep.equal(request_object);
+				expect(result).to.deep.equal(expected_result);
+				done();
+			});
+		});
+
+		it('should work with call(method, path, {body}) with promise', function (done) {
+			// Body
+			let body = {
+				tracking: {
+					tracking_number: '1111111111'
+				}
+			};
+			aftership.call('POST', '/couriers/detect', {
+				body: body
+			}).then(function (result) {
+				let request_object = {
+					headers: {
+						'aftership-api-key': api_key,
+						'Content-Type': 'application/json',
+						'x-aftership-agent': 'LANGUAGE-sdk-VERSION'
+					},
+					url: 'https://api.aftership.com/v4/couriers/detect',
+					body: body,
+					method: 'POST',
+					json: true
+				};
+				expect(aftership.request.args[0][0]).to.deep.equal(request_object);
+				expect(result).to.deep.equal(expected_result);
 				done();
 			});
 		});
@@ -330,6 +377,34 @@ describe('Test aftership.call()', function () {
 			});
 		});
 
+		it('should return promise with response error, if response code != 200', function (done) {
+			let expected_message = 'Invalid API key.';
+			let mock_req = {
+				headers: {
+					'x-ratelimit-limit': 999,
+					'x-ratelimit-remaining': 999,
+					'x-ratelimit-reset': 999
+				}
+			};
+			let result = {
+				meta: {
+					code: 401,
+					message: 'Invalid API key.',
+					type: 'Unauthorized'
+				},
+				data: {}
+			};
+			// Construct with invalid api_key
+			let aftership = Aftership('');
+			sandbox.stub(aftership, 'request', function (request_object, callback) {
+				callback(null, mock_req, result);
+			});
+			aftership.call('GET', '/couriers/all').catch(function (err) {
+				expect(err.message).to.equal(expected_message);
+				done();
+			});
+		});
+
 		it('should callback with response error, if request throw', function (done) {
 			let expected_error = new Error('Some error');
 			let aftership = Aftership(api_key);
@@ -338,6 +413,19 @@ describe('Test aftership.call()', function () {
 				callback(expected_error);
 			});
 			aftership.call('GET', '/couriers/all', function (err) {
+				expect(err.message).to.equal(expected_error.message);
+				done();
+			});
+		});
+
+		it('should return promise with response error, if request throw', function (done) {
+			let expected_error = new Error('Some error');
+			let aftership = Aftership(api_key);
+			// Stub request to throw
+			sandbox.stub(aftership, 'request', function (request_object, callback) {
+				callback(expected_error);
+			});
+			aftership.call('GET', '/couriers/all').catch(function (err) {
 				expect(err.message).to.equal(expected_error.message);
 				done();
 			});
