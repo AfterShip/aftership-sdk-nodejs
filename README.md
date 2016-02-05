@@ -58,7 +58,7 @@ mocha --recursive
 
 - [Constructor(api_key, options)](#constructorapi_key-options)
 - [call(method, path, options, callback)](#callmethod-path-options-callback)
-- [Proxy Method](#proxy-methodget-post-put-delete)
+- [Proxy Method](#proxy-method-get-post-put-delete)
 - [Rate Limiter](#rate-limiter)
 - [Retry policy](#retry-policy)
 - [Error Handling](#error-handling)
