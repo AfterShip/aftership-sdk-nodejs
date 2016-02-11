@@ -30,6 +30,14 @@ Aftership.call('GET', '/couriers/all', function (err, result) {
 	}
 });
 
+// Or do it with promise 
+
+Aftership.call('GET', '/couriers/all').then(function (result) {
+	console.log(result);
+}).catch(function (err) {
+	console.log(err);
+});
+
 /** Console
 { meta: { code: 200 },
   data:
@@ -50,6 +58,7 @@ mocha --recursive
 
 - [Constructor(api_key, options)](#constructorapi_key-options)
 - [call(method, path, options, callback)](#callmethod-path-options-callback)
+- [Proxy Method](#proxy-method-get-post-put-delete)
 - [Rate Limiter](#rate-limiter)
 - [Retry policy](#retry-policy)
 - [Error Handling](#error-handling)
@@ -58,7 +67,6 @@ mocha --recursive
 	- [/trackings](#trackings)
 	- [/last_checkpoint](#last_checkpoint)
 	- [/notifications](#notifications)
-- [Proxy Method](#proxy-method)
 
 
 ## Constructor(api_key, options)
@@ -98,6 +106,19 @@ Make request with option
 	- `retry` - *boolean*, retry if fail? override `default retry` if set, see [Retry policy](#retry-policy)
 	- `raw` - *boolean*, if `true`, return result as `string`, else return as `object`, default is `false`
 - `callback` - the callback to handle error and result, the result is the response body of the request
+
+
+## Proxy Method (GET, POST, PUT, DELETE)
+
+There are also interface `GET`, `POST`, `PUT`, `DELETE` which are proxy to `Aftership.call(...)`
+
+```javascript
+Aftership.call('GET', '/path', options, callback);
+// is equivalent to
+Aftership.GET('/path', options, callback);
+
+// So as `POST`, `PUT` and `DELETE`
+```
 
 ## Rate Limiter
 
@@ -326,18 +347,6 @@ Aftership.call('POST', '/notifications/ups/1234567890/remove', {
 }, function (err, result) {
 	// Your code here
 });
-```
-
-## Proxy Method
-
-There are also interface `GET`, `POST`, `PUT`, `DELETE` which are proxy to `Aftership.call(...)`
-
-```javascript
-Aftership.call('GET', '/path', options, callback);
-// is equivalent to
-Aftership.GET('/path', options, callback);
-
-// So as `POST`, `PUT` and `DELETE`
 ```
 
 ## License
