@@ -101,6 +101,7 @@ Make request with option
 - `method` - **Require** - Either `get`, `post`, `put` or `delete`, case insensitive
 - `path` - **Require** *string*, start with `/`, see available path [here](https://www.aftership.com/docs/)
 - `options` - **Optional** - object of request options
+	- `api_key` - *string*, AfterShip API key, override `default api_key` if set
 	- `body` - *object*, `POST` body
 	- `query` - *object*, `query` object
 	- `retry` - *boolean*, retry if fail? override `default retry` if set, see [Retry policy](#retry-policy)
@@ -130,7 +131,7 @@ const Aftership = require('aftership')('YOUR_API_KEY');
 console.log(Aftership.rate_limit);
 
 // console output
-// { reset: null, limit: null, remaining: null }
+// { 'YOUR_API-KEY' : { reset: null, limit: null, remaining: null } }
 ```
 After making an API call, it will be set.
 ```javascript
@@ -139,7 +140,7 @@ Aftership.call('GET', '/couriers', function (err, result) {
 });
 
 // console output
-// { limit: 600, remaining: 599, reset: 1453281417 }
+// { 'YOUR_API-KEY' : { limit: 600, remaining: 599, reset: 1453281417 } }
 ```
 
 When the API response with `429 Too Many request error`
@@ -151,7 +152,7 @@ When the API response with `429 Too Many request error`
 To understand error of AfterShip, please see https://www.aftership.com/docs/api/4/errors
 
 For this SDK, errors below are retriable.
-- `code >= 500` from API
+- `meta.code == [500, 502, 503, 504]` from API
 - `ETIMEDOUT`/`ECONNRESET`/`ECONNREFUSED` from node.js
 
 You can set the `retry` flag
