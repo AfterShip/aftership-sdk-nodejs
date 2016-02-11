@@ -207,6 +207,39 @@ describe('Test Payload constructor', function () {
 				expect(e.message).to.equal(expected_error.message);
 			}
 		});
+
+		it('should throw HandlerInvalidApiKey, if api_key is invalid', function () {
+			let expected_error = Error('HandlerError: Invalid API key');
+			let aftership = Aftership(api_key);
+			try {
+				Payload(aftership, 'GET', '', {
+					api_key: ''
+				});
+			} catch (e) {
+				expect(e.message).to.equal(expected_error.message);
+			}
+			try {
+				Payload(aftership, 'GET', '', {
+					api_key: 999
+				});
+			} catch (e) {
+				expect(e.message).to.equal(expected_error.message);
+			}
+			try {
+				Payload(aftership, 'GET', '', {
+					api_key: null
+				});
+			} catch (e) {
+				expect(e.message).to.equal(expected_error.message);
+			}
+			try {
+				Payload(aftership, 'GET', '', {
+					api_key: true
+				});
+			} catch (e) {
+				expect(e.message).to.equal(expected_error.message);
+			}
+		});
 	});
 
 	describe('Test Correct cases', function () {
@@ -303,6 +336,17 @@ describe('Test Payload constructor', function () {
 				// Retry count is undefined
 				let result2 = Payload(aftership, 'GET', '');
 				expect(result2.retry_count).to.equal(undefined);
+			});
+
+			it('should override default api_key, if api_key is defined', function () {
+				// Default to true
+				let aftership = Aftership(api_key);
+
+				let other_api_key = 'OTHER_API_KEY';
+				let result = Payload(aftership, 'GET', '', {
+					api_key: other_api_key
+				});
+				expect(result.request_object.headers['aftership-api-key']).to.equal(other_api_key);
 			});
 		});
 	});
