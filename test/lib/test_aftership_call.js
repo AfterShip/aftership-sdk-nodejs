@@ -80,7 +80,8 @@ describe('Test aftership.call()', function () {
 				'x-ratelimit-limit': 999,
 				'x-ratelimit-remaining': 999,
 				'x-ratelimit-reset': 999
-			}
+			},
+			statusCode: 200
 		};
 
 		before(function () {
@@ -349,6 +350,27 @@ describe('Test aftership.call()', function () {
 	});
 
 	describe('Test error handling', function () {
+		it('should return InternalError, if response body is string', function (done) {
+			let expected_error = {
+				type: 'InternalError',
+				message: 'Something went wrong on AfterShip\'s end.',
+				code: 500,
+				data: {}
+			};
+			let result = 'string response';
+			let aftership = Aftership(api_key);
+			sandbox.stub(aftership, 'request', function (request_object, callback) {
+				callback(null, null, result);
+			});
+			aftership.call('GET', '/couriers/all', function (err) {
+				expect(err.message).to.equal(expected_error.message);
+				expect(err.type).to.equal(expected_error.type);
+				expect(err.code).to.equal(expected_error.code);
+				expect(err.data).to.deep.equal(expected_error.data);
+				done();
+			});
+		});
+
 		it('should callback with response error, if response code != 200', function (done) {
 			let expected_message = 'Invalid API key.';
 			let mock_req = {
@@ -356,7 +378,8 @@ describe('Test aftership.call()', function () {
 					'x-ratelimit-limit': 999,
 					'x-ratelimit-remaining': 999,
 					'x-ratelimit-reset': 999
-				}
+				},
+				statusCode: 401
 			};
 			let result = {
 				meta: {
@@ -384,7 +407,8 @@ describe('Test aftership.call()', function () {
 					'x-ratelimit-limit': 999,
 					'x-ratelimit-remaining': 999,
 					'x-ratelimit-reset': 999
-				}
+				},
+				statusCode: 401
 			};
 			let result = {
 				meta: {
@@ -504,12 +528,21 @@ describe('Test aftership.call()', function () {
 	describe('Test RateLimit', function () {
 		it('should request again until reset timestamp, if return 429 and rate is true', function (done) {
 			let now = Math.ceil(Date.now() / 1000);
-			let mock_req = {
+			let mock_req1 = {
 				headers: {
 					'x-ratelimit-limit': 600,
 					'x-ratelimit-remaining': 0,
 					'x-ratelimit-reset': now + 5
-				}
+				},
+				statusCode: 429
+			};
+			let mock_req2 = {
+				headers: {
+					'x-ratelimit-limit': 600,
+					'x-ratelimit-remaining': 0,
+					'x-ratelimit-reset': now + 65
+				},
+				statusCode: 200
 			};
 			let mock_result1 = {
 				meta: {
@@ -527,8 +560,8 @@ describe('Test aftership.call()', function () {
 			let aftership = Aftership(api_key);
 			// Stub request to throw
 			let request = sandbox.stub(aftership, 'request');
-			request.onCall(0).callsArgWith(1, null, mock_req, mock_result1);
-			request.onCall(1).callsArgWith(1, null, mock_req, mock_result2);
+			request.onCall(0).callsArgWith(1, null, mock_req1, mock_result1);
+			request.onCall(1).callsArgWith(1, null, mock_req2, mock_result2);
 
 			aftership.call('GET', '/couriers/all', function (first_err, first_result) {
 				let diff = Math.ceil(Date.now() / 1000) - now;
@@ -544,7 +577,8 @@ describe('Test aftership.call()', function () {
 					'x-ratelimit-limit': 600,
 					'x-ratelimit-remaining': 0,
 					'x-ratelimit-reset': now + 5
-				}
+				},
+				statusCode: 429
 			};
 			let mock_result = {
 				meta: {
@@ -644,7 +678,8 @@ describe('Test aftership.call()', function () {
 
 			before(function () {
 				mock_req = {
-					headers: {}
+					headers: {},
+					statusCode: 500
 				};
 				expected_error = {
 					meta: {
