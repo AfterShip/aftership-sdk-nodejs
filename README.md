@@ -152,7 +152,7 @@ When the API response with `429 Too Many request error`
 To understand error of AfterShip, please see https://www.aftership.com/docs/api/4/errors
 
 For this SDK, errors below are retriable.
-- `HTTP status code !== [500, 502, 503, 504]` from API
+- `HTTP status code == [500, 502, 503, 504]` from API
 - `ETIMEDOUT`/`ECONNRESET`/`ECONNREFUSED` from node.js
 
 You can set the `retry` flag
