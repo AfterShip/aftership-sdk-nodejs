@@ -167,6 +167,93 @@ When an retriable error comes,
 
 ## Error Handling
 
+There are 3 kinds of error
+- SDK Error
+- Request Error
+- API Error
+
+Error object of this SDK contain fields:
+- `type` - **Require** - type of the error
+- `message` - **Optional** - detail message of the error
+- `data` - **Optional** - data lead to the error
+- `code` - **Optional** - error code for API Error
+- `response_body` - **Optional** - response body of API Error
+- `retry_count` - **Optional** - number of retry, if the error is retriable
+
+> Please handle each error by its `type`, since it is a require field
+
+### SDK Error
+
+Error return by the SDK instance, mostly invalid param type when calling `constructor` or `call` function  
+`error.type` is one of [error_enum](https://github.com/AfterShip/aftership-sdk-nodejs/blob/master/lib/error/error_enum.js)  
+**Throw** by the SDK instance
+
+```js
+const Aftership = require('aftership')('YOUR_API_KEY');
+
+try {
+	Aftership.call('INVALID_METHOD', '/couriers/all', function (err, result) {
+		// ...
+	});
+} catch (e) {
+	console.log(e);
+}
+
+/*
+{ [Error: HandlerError: Invalid Method value]
+  type: 'HandlerError',
+  message: 'HandlerError: Invalid Method value',
+  data: 'INVALID_METHOD' 
+  ... }
+*/
+```
+
+### Request Error
+
+Error return by the `request` module  
+`error.type` could be `ETIMEDOUT`, `ECONNRESET`, etc.  
+**Catch** by promise or **Pass** through the first param of callback
+
+```js
+const Aftership = require('aftership')('YOUR_API_KEY');
+
+Aftership.call('GET', '/couriers/all', function (err, result) {
+	if (err) {
+		console.log(err);
+	}
+});
+/*
+{ [Error]
+  code: 'ECONNRESET',
+  type: 'ECONNRESET' 
+  ... }
+*/
+```
+
+### API Error
+
+Error return by the Aftership API  
+`error.type` shuold be same as https://www.aftership.com/docs/api/4/errors  
+**Catch** by promise or **Pass** through the first param of callback
+
+```js
+const Aftership = require('aftership')('INVALID_API_KEY');
+
+Aftership.call('GET', '/couriers/all', function (err, result) {
+	if (err) {
+		console.log(err);
+	}
+});
+/*
+{ [Error: Invalid API key.]
+  type: 'Unauthorized',
+  message: 'Invalid API key.',
+  code: 401,
+  data: {},
+  response_body: '{"meta":{"code":401,"message":"Invalid API key.","type":"Unauthorized"},"data":{}}' }
+*/
+```
+
 ## Examples
 ### /couriers
 **GET** /couriers
