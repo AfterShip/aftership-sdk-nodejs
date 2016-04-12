@@ -173,7 +173,7 @@ There are 3 kinds of error
 - API Error
 
 Error object of this SDK contain fields:
-- `type` - **Require** - type of the error
+- `type` - **Require** - type of the error, **please handle each error by this field**
 - `message` - **Optional** - detail message of the error
 - `data` - **Optional** - data lead to the error
 - `code` - **Optional** - error code for API Error
