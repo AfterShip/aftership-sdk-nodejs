@@ -230,6 +230,26 @@ describe('Test aftership.call()', function () {
 				done();
 			});
 		});
+
+		it('should work with call(method, path, {timeout: 10000})', function (done) {
+			aftership.call('GET', '/couriers/all', {
+				timeout: 10000
+			}, function (err, result) {
+				let request_object = {
+					headers: {
+						'aftership-api-key': api_key,
+						'Content-Type': 'application/json',
+						'x-aftership-agent': 'LANGUAGE-sdk-VERSION'
+					},
+					url: 'https://api.aftership.com/v4/couriers/all',
+					method: 'GET',
+					json: true,
+					timeout: 10000
+				};
+				expect(aftership.request.args[0][0]).to.deep.equal(request_object);
+				done();
+			});
+		});
 	});
 
 	describe('Test Proxy method', function () {

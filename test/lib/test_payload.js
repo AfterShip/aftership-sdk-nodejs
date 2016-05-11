@@ -240,6 +240,39 @@ describe('Test Payload constructor', function () {
 				expect(e.message).to.equal(expected_error.message);
 			}
 		});
+
+		it('should throw HandlerInvalidTimeout, if timeout is invalid', function () {
+			let expected_error = Error('HandlerError: Invalid Timeout');
+			let aftership = Aftership(api_key);
+			try {
+				Payload(aftership, 'GET', '', {
+					timeout: ''
+				});
+			} catch (e) {
+				expect(e.message).to.equal(expected_error.message);
+			}
+			try {
+				Payload(aftership, 'GET', '', {
+					timeout: true
+				});
+			} catch (e) {
+				expect(e.message).to.equal(expected_error.message);
+			}
+			try {
+				Payload(aftership, 'GET', '', {
+					timeout: false
+				});
+			} catch (e) {
+				expect(e.message).to.equal(expected_error.message);
+			}
+			try {
+				Payload(aftership, 'GET', '', {
+					timeout: {}
+				});
+			} catch (e) {
+				expect(e.message).to.equal(expected_error.message);
+			}
+		});
 	});
 
 	describe('Test Correct cases', function () {
@@ -316,6 +349,21 @@ describe('Test Payload constructor', function () {
 					raw: false
 				});
 				expect(result3.raw).to.equal(false);
+			});
+
+			it('should set correct timeout value', function () {
+				// Default is false
+				let aftership = Aftership(api_key);
+
+				// Equal to default, false
+				let result1 = Payload(aftership, 'GET', '');
+				expect(result1.request_object.timeout).to.equal(undefined);
+
+				// Overwrite default raw, to true
+				let result2 = Payload(aftership, 'GET', '', {
+					timeout: 10000
+				});
+				expect(result2.request_object.timeout).to.equal(10000);
 			});
 
 			it('should have retry count, if retry = true', function () {
