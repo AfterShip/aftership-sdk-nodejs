@@ -284,7 +284,7 @@ let body = {
 		'slug': ['dhl', 'ups', 'fedex']
 	}
 };
-Aftership.call('POST', '/couriers', {
+Aftership.call('POST', '/couriers/detect', {
 	body: body
 }, function (err, result) {
 	// Your code here
