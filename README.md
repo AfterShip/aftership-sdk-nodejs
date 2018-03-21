@@ -79,6 +79,7 @@ Create AfterShip instance with options
 	- `proxy` - *string*, proxy, default is `null`
 	- `retry` - *boolean*, retry if fail? default is `true`, see [Retry policy](#retry-policy)
 	- `rate` - *boolean*, retry if response with `429 Too Many request error` see [Rate Limiter](#rate-limiter)
+	- `user_agent_prefix` - *string*, prefix of User-Agent in headers, default 'aftership-sdk-nodejs'
 
 
 Example:

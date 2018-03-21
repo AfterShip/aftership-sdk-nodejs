@@ -24,7 +24,8 @@
   },
   "dependencies": {
     "lodash": "^3.10.1",
-    "request": "^2.67.0"
+    "request": "^2.67.0",
+    "uuid": "^3.2.1"
   },
   "devDependencies": {
     "chai": "^3.4.1",
