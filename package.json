@@ -24,7 +24,8 @@
   },
   "dependencies": {
     "lodash": "^3.10.1",
-    "request": "^2.67.0"
+    "request": "^2.67.0",
+    "uuid": "^3.2.1"
   },
   "devDependencies": {
     "chai": "^3.4.1",
@@ -38,6 +39,7 @@
     "load-grunt-config": "^0.19.1",
     "mocha": "^2.3.4",
     "pre-commit": "^1.1.2",
+    "proxyquire": "^2.0.1",
     "sinon": "^1.17.2"
   },
   "keywords": [

@@ -100,17 +100,9 @@ describe('Test aftership.call()', function () {
 
 		it('should work with call(method, path) with callback', function (done) {
 			aftership.call('GET', '/couriers/all', function (err, result) {
-				let request_object = {
-					headers: {
-						'aftership-api-key': api_key,
-						'Content-Type': 'application/json',
-						'x-aftership-agent': 'LANGUAGE-sdk-VERSION'
-					},
-					url: 'https://api.aftership.com/v4/couriers/all',
-					method: 'GET',
-					json: true
-				};
-				expect(aftership.request.args[0][0]).to.deep.equal(request_object);
+				const actual_request = aftership.request.args[0][0];
+				expect(actual_request.url).to.equal('https://api.aftership.com/v4/couriers/all');
+				expect(actual_request.method).to.equal('GET');
 				expect(result).to.deep.equal(expected_result);
 				done();
 			});
@@ -126,18 +118,10 @@ describe('Test aftership.call()', function () {
 			aftership.call('POST', '/couriers/detect', {
 				body: body
 			}, function (err, result) {
-				let request_object = {
-					headers: {
-						'aftership-api-key': api_key,
-						'Content-Type': 'application/json',
-						'x-aftership-agent': 'LANGUAGE-sdk-VERSION'
-					},
-					url: 'https://api.aftership.com/v4/couriers/detect',
-					body: body,
-					method: 'POST',
-					json: true
-				};
-				expect(aftership.request.args[0][0]).to.deep.equal(request_object);
+				const actual_request = aftership.request.args[0][0];
+				expect(actual_request.url).to.equal('https://api.aftership.com/v4/couriers/detect');
+				expect(actual_request.method).to.equal('POST');
+				expect(actual_request.body).to.deep.equal(body);
 				expect(result).to.deep.equal(expected_result);
 				done();
 			});
@@ -145,17 +129,9 @@ describe('Test aftership.call()', function () {
 
 		it('should work with call(method, path) with promise', function (done) {
 			aftership.call('GET', '/couriers/all').then(function (result) {
-				let request_object = {
-					headers: {
-						'aftership-api-key': api_key,
-						'Content-Type': 'application/json',
-						'x-aftership-agent': 'LANGUAGE-sdk-VERSION'
-					},
-					url: 'https://api.aftership.com/v4/couriers/all',
-					method: 'GET',
-					json: true
-				};
-				expect(aftership.request.args[0][0]).to.deep.equal(request_object);
+				const actual_request = aftership.request.args[0][0];
+				expect(actual_request.url).to.equal('https://api.aftership.com/v4/couriers/all');
+				expect(actual_request.method).to.equal('GET');
 				expect(result).to.deep.equal(expected_result);
 				done();
 			});
@@ -171,18 +147,10 @@ describe('Test aftership.call()', function () {
 			aftership.call('POST', '/couriers/detect', {
 				body: body
 			}).then(function (result) {
-				let request_object = {
-					headers: {
-						'aftership-api-key': api_key,
-						'Content-Type': 'application/json',
-						'x-aftership-agent': 'LANGUAGE-sdk-VERSION'
-					},
-					url: 'https://api.aftership.com/v4/couriers/detect',
-					body: body,
-					method: 'POST',
-					json: true
-				};
-				expect(aftership.request.args[0][0]).to.deep.equal(request_object);
+				const actual_request = aftership.request.args[0][0];
+				expect(actual_request.url).to.equal('https://api.aftership.com/v4/couriers/detect');
+				expect(actual_request.method).to.equal('POST');
+				expect(actual_request.body).to.deep.equal(body);
 				expect(result).to.deep.equal(expected_result);
 				done();
 			});
@@ -195,18 +163,10 @@ describe('Test aftership.call()', function () {
 			aftership.call('GET', '/couriers/all', {
 				query: query
 			}, function (err, result) {
-				let request_object = {
-					headers: {
-						'aftership-api-key': api_key,
-						'Content-Type': 'application/json',
-						'x-aftership-agent': 'LANGUAGE-sdk-VERSION'
-					},
-					url: 'https://api.aftership.com/v4/couriers/all',
-					qs: query,
-					method: 'GET',
-					json: true
-				};
-				expect(aftership.request.args[0][0]).to.deep.equal(request_object);
+				const actual_request = aftership.request.args[0][0];
+				expect(actual_request.url).to.equal('https://api.aftership.com/v4/couriers/all');
+				expect(actual_request.method).to.equal('GET');
+				expect(actual_request.qs).to.equal(query);
 				done();
 			});
 		});
@@ -215,17 +175,9 @@ describe('Test aftership.call()', function () {
 			aftership.call('GET', '/couriers/all', {
 				raw: true
 			}, function (err, result) {
-				let request_object = {
-					headers: {
-						'aftership-api-key': api_key,
-						'Content-Type': 'application/json',
-						'x-aftership-agent': 'LANGUAGE-sdk-VERSION'
-					},
-					url: 'https://api.aftership.com/v4/couriers/all',
-					method: 'GET',
-					json: true
-				};
-				expect(aftership.request.args[0][0]).to.deep.equal(request_object);
+				const actual_request = aftership.request.args[0][0];
+				expect(actual_request.url).to.equal('https://api.aftership.com/v4/couriers/all');
+				expect(actual_request.method).to.equal('GET');
 				expect(_.isString(result)).to.equal(true);
 				done();
 			});
@@ -235,18 +187,10 @@ describe('Test aftership.call()', function () {
 			aftership.call('GET', '/couriers/all', {
 				timeout: 10000
 			}, function (err, result) {
-				let request_object = {
-					headers: {
-						'aftership-api-key': api_key,
-						'Content-Type': 'application/json',
-						'x-aftership-agent': 'LANGUAGE-sdk-VERSION'
-					},
-					url: 'https://api.aftership.com/v4/couriers/all',
-					method: 'GET',
-					json: true,
-					timeout: 10000
-				};
-				expect(aftership.request.args[0][0]).to.deep.equal(request_object);
+				const actual_request = aftership.request.args[0][0];
+				expect(actual_request.url).to.equal('https://api.aftership.com/v4/couriers/all');
+				expect(actual_request.method).to.equal('GET');
+				expect(actual_request.timeout).to.equal(10000);
 				done();
 			});
 		});
@@ -284,17 +228,9 @@ describe('Test aftership.call()', function () {
 
 		it('should work with handler.GET(...)', function (done) {
 			aftership.GET('/couriers/all', function (err, result) {
-				let request_object = {
-					headers: {
-						'aftership-api-key': api_key,
-						'Content-Type': 'application/json',
-						'x-aftership-agent': 'LANGUAGE-sdk-VERSION'
-					},
-					url: 'https://api.aftership.com/v4/couriers/all',
-					method: 'GET',
-					json: true
-				};
-				expect(aftership.request.args[0][0]).to.deep.equal(request_object);
+				const actual_request = aftership.request.args[0][0];
+				expect(actual_request.url).to.equal('https://api.aftership.com/v4/couriers/all');
+				expect(actual_request.method).to.equal('GET');
 				done();
 			});
 		});
@@ -309,18 +245,10 @@ describe('Test aftership.call()', function () {
 			aftership.POST('/couriers/detect', {
 				body: body
 			}, function (err, result) {
-				let request_object = {
-					headers: {
-						'aftership-api-key': api_key,
-						'Content-Type': 'application/json',
-						'x-aftership-agent': 'LANGUAGE-sdk-VERSION'
-					},
-					url: 'https://api.aftership.com/v4/couriers/detect',
-					method: 'POST',
-					body: body,
-					json: true
-				};
-				expect(aftership.request.args[0][0]).to.deep.equal(request_object);
+				const actual_request = aftership.request.args[0][0];
+				expect(actual_request.url).to.equal('https://api.aftership.com/v4/couriers/detect');
+				expect(actual_request.method).to.equal('POST');
+				expect(actual_request.body).to.deep.equal(body);
 				done();
 			});
 		});
@@ -335,35 +263,19 @@ describe('Test aftership.call()', function () {
 			aftership.PUT('/trackings/dhl/0000000000', {
 				body: body
 			}, function (err, result) {
-				let request_object = {
-					headers: {
-						'aftership-api-key': api_key,
-						'Content-Type': 'application/json',
-						'x-aftership-agent': 'LANGUAGE-sdk-VERSION'
-					},
-					url: 'https://api.aftership.com/v4/trackings/dhl/0000000000',
-					method: 'PUT',
-					body: body,
-					json: true
-				};
-				expect(aftership.request.args[0][0]).to.deep.equal(request_object);
+				const actual_request = aftership.request.args[0][0];
+				expect(actual_request.url).to.equal('https://api.aftership.com/v4/trackings/dhl/0000000000');
+				expect(actual_request.method).to.equal('PUT');
+				expect(actual_request.body).to.deep.equal(body);
 				done();
 			});
 		});
 
 		it('should work with handler.DELETE(...)', function (done) {
 			aftership.DELETE('/trackings/dhl/0000000000', function () {
-				let request_object = {
-					headers: {
-						'aftership-api-key': api_key,
-						'Content-Type': 'application/json',
-						'x-aftership-agent': 'LANGUAGE-sdk-VERSION'
-					},
-					url: 'https://api.aftership.com/v4/trackings/dhl/0000000000',
-					method: 'DELETE',
-					json: true
-				};
-				expect(aftership.request.args[0][0]).to.deep.equal(request_object);
+				const actual_request = aftership.request.args[0][0];
+				expect(actual_request.url).to.equal('https://api.aftership.com/v4/trackings/dhl/0000000000');
+				expect(actual_request.method).to.equal('DELETE');
 				done();
 			});
 		});

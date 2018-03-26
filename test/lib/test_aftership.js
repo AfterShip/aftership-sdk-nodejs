@@ -7,56 +7,31 @@ const expect = chai.expect;
 const Aftership = require('./../../index');
 
 let api_key = 'SOME_API_KEY';
-let default_endpoint = 'https://api.aftership.com/v4';
-let default_proxy = null;
-let default_retry = true;
 
 describe('Test constructor', function () {
 	describe('Test construct correct cases', function () {
 		it('should construct with api_key correctly', function () {
 			let aftership = Aftership(api_key);
 			expect(aftership.api_key).to.equal(api_key);
-			expect(aftership.endpoint).to.equal(default_endpoint);
-			expect(aftership.proxy).to.equal(default_proxy);
-			expect(aftership.retry).to.equal(default_retry);
-
-			aftership = Aftership(api_key, null, null, null, null);
-			expect(aftership.api_key).to.equal(api_key);
-			expect(aftership.endpoint).to.equal(default_endpoint);
-			expect(aftership.proxy).to.equal(default_proxy);
-			expect(aftership.retry).to.equal(default_retry);
+			expect(aftership.endpoint).to.equal('https://api.aftership.com/v4');
+			expect(aftership.proxy).to.equal(null);
+			expect(aftership.retry).to.equal(true);
+			expect(aftership.user_agent_prefix).to.equal('aftership-sdk-nodejs');
 		});
 
-		it('should construct with api_key and endpoint correctly', function () {
+		it('should construct with api_key and options correctly', function () {
 			let endpoint = 'https://api.aftership.com/v3';
 			let aftership = Aftership(api_key, {
-				endpoint: endpoint
+				endpoint: endpoint,
+				proxy: '127.0.0.1',
+				retry: false,
+				user_agent_prefix: 'web'
 			});
 			expect(aftership.api_key).to.equal(api_key);
-			expect(aftership.endpoint).to.equal(endpoint);
-			expect(aftership.proxy).to.equal(default_proxy);
-			expect(aftership.retry).to.equal(default_retry);
-		});
-
-		it('should construct with api_key and proxy correctly', function () {
-			let proxy = '127.0.0.1';
-			let aftership = Aftership(api_key, {
-				proxy: proxy
-			});
 			expect(aftership.api_key).to.equal(api_key);
-			expect(aftership.endpoint).to.equal(default_endpoint);
-			expect(aftership.proxy).to.equal(proxy);
-			expect(aftership.retry).to.equal(default_retry);
-		});
-
-		it('should construct with api_key and retry correctly', function () {
-			let aftership = Aftership(api_key, {
-				retry: false
-			});
-			expect(aftership.api_key).to.equal(api_key);
-			expect(aftership.endpoint).to.equal(default_endpoint);
-			expect(aftership.proxy).to.equal(default_proxy);
+			expect(aftership.proxy).to.equal('127.0.0.1');
 			expect(aftership.retry).to.equal(false);
+			expect(aftership.user_agent_prefix).to.equal('web');
 		});
 	});
 
