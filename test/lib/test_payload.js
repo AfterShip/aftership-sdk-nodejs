@@ -5,10 +5,18 @@ const api_key = 'SOME_API_KEY'; // please use your AfterShip api key
 const _ = require('lodash');
 const chai = require('chai');
 const expect = chai.expect;
-const Payload = require('./../../lib/payload');
+const proxyquire = require('proxyquire');
 const Aftership = require('./../../index');
 
 describe('Test Payload constructor', function () {
+	let Payload;
+
+	before(function () {
+		Payload = proxyquire('../../lib/payload', {
+			uuid: () => 'MOCK_UUID'
+		});
+	});
+
 	describe('Test error handling', function () {
 		it('should throw HandlerInvalidMethod, if method is not `GET`, `POST`, `DELETE`, `PUT`', function () {
 			let expected_error = 'HandlerError: Invalid Method value';
@@ -280,12 +288,12 @@ describe('Test Payload constructor', function () {
 			it('should set correct headers', function () {
 				let aftership = Aftership(api_key);
 				let result = Payload(aftership, 'GET', '');
-				let headers = {
-					'aftership-api-key': api_key,
-					'Content-Type': 'application/json',
-					'x-aftership-agent': 'LANGUAGE-sdk-VERSION'
-				};
-				expect(result.request_object.headers).to.deep.equal(headers);
+				const actual_headers = result.request_object.headers;
+				expect(actual_headers['aftership-api-key']).to.equal(api_key);
+				expect(actual_headers['Content-Type']).to.equal('application/json');
+				expect(actual_headers['x-request-id']).to.equal('MOCK_UUID');
+				expect(actual_headers['User-Agent']).to.equal('aftership-sdk-nodejs/MOCK_UUID');
+				expect(actual_headers['x-aftership-agent']).to.equal('LANGUAGE-sdk-VERSION');
 			});
 
 			it('should set correct url', function () {

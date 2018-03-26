@@ -39,6 +39,7 @@
     "load-grunt-config": "^0.19.1",
     "mocha": "^2.3.4",
     "pre-commit": "^1.1.2",
+    "proxyquire": "^2.0.1",
     "sinon": "^1.17.2"
   },
   "keywords": [
