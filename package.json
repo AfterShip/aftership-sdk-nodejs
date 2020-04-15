@@ -14,13 +14,18 @@
   "bugs": {
     "url": "https://github.com/aftership/aftership-sdk-nodejs/issues"
   },
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "engines": {
-    "node": ">=4.2"
+    "node": ">=10.0"
   },
   "scripts": {
-    "lint": "grunt lint",
-    "test": "grunt lint && grunt coverage"
+    "prepare": "npm run build",
+    "build": "npm run build:clean && tsc",
+    "build:clean": "shx rm -rf ./dist ./coverage ./.nyc_output",
+    "lint": "tslint --project .",
+    "test": "nyc mocha --config .mocharc.json src/*.spec.js test/integration/*.js",
+    "coverage": "codecov -F eventsapi --root=$PWD"
   },
   "dependencies": {
     "lodash": "^4.17.11",
@@ -40,7 +45,14 @@
     "mocha": "^2.3.4",
     "pre-commit": "^1.1.2",
     "proxyquire": "^2.0.1",
-    "sinon": "^1.17.2"
+    "sinon": "^1.17.2",
+    "codecov": "^3.0.4",
+    "nyc": "^14.1.1",
+    "shx": "^0.3.2",
+    "ts-node": "^8.2.0",
+    "tslint": "^5.17.0",
+    "tslint-config-airbnb": "^5.11.1",
+    "typescript": "^3.5.1"
   },
   "keywords": [
     "aftership"

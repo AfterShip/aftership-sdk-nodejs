@@ -1,0 +1,16 @@
+{
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "**/*.spec.js"
+  ],
+  "reporter": [
+    "lcov"
+  ],
+  "extension": [
+    ".ts"
+  ],
+  "all": false,
+  "cache": true
+}
