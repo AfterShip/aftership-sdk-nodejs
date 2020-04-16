@@ -168,3 +168,7 @@ dwsync.xml
 
 *.komodoproject
 .komodotools
+
+dist
+
+.nyc_output
