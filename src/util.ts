@@ -79,11 +79,10 @@ export const processException = (error: any) => {
 };
 
 export const setRateLimiting = (app: any, data: any) => {
-
   const rateLimiting = {
-    reset: data['X-RateLimit-Reset'],
-    limit: data['X-RateLimit-Limit'],
-    remaining: data['X-RateLimit-Remaining'],
+    reset: data['x-ratelimit-reset'],
+    limit: data['x-ratelimit-limit'],
+    remaining: data['x-ratelimit-remaining'],
   };
 
   debugRateLimiting('rateLimiting %o', rateLimiting);
