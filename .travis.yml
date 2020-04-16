@@ -20,4 +20,4 @@ script:
   - . ./scripts/ci/run.sh
 
 after_script:
-  - bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN > /dev/null
+  - bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
