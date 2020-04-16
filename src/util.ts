@@ -6,9 +6,9 @@ const debugProcessResponse = debug('aftership:processResponse');
 const debugProcessException = debug('aftership:processException');
 const debugRateLimiting = debug('aftership:setRateLimiting');
 
-export const DEFAULTENDPOINT = 'https://api.aftership.com/v4';
+export const DEFAULT_ENDPOINT = 'https://api.aftership.com/v4';
 
-export const DEFAULTAPIKEY = process.env['AFTERSHIP_API_KEY'];
+export const DEFAULT_API_KEY = process.env['AFTERSHIP_API_KEY'];
 
 export const TIMEOUT = 50000;
 
@@ -20,7 +20,7 @@ export const makeRequest = (app: any) => ({ url, method }: Entity) => (headers: 
     const request = axios.request({
       url,
       method,
-      baseURL: `${DEFAULTENDPOINT}`,
+      baseURL: `${DEFAULT_ENDPOINT}`,
       headers: { 'aftership-api-key': headers.apiKey },
       data: { ...data },
       timeout: TIMEOUT,

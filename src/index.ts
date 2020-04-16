@@ -1,5 +1,5 @@
 import { Courier } from './courier';
-import { DEFAULTAPIKEY } from './util';
+import { DEFAULT_API_KEY } from './util';
 
 class AfterShip {
   private apiKey: string;
@@ -7,10 +7,10 @@ class AfterShip {
 
   public courier: any;
   constructor(apiKey: string) {
-    if (apiKey !== '' && apiKey !== undefined) {
+    if (apiKey !== undefined && apiKey !== '') {
       this.apiKey = apiKey;
-    } else if (DEFAULTAPIKEY !== undefined) {
-      this.apiKey = DEFAULTAPIKEY;
+    } else if (DEFAULT_API_KEY !== undefined) {
+      this.apiKey = DEFAULT_API_KEY;
     } else {
       this.apiKey = 'aftership-api-key';
     }
