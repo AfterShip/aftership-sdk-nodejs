@@ -30,27 +30,15 @@
   "dependencies": {
     "@types/node": "^13.11.1",
     "axios": "^0.19.2",
-    "debug": "^4.1.1",
-    "lodash": "^4.17.11",
-    "request": "^2.88.0",
-    "uuid": "^3.3.2"
+    "debug": "^4.1.1"
   },
   "devDependencies": {
     "@types/debug": "^4.1.5",
     "chai": "^3.4.1",
     "codecov": "^3.0.4",
-    "eslint": "^1.10.3",
-    "eslint-config-aftership": "^1.10.1",
-    "grunt": "^0.4.5",
-    "grunt-eslint": "^17.3.1",
-    "grunt-mocha-istanbul": "^3.0.1",
-    "http-proxy": "^1.12.0",
-    "istanbul": "^0.4.2",
-    "load-grunt-config": "^0.19.1",
     "mocha": "^2.3.4",
     "nyc": "^14.1.1",
     "pre-commit": "^1.1.2",
-    "proxyquire": "^2.0.1",
     "shx": "^0.3.2",
     "sinon": "^1.17.2",
     "ts-node": "^8.2.0",
