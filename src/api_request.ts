@@ -7,8 +7,6 @@ const debugProcessResponse = debug('aftership:processResponse');
 const debugProcessException = debug('aftership:processException');
 const debugRateLimiting = debug('aftership:setRateLimiting');
 
-const DEFAULT_ENDPOINT = 'https://api.aftership.com/v4';
-
 const TIMEOUT = 50000;
 
 /**
@@ -34,10 +32,12 @@ export interface IRequest {
 export class ApiRequest implements IRequest {
   private app: any;
   private apiKey: string;
+  private endpoint: string;
 
-  constructor(app: any, apiKey: string) {
+  constructor(app: any, apiKey: string, endpoint: string) {
     this.app = app;
     this.apiKey = apiKey;
+    this.endpoint = endpoint;
   }
 
   /**
@@ -62,7 +62,7 @@ export class ApiRequest implements IRequest {
     const request = axios.request({
       url,
       method,
-      baseURL: `${DEFAULT_ENDPOINT}`,
+      baseURL: this.endpoint,
       headers: { 'aftership-api-key': this.apiKey },
       data: { ...data },
       timeout: TIMEOUT,
@@ -122,6 +122,10 @@ export class ApiRequest implements IRequest {
   }
 
   private setRateLimiting(app: any, data: any): void {
+    if (!data) {
+      return;
+    }
+
     const rateLimiting = {
       reset: data['x-ratelimit-reset'],
       limit: data['x-ratelimit-limit'],
