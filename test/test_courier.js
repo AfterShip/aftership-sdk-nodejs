@@ -3,6 +3,7 @@ var axios = require("axios");
 var MockAdapter = require("axios-mock-adapter");
 var AftershipResource = require("../dist/resources.js").AftershipResource;
 var CourierDetectRequest = require("../dist/models/couriers/courier_detect_request.js").CourierDetectRequest;
+var CourierDetectTracking = require("../dist/models/couriers/courier_detect_request.js").CourierDetectTracking;
 
 var aftership = new Aftership("SOME_API_KEY");
 
@@ -245,7 +246,11 @@ describe("Courier", function () {
 
   describe("#detectCouriers()", function () {
     this.timeout(30000);
-    const payload = new CourierDetectRequest('3123123123329291231231');
+    const tracking = {
+      tracking_number: '3123123123329291231231',
+      tracking_postal_code: '1234',
+    }
+    const payload = new CourierDetectRequest(tracking);
 
     it("should return couriers and total with Promise", function (done) {
       aftership.courier

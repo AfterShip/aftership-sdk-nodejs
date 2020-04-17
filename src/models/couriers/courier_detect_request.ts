@@ -10,60 +10,56 @@ export class CourierDetectRequest {
    */
   public tracking: CourierDetectTracking;
 
-  constructor(tracking_number: string) {
-    this.tracking = new CourierDetectTracking(tracking_number);
+  /**
+   * CourierDetectRequest constructor
+   * @param tracking tracking object, the tracking_number field is required.
+   */
+  constructor(tracking: CourierDetectTracking) {
+    if (tracking === undefined || tracking.tracking_number === undefined
+      || tracking.tracking_number === '') {
+      // Verify tracking_number
+      throw AftershipError.getSdkError(
+        ErrorEnum.constructorInvalidTrackingNumber,
+        tracking,
+      );
+    }
+
+    this.tracking = tracking;
   }
 }
 
 /**
  * The tracking object of couriers detect
  */
-export class CourierDetectTracking {
+export interface CourierDetectTracking {
   /**
-   * Tracking number.
+   * Tracking number. (Required)
    */
-  public tracking_number: string;
+  tracking_number: string;
 
   /**
    * The postal code of receiver's address. Required by some couriers, such asdeutsch-post
    */
-  public tracking_postal_code: string;
+  tracking_postal_code: string;
 
   /**
    * Shipping date in YYYYMMDD format. Required by some couriers, such asdeutsch-post
    */
-  public tracking_ship_date: string;
+  tracking_ship_date: string;
 
   /**
    * Key of the shipment for a specific courier. Required by some couriers, such assic-teliway
    */
-  public tracking_key: string;
+  tracking_key: string;
 
   /**
    * Destination Country of the shipment for a specific courier. Required by some couriers, such aspostnl-3s
    */
-  public tracking_destination_country: string;
+  tracking_destination_country: string;
 
   /**
    * If not specified, Aftership will automatically detect the courier based on the tracking number format
    * and your selected couriers. Use array or comma separated to input a list of couriers for auto detect.
    */
-  public slug: string | string[];
-
-  constructor(tracking_number: string) {
-    if (tracking_number === undefined || tracking_number === '') {
-      // Verify tracking_number
-      throw AftershipError.getSdkError(
-        ErrorEnum.constructorInvalidTrackingNumber,
-        tracking_number,
-      );
-    }
-
-    this.tracking_number = tracking_number;
-    this.tracking_postal_code = '';
-    this.tracking_ship_date = '';
-    this.tracking_key = '';
-    this.tracking_destination_country = '';
-    this.slug = '';
-  }
+  slug: string | string[];
 }

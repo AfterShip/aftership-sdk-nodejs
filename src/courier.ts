@@ -27,7 +27,7 @@ export interface Courier {
 }
 
 /**
- * The implement of the courier
+ * The implementation of the courier
  */
 export class CourierImpl implements Courier {
   private request: Request;

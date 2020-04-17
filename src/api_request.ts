@@ -16,7 +16,7 @@ const TIMEOUT = 50000;
 export interface Request {
   /**
    * Make the request to AfterShip API
-   * @param urlAndMethod request url and method
+   * @param config the config of request (f.e. url, method)
    * @param data data
    */
   makeRequest<T, R>(
@@ -41,7 +41,7 @@ export class ApiRequestImpl implements Request {
 
   /**
    * Make a request call to AfterShip API
-   * @param param0 request url and method
+   * @param config the config of request (f.e. url, method)
    * @param data data
    */
   public makeRequest<T, R>(
