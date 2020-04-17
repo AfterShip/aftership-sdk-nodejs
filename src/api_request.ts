@@ -1,6 +1,7 @@
 import axios from 'axios';
 import debug from 'debug';
-import { Entity, Envelope, Meta } from './util';
+import { RequestConfig } from './models/request_config';
+import { AftershipResponse, Meta } from './models/response';
 
 const debugMakeRequest = debug('aftership:makeRequest');
 const debugProcessResponse = debug('aftership:processResponse');
@@ -12,24 +13,22 @@ const TIMEOUT = 50000;
 /**
  * API request interface
  */
-export interface IRequest {
+export interface Request {
   /**
    * Make the request to AfterShip API
    * @param urlAndMethod request url and method
    * @param data data
-   * @param callback optional, return Promise if callback is not define
    */
-  makeRequest(
-    { url, method }: Entity,
-    data: any,
-    callback?: Function,
-  ): void | Promise<any>;
+  makeRequest<T, R>(
+    { url, method }: RequestConfig,
+    data?: T,
+  ): Promise<AftershipResponse<R>>;
 }
 
 /**
- * API Request class
+ * The implementation of API request
  */
-export class ApiRequest implements IRequest {
+export class ApiRequestImpl implements Request {
   private app: any;
   private apiKey: string;
   private endpoint: string;
@@ -44,19 +43,15 @@ export class ApiRequest implements IRequest {
    * Make a request call to AfterShip API
    * @param param0 request url and method
    * @param data data
-   * @param callback optional, return Promise if callback is not defined
    */
-  public makeRequest(
-    { url, method }: Entity,
-    data: any = {},
-    callback?: Function,
-  ): void | Promise<any> {
+  public makeRequest<T, R>(
+    { url, method }: RequestConfig,
+    data?: T,
+  ): Promise<AftershipResponse<R>> {
     debugMakeRequest('config %o', {
       url,
       method,
       apiKey: this.apiKey,
-      ...data,
-      callback: typeof callback,
     });
 
     const request = axios.request({
@@ -64,27 +59,14 @@ export class ApiRequest implements IRequest {
       method,
       baseURL: this.endpoint,
       headers: { 'aftership-api-key': this.apiKey },
-      data: { ...data },
+      data: data !== undefined ? { ...data } : null,
       timeout: TIMEOUT,
       validateStatus: (status) => {
         return status <= 504;
       },
     });
 
-    if (callback !== undefined && typeof callback === 'function') {
-      debugMakeRequest('in callback..........');
-
-      request
-        .then(({ headers, data }) => {
-          this.setRateLimiting(this.app, headers);
-          callback(null, this.processResponse(data));
-        })
-        .catch(e => callback(this.processException(e)));
-      return;
-    }
-    debugMakeRequest('in Promise.........');
-
-    // return Promise, if callback is not define
+    // return Promise
     return new Promise((resolve, reject) => {
       request
         .then(({ headers, data }) => {
@@ -95,7 +77,7 @@ export class ApiRequest implements IRequest {
     });
   }
 
-  private processResponse(data: any): Envelope {
+  private processResponse<T>(data: any): AftershipResponse<T> {
     const meta: Meta = { code: data['meta']['code'] };
     const message = data['meta']['message'];
     const type = data['meta']['type'];

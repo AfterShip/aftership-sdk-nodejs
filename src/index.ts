@@ -1,16 +1,16 @@
 import lodash from 'lodash';
-import { ICourier, Courier } from './courier';
-import { DEFAULT_API_KEY, DEFAULT_ENDPOINT } from './util';
-import { ApiRequest } from './api_request';
+import { Courier, CourierImpl } from './courier';
+import { DEFAULT_API_KEY, DEFAULT_ENDPOINT } from './constants';
+import { ApiRequestImpl } from './api_request';
 import { AftershipError } from './error/error';
 import { ErrorEnum } from './error/error_enum';
 
-class AfterShip {
+export class AfterShip {
   public readonly apiKey: string;
   public readonly endpoint: string;
   private rateLimiting: any = {};
 
-  public readonly courier: ICourier;
+  public readonly courier: Courier;
   constructor(apiKey: string) {
     if (apiKey !== undefined && apiKey !== '') {
       this.apiKey = apiKey;
@@ -23,9 +23,9 @@ class AfterShip {
     this.errorHandling(this.apiKey);
     this.endpoint = DEFAULT_ENDPOINT;
 
-    const request = new ApiRequest(this, this.apiKey, this.endpoint);
+    const request = new ApiRequestImpl(this, this.apiKey, this.endpoint);
 
-    this.courier = new Courier(request);
+    this.courier = new CourierImpl(request);
   }
 
   public getRateLimiting(): any {
@@ -52,17 +52,3 @@ class AfterShip {
     }
   }
 }
-
-const _afterShip = () => {
-  let app: AfterShip | undefined = undefined;
-  return (apiKey: string) => {
-    if (app === undefined) {
-      app = new AfterShip(apiKey);
-    }
-    return app;
-  };
-};
-
-const afterShip = _afterShip();
-
-export { afterShip as AfterShip };

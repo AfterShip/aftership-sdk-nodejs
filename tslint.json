@@ -37,7 +37,8 @@
       true,
       "ban-keywords",
       "check-format",
-      "allow-leading-underscore"
+      "allow-leading-underscore",
+      "allow-snake-case"
     ],
     // adds check-module, check-type, check-rest-spread, check-typecast, check-type-operator
     "whitespace": [

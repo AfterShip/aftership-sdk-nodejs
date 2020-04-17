@@ -12,6 +12,11 @@ export class ErrorEnum {
     'ConstructorError: Invalid API key',
   );
 
+  public static constructorInvalidTrackingNumber = new AftershipError(
+    ErrorType.ConstructorError,
+    'ConstructorError: tracking_number',
+  );
+
   public static handlerInvalidBody = new AftershipError(
     ErrorType.HandlerError,
     'HandlerError: Invalid Body value',

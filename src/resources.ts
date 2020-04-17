@@ -4,5 +4,5 @@
 export enum AftershipResource {
   Couriers = '/couriers',
   CouriersAll = '/couriers/all',
-  Detect = '/couriers/detect',
+  CouriersDetect = '/couriers/detect',
 }
