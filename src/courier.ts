@@ -1,24 +1,71 @@
-import { makeRequest, AftershipUrl } from './util';
+import { AftershipResource } from './resources';
+import { IRequest } from './api_request';
 
-export class Courier {
-  private app: any;
-  private apiKey: string;
+/**
+ * Get a list of AfterShip supported couriers.
+ */
+export interface ICourier {
+  /**
+   * Return a list of couriers activated at your AfterShip account
+   * @param callback optional, return Promise if callback is not defined
+   */
+  listCouriers(callback?: Function): void | Promise<any>;
 
-  constructor(app: any, apiKey: string) {
-    this.app = app;
-    this.apiKey = apiKey;
+  /**
+   * Return a list of all couriers
+   * @param callback optional, return Promise if callback is not defined
+   */
+  listAllCouriers(callback?: Function): void | Promise<any>;
+
+  /**
+   * Return a list of matched couriers based on tracking number format and selected couriers or a list of couriers
+   * @param data data
+   * @param callback optional, return Promise if callback is not defined
+   */
+  detectCouriers(data: any, callback?: Function): void | Promise<any>;
+}
+
+export class Courier implements ICourier {
+  private request: IRequest;
+
+  constructor(request: IRequest) {
+    this.request = request;
   }
 
-  public listCouriers(callback?: Function): any {
-    const apiKey = this.apiKey;
-    return makeRequest(this.app)({ method: 'GET', url: AftershipUrl.Couriers })({ apiKey })({})(callback);
+  /**
+   * Return a list of couriers activated at your AfterShip account
+   * @param callback optional, return Promise if callback is not defined
+   */
+  public listCouriers(callback?: Function): void | Promise<any> {
+    return this.request.makeRequest(
+      { method: 'GET', url: AftershipResource.Couriers },
+      {},
+      callback,
+    );
   }
-  public listAllCouriers(callback?: Function): any {
-    const apiKey = this.apiKey;
-    return makeRequest(this.app)({ method: 'GET', url: AftershipUrl.CouriersAll })({ apiKey })({})(callback);
+
+  /**
+   * Return a list of all couriers
+   * @param callback optional, return Promise if callback is not defined
+   */
+  public listAllCouriers(callback?: Function): void | Promise<any> {
+    return this.request.makeRequest(
+      { method: 'GET', url: AftershipResource.CouriersAll },
+      {},
+      callback,
+    );
   }
-  public detectCouriers(data: any, callback?: Function): any {
-    const apiKey = this.apiKey;
-    return makeRequest(this.app)({ method: 'POST', url: AftershipUrl.Detect })({ apiKey })(data)(callback);
+
+  /**
+   * Return a list of matched couriers based on tracking number format and selected couriers or a list of couriers
+   * @param data data
+   * @param callback optional, return Promise if callback is not defined
+   */
+  public detectCouriers(data: any, callback?: Function): void | Promise<any> {
+    return this.request.makeRequest(
+      { method: 'POST', url: AftershipResource.Detect },
+      data,
+      callback,
+    );
   }
 }
