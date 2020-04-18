@@ -1,16 +1,20 @@
 import lodash from 'lodash';
-import { Courier, CourierImpl } from './courier';
-import { DEFAULT_API_KEY, DEFAULT_ENDPOINT } from './constants';
+
+import { CourierImpl } from './courier';
 import { ApiRequestImpl } from './api_request';
 import { AftershipError } from './error/error';
 import { ErrorEnum } from './error/error_enum';
+import { CourierEndpoint } from './method';
+
+const DEFAULT_API_KEY = process.env['AFTERSHIP_API_KEY'];
+const DEFAULT_ENDPOINT = 'https://api.aftership.com/v4';
 
 export class AfterShip {
   public readonly apiKey: string;
   public readonly endpoint: string;
   private rateLimiting: any = {};
 
-  public readonly courier: Courier;
+  public readonly courier: CourierEndpoint;
   constructor(apiKey: string) {
     if (apiKey !== undefined && apiKey !== '') {
       this.apiKey = apiKey;

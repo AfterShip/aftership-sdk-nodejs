@@ -1,35 +1,12 @@
-import { AftershipResource } from './resources';
 import { Request } from './api_request';
 import { AftershipResponse } from './models/response';
-import { CourierList } from './models/couriers/courier_list';
-import { CourierDetectRequest } from './models/couriers/courier_detect_request';
-import { CourierDetectList } from './models/couriers/courier_detect_list';
+import { CourierList, CourierDetectRequest, CourierDetectList } from './models/couriers';
+import { CourierEndpoint } from './method';
 
 /**
- * Get a list of AfterShip supported couriers.
+ * The implementation of the courier endpoint request
  */
-export interface Courier {
-  /**
-   * Return a list of couriers activated at your AfterShip account
-   */
-  listCouriers(): Promise<AftershipResponse<CourierList>>;
-
-  /**
-   * Return a list of all couriers
-   */
-  listAllCouriers(): Promise<AftershipResponse<CourierList>>;
-
-  /**
-   * Return a list of matched couriers based on tracking number format and selected couriers or a list of couriers
-   * @param data data
-   */
-  detectCouriers(data: CourierDetectRequest): Promise<AftershipResponse<CourierDetectList>>;
-}
-
-/**
- * The implementation of the courier
- */
-export class CourierImpl implements Courier {
+export class CourierImpl implements CourierEndpoint {
   private request: Request;
 
   constructor(request: Request) {
@@ -41,7 +18,7 @@ export class CourierImpl implements Courier {
    */
   public listCouriers(): Promise<AftershipResponse<CourierList>> {
     return this.request.makeRequest<null, CourierList>(
-      { method: 'GET', url: AftershipResource.Couriers },
+      { method: 'GET', url: '/couriers' },
     );
   }
 
@@ -50,7 +27,7 @@ export class CourierImpl implements Courier {
    */
   public listAllCouriers(): Promise<AftershipResponse<CourierList>> {
     return this.request.makeRequest<null, CourierList>(
-      { method: 'GET', url: AftershipResource.CouriersAll },
+      { method: 'GET', url: '/couriers/all' },
     );
   }
 
@@ -60,7 +37,7 @@ export class CourierImpl implements Courier {
    */
   public detectCouriers(data: CourierDetectRequest): Promise<AftershipResponse<CourierDetectList>> {
     return this.request.makeRequest<CourierDetectRequest, CourierDetectList>(
-      { method: 'POST', url: AftershipResource.CouriersDetect },
+      { method: 'POST', url: '/couriers/detect' },
       data,
     );
   }

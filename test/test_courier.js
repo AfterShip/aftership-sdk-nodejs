@@ -1,9 +1,8 @@
 var Aftership = require("../dist/index.js").AfterShip;
 var axios = require("axios");
 var MockAdapter = require("axios-mock-adapter");
-var AftershipResource = require("../dist/resources.js").AftershipResource;
-var CourierDetectRequest = require("../dist/models/couriers/courier_detect_request.js").CourierDetectRequest;
-var CourierDetectTracking = require("../dist/models/couriers/courier_detect_request.js").CourierDetectTracking;
+var CourierDetectRequest = require("../dist/models/couriers.js").CourierDetectRequest;
+var CourierDetectTracking = require("../dist/models/couriers.js").CourierDetectTracking;
 
 var aftership = new Aftership("SOME_API_KEY");
 
@@ -11,7 +10,7 @@ var aftership = new Aftership("SOME_API_KEY");
 var mock = new MockAdapter(axios);
 
 // Mock listCouriers
-mock.onGet(AftershipResource.Couriers).reply(
+mock.onGet('/couriers').reply(
   200,
   {
     meta: {
@@ -49,7 +48,7 @@ mock.onGet(AftershipResource.Couriers).reply(
 );
 
 // Mock listAllCouriers
-mock.onGet(AftershipResource.CouriersAll).reply(
+mock.onGet('/couriers/all').reply(
   200,
   {
     meta: {
@@ -96,7 +95,7 @@ mock.onGet(AftershipResource.CouriersAll).reply(
 );
 
 // Mock detectCouriers
-mock.onPost(AftershipResource.CouriersDetect).reply(
+mock.onPost('/couriers/detect').reply(
   200,
   {
     meta: {

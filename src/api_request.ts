@@ -1,6 +1,5 @@
-import axios from 'axios';
+import axios, { Method } from 'axios';
 import debug from 'debug';
-import { RequestConfig } from './models/request_config';
 import { AftershipResponse, Meta } from './models/response';
 
 const debugMakeRequest = debug('aftership:makeRequest');
@@ -9,6 +8,11 @@ const debugProcessException = debug('aftership:processException');
 const debugRateLimiting = debug('aftership:setRateLimiting');
 
 const TIMEOUT = 50000;
+
+interface RequestConfig {
+  method: Method;
+  url: string;
+}
 
 /**
  * API request interface
