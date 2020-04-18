@@ -1,15 +1,15 @@
-import { Request } from './api_request';
-import { AftershipResponse } from './models/response';
-import { CourierList, CourierDetectRequest, CourierDetectList } from './models/couriers';
-import { CourierEndpoint } from './method';
+import { ApiRequest } from '../lib/api_request';
+import { AftershipResponse } from '../model/aftership_response';
+import { CourierList, CourierDetectRequest, CourierDetectList } from '../model/couriers';
+import { CourierEndpoint } from '../endpoint';
 
 /**
  * The implementation of the courier endpoint request
  */
-export class CourierImpl implements CourierEndpoint {
-  private request: Request;
+export class CourierImplementation implements CourierEndpoint {
+  private request: ApiRequest;
 
-  constructor(request: Request) {
+  constructor(request: ApiRequest) {
     this.request = request;
   }
 

@@ -75,7 +75,7 @@
     "no-empty": true,
     "no-floating-promises": true,
     "no-for-in-array": true,
-    "no-implicit-dependencies": true,
+    "no-implicit-dependencies": [true, "dev"],
     "no-object-literal-type-assertion": true,
     "no-redundant-jsdoc": true,
     "no-require-imports": true,

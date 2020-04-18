@@ -1,6 +1,6 @@
 import axios, { Method } from 'axios';
 import debug from 'debug';
-import { AftershipResponse, Meta } from './models/response';
+import { AftershipResponse, Meta } from '../model/aftership_response';
 
 const debugMakeRequest = debug('aftership:makeRequest');
 const debugProcessResponse = debug('aftership:processResponse');
@@ -17,7 +17,7 @@ interface RequestConfig {
 /**
  * API request interface
  */
-export interface Request {
+export interface ApiRequest {
   /**
    * Make the request to AfterShip API
    * @param config the config of request (f.e. url, method)
@@ -32,7 +32,7 @@ export interface Request {
 /**
  * The implementation of API request
  */
-export class ApiRequestImpl implements Request {
+export class ApiRequestImplementation implements ApiRequest {
   private app: any;
   private apiKey: string;
   private endpoint: string;

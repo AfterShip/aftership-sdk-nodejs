@@ -28,17 +28,17 @@
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov -t ${CODECOV_TOKEN} -F aftership"
   },
   "dependencies": {
-    "@types/node": "^13.11.1",
     "axios": "^0.19.2",
-    "debug": "^4.1.1",
     "lodash": "^4.17.11"
   },
   "devDependencies": {
     "@types/debug": "^4.1.5",
     "@types/lodash": "^4.14.149",
+    "@types/node": "^13.11.1",
     "axios-mock-adapter": "^1.18.1",
     "chai": "^3.4.1",
     "codecov": "^3.0.4",
+    "debug": "^4.1.1",
     "mocha": "^2.3.4",
     "nyc": "^14.1.1",
     "pre-commit": "^1.1.2",
