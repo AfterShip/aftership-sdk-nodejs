@@ -245,8 +245,8 @@ describe("Courier", function () {
   describe("#detectCouriers()", function () {
     this.timeout(30000);
     const tracking = {
-      tracking_number: '3123123123329291231231',
-      tracking_postal_code: '1234',
+      tracking_number: '906587618687',
+      tracking_postal_code: 'DA15BU',
     }
     const payload = new CourierDetectRequest(tracking);
 
