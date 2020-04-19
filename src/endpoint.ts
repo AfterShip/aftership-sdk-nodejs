@@ -1,5 +1,7 @@
 import { AftershipResponse } from './model/aftership_response';
-import { CourierList, CourierDetectRequest, CourierDetectList } from './model/couriers';
+import { CourierList } from './model/courier/courier_list';
+import { CourierDetectRequest } from './model/courier/courier_detect_request';
+import { CourierDetectList } from './model/courier/courier_detect_list';
 
 /**
  * Get a list of AfterShip supported couriers.

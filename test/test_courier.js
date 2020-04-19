@@ -1,7 +1,7 @@
 var Aftership = require("../dist/index.js").AfterShip;
 var axios = require("axios");
 var MockAdapter = require("axios-mock-adapter");
-var CourierDetectRequest = require("../dist/model/couriers.js").CourierDetectRequest;
+var CourierDetectRequest = require("../dist/model/courier/courier_detect_request.js").CourierDetectRequest;
 
 var aftership = new Aftership("SOME_API_KEY");
 

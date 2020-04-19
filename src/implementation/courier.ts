@@ -1,7 +1,9 @@
 import { ApiRequest } from '../lib/api_request';
-import { AftershipResponse } from '../model/aftership_response';
-import { CourierList, CourierDetectRequest, CourierDetectList } from '../model/couriers';
 import { CourierEndpoint } from '../endpoint';
+import { AftershipResponse } from '../model/aftership_response';
+import { CourierList } from '../model/courier/courier_list';
+import { CourierDetectRequest } from '../model/courier/courier_detect_request';
+import { CourierDetectList } from '../model/courier/courier_detect_list';
 
 /**
  * The implementation of the courier endpoint request
