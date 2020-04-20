@@ -21,15 +21,13 @@ describe("Notification", function () {
     it("should throw exception when both specify tracking id and tracking number", async function () {
       let expected_error =
         "HandlerError: Cannot specify tracking number and tracking id at the same time";
-      const tracking_id = "5b74f4958776db0e00b6f5ed";
-      const slug = "ups";
-      const tracking_number = "1234567890";
+      const param = {
+        tracking_id: "5b74f4958776db0e00b6f5ed",
+        slug: "ups",
+        tracking_number: "1234567890",
+      };
       try {
-        await aftership.notification.getNotification(
-          tracking_id,
-          slug,
-          tracking_number
-        );
+        await aftership.notification.getNotification(param);
       } catch (e) {
         expect(e.message).to.equal(expected_error);
       }
@@ -38,15 +36,11 @@ describe("Notification", function () {
     it("should throw exception when only specify slug", async function () {
       let expected_error =
         "HandlerError: You must specify the tracking number or tracking id";
-      const tracking_id = "";
-      const slug = "ups";
-      const tracking_number = "";
+      const param = {
+        slug: "ups",
+      };
       try {
-        await aftership.notification.getNotification(
-          tracking_id,
-          slug,
-          tracking_number
-        );
+        await aftership.notification.getNotification(param);
       } catch (e) {
         expect(e.message).to.equal(expected_error);
       }
@@ -55,29 +49,27 @@ describe("Notification", function () {
     it("should throw exception when only specify tracking number", async function () {
       let expected_error =
         "HandlerError: You must specify the tracking number or tracking id";
-      const tracking_id = "";
-      const slug = "";
-      const tracking_number = "1234567890";
+      const param = {
+        tracking_number: "1234567890",
+      };
       try {
-        await aftership.notification.getNotification(
-          tracking_id,
-          slug,
-          tracking_number
-        );
+        await aftership.notification.getNotification(param);
       } catch (e) {
         expect(e.message).to.equal(expected_error);
       }
     });
   });
 
-  describe("#getNotification(slug, tracking_number)", function () {
+  describe("#getNotification({slug, tracking_number})", function () {
     it("should get notification when success", function (done) {
-      const slug = "ups";
-      const tracking_number = "1234567890";
+      const param = {
+        slug: "ups",
+        tracking_number: "1234567890",
+      };
 
       // This sets the mock adapter on the default instance
       var mock = new MockAdapter(axios);
-      mock.onGet(`/notifications/${slug}/${tracking_number}`).reply(
+      mock.onGet(`/notifications/${param.slug}/${param.tracking_number}`).reply(
         200,
         {
           meta: {
@@ -98,7 +90,7 @@ describe("Notification", function () {
       );
 
       aftership.notification
-        .getNotification(null, slug, tracking_number)
+        .getNotification(param)
         .then((result) => {
           if (result && result.data && result.data.notification) {
             const emails = result.data.notification.emails;
@@ -126,12 +118,14 @@ describe("Notification", function () {
     });
 
     it("should get error meta when no success", function (done) {
-      const slug = "ups";
-      const tracking_number = "1234567890";
+      const param = {
+        slug: "ups",
+        tracking_number: "1234567890",
+      };
 
       // This sets the mock adapter on the default instance
       var mock = new MockAdapter(axios);
-      mock.onGet(`/notifications/${slug}/${tracking_number}`).reply(
+      mock.onGet(`/notifications/${param.slug}/${param.tracking_number}`).reply(
         404,
         {
           meta: {
@@ -149,7 +143,7 @@ describe("Notification", function () {
       );
 
       aftership.notification
-        .getNotification(null, slug, tracking_number)
+        .getNotification(param)
         .then((result) => {
           if (result && result.meta && result.meta.code === 4004) {
             done();
@@ -161,13 +155,15 @@ describe("Notification", function () {
     });
   });
 
-  describe("#getNotification(tracking_id)", function () {
+  describe("#getNotification({tracking_id})", function () {
     it("should get notification when success", function (done) {
-      const tracking_id = "5b74f4958776db0e00b6f5ed";
+      const param = {
+        tracking_id: "5b74f4958776db0e00b6f5ed",
+      };
 
       // This sets the mock adapter on the default instance
       var mock = new MockAdapter(axios);
-      mock.onGet(`/notifications/${tracking_id}`).reply(
+      mock.onGet(`/notifications/${param.tracking_id}`).reply(
         200,
         {
           meta: {
@@ -188,7 +184,7 @@ describe("Notification", function () {
       );
 
       aftership.notification
-        .getNotification(tracking_id)
+        .getNotification(param)
         .then((result) => {
           if (result && result.data && result.data.notification) {
             const emails = result.data.notification.emails;
@@ -216,11 +212,13 @@ describe("Notification", function () {
     });
 
     it("should catch exception when error", function (done) {
-      const tracking_id = "5b74f4958776db0e00b6f5ed";
+      const param = {
+        tracking_id: "5b74f4958776db0e00b6f5ed",
+      };
 
       // This sets the mock adapter on the default instance
       var mock = new MockAdapter(axios);
-      mock.onGet(`/notifications/${tracking_id}`).reply(
+      mock.onGet(`/notifications/${param.tracking_id}`).reply(
         404,
         {
           meta: {
@@ -238,7 +236,7 @@ describe("Notification", function () {
       );
 
       aftership.notification
-        .getNotification(tracking_id)
+        .getNotification(param)
         .then((result) => {
           if (result && result.meta && result.meta.code === 4004) {
             done();
@@ -265,8 +263,9 @@ describe("Notification", function () {
     it("should throw exception when not specify tracking id and tracking number", async function () {
       let expected_error =
         "HandlerError: You must specify the tracking number or tracking id";
+      const param = {};
       try {
-        await aftership.notification.addNotification(notification);
+        await aftership.notification.addNotification(param, notification);
       } catch (e) {
         expect(e.message).to.equal(expected_error);
       }
@@ -275,16 +274,13 @@ describe("Notification", function () {
     it("should throw exception when both specify tracking id and tracking number", async function () {
       let expected_error =
         "HandlerError: Cannot specify tracking number and tracking id at the same time";
-      const tracking_id = "5b74f4958776db0e00b6f5ed";
-      const slug = "ups";
-      const tracking_number = "1234567890";
+      const param = {
+        tracking_id: "5b74f4958776db0e00b6f5ed",
+        slug: "ups",
+        tracking_number: "1234567890",
+      };
       try {
-        await aftership.notification.addNotification(
-          notification,
-          tracking_id,
-          slug,
-          tracking_number
-        );
+        await aftership.notification.addNotification(param, notification);
       } catch (e) {
         expect(e.message).to.equal(expected_error);
       }
@@ -293,16 +289,11 @@ describe("Notification", function () {
     it("should throw exception when only specify slug", async function () {
       let expected_error =
         "HandlerError: You must specify the tracking number or tracking id";
-      const tracking_id = "";
-      const slug = "ups";
-      const tracking_number = "";
+      const param = {
+        slug: "ups",
+      };
       try {
-        await aftership.notification.addNotification(
-          notification,
-          tracking_id,
-          slug,
-          tracking_number
-        );
+        await aftership.notification.addNotification(param, notification);
       } catch (e) {
         expect(e.message).to.equal(expected_error);
       }
@@ -311,23 +302,18 @@ describe("Notification", function () {
     it("should throw exception when only specify tracking number", async function () {
       let expected_error =
         "HandlerError: You must specify the tracking number or tracking id";
-      const tracking_id = "";
-      const slug = "";
-      const tracking_number = "1234567890";
+      const param = {
+        tracking_number: "1234567890",
+      };
       try {
-        await aftership.notification.addNotification(
-          notification,
-          tracking_id,
-          slug,
-          tracking_number
-        );
+        await aftership.notification.addNotification(param, notification);
       } catch (e) {
         expect(e.message).to.equal(expected_error);
       }
     });
   });
 
-  describe("#addNotification(slug, tracking_number)", function () {
+  describe("#addNotification({slug, tracking_number})", function () {
     const notification = {
       notification: {
         emails: [
@@ -340,33 +326,37 @@ describe("Notification", function () {
     };
 
     it("should get notification when success", function (done) {
-      const slug = "ups";
-      const tracking_number = "1234567890";
+      const param = {
+        slug: "ups",
+        tracking_number: "1234567890",
+      };
 
       // This sets the mock adapter on the default instance
       var mock = new MockAdapter(axios);
-      mock.onPost(`/notifications/${slug}/${tracking_number}/add`).reply(
-        200,
-        {
-          meta: {
-            code: 200,
-          },
-          data: {
-            notification: {
-              emails: [],
-              smses: ["+85261236888"],
+      mock
+        .onPost(`/notifications/${param.slug}/${param.tracking_number}/add`)
+        .reply(
+          200,
+          {
+            meta: {
+              code: 200,
+            },
+            data: {
+              notification: {
+                emails: [],
+                smses: ["+85261236888"],
+              },
             },
           },
-        },
-        {
-          "x-ratelimit-reset": 1406096275,
-          "x-ratelimit-limit": 10,
-          "x-ratelimit-remaining": 9,
-        }
-      );
+          {
+            "x-ratelimit-reset": 1406096275,
+            "x-ratelimit-limit": 10,
+            "x-ratelimit-remaining": 9,
+          }
+        );
 
       aftership.notification
-        .addNotification(notification, null, slug, tracking_number)
+        .addNotification(param, notification)
         .then((result) => {
           if (result && result.data && result.data.notification) {
             const emails = result.data.notification.emails;
@@ -386,30 +376,34 @@ describe("Notification", function () {
     });
 
     it("should get error meta when no success", function (done) {
-      const slug = "ups";
-      const tracking_number = "1234567890";
+      const param = {
+        slug: "ups",
+        tracking_number: "1234567890",
+      };
 
       // This sets the mock adapter on the default instance
       var mock = new MockAdapter(axios);
-      mock.onPost(`/notifications/${slug}/${tracking_number}/add`).reply(
-        404,
-        {
-          meta: {
-            code: 4004,
-            type: "BadRequest",
-            message: "Tracking does not exist.",
+      mock
+        .onPost(`/notifications/${param.slug}/${param.tracking_number}/add`)
+        .reply(
+          404,
+          {
+            meta: {
+              code: 4004,
+              type: "BadRequest",
+              message: "Tracking does not exist.",
+            },
+            data: {},
           },
-          data: {},
-        },
-        {
-          "x-ratelimit-reset": 1406096275,
-          "x-ratelimit-limit": 10,
-          "x-ratelimit-remaining": 9,
-        }
-      );
+          {
+            "x-ratelimit-reset": 1406096275,
+            "x-ratelimit-limit": 10,
+            "x-ratelimit-remaining": 9,
+          }
+        );
 
       aftership.notification
-        .addNotification(notification, null, slug, tracking_number)
+        .addNotification(param, notification)
         .then((result) => {
           if (result && result.meta && result.meta.code === 4004) {
             done();
@@ -421,7 +415,7 @@ describe("Notification", function () {
     });
   });
 
-  describe("#addNotification(tracking_id)", function () {
+  describe("#addNotification({tracking_id})", function () {
     const notification = {
       notification: {
         emails: [
@@ -434,11 +428,13 @@ describe("Notification", function () {
     };
 
     it("should get notification when success", function (done) {
-      const tracking_id = "5b74f4958776db0e00b6f5ed";
+      const param = {
+        tracking_id: "5b74f4958776db0e00b6f5ed",
+      };
 
       // This sets the mock adapter on the default instance
       var mock = new MockAdapter(axios);
-      mock.onPost(`/notifications/${tracking_id}/add`).reply(
+      mock.onPost(`/notifications/${param.tracking_id}/add`).reply(
         200,
         {
           meta: {
@@ -459,7 +455,7 @@ describe("Notification", function () {
       );
 
       aftership.notification
-        .addNotification(notification, tracking_id)
+        .addNotification(param, notification)
         .then((result) => {
           if (result && result.data && result.data.notification) {
             const emails = result.data.notification.emails;
@@ -479,11 +475,13 @@ describe("Notification", function () {
     });
 
     it("should catch exception when error", function (done) {
-      const tracking_id = "5b74f4958776db0e00b6f5ed";
+      const param = {
+        tracking_id: "5b74f4958776db0e00b6f5ed",
+      };
 
       // This sets the mock adapter on the default instance
       var mock = new MockAdapter(axios);
-      mock.onPost(`/notifications/${tracking_id}/add`).reply(
+      mock.onPost(`/notifications/${param.tracking_id}/add`).reply(
         404,
         {
           meta: {
@@ -501,7 +499,7 @@ describe("Notification", function () {
       );
 
       aftership.notification
-        .addNotification(notification, tracking_id)
+        .addNotification(param, notification)
         .then((result) => {
           if (result && result.meta && result.meta.code === 4004) {
             done();
@@ -526,10 +524,11 @@ describe("Notification", function () {
     };
 
     it("should throw exception when not specify tracking id and tracking number", async function () {
+      const param = {};
       let expected_error =
         "HandlerError: You must specify the tracking number or tracking id";
       try {
-        await aftership.notification.removeNotification(notification);
+        await aftership.notification.removeNotification(param, notification);
       } catch (e) {
         expect(e.message).to.equal(expected_error);
       }
@@ -538,16 +537,13 @@ describe("Notification", function () {
     it("should throw exception when both specify tracking id and tracking number", async function () {
       let expected_error =
         "HandlerError: Cannot specify tracking number and tracking id at the same time";
-      const tracking_id = "5b74f4958776db0e00b6f5ed";
-      const slug = "ups";
-      const tracking_number = "1234567890";
+      const param = {
+        tracking_id: "5b74f4958776db0e00b6f5ed",
+        slug: "ups",
+        tracking_number: "1234567890",
+      };
       try {
-        await aftership.notification.removeNotification(
-          notification,
-          tracking_id,
-          slug,
-          tracking_number
-        );
+        await aftership.notification.removeNotification(param, notification);
       } catch (e) {
         expect(e.message).to.equal(expected_error);
       }
@@ -556,16 +552,11 @@ describe("Notification", function () {
     it("should throw exception when only specify slug", async function () {
       let expected_error =
         "HandlerError: You must specify the tracking number or tracking id";
-      const tracking_id = "";
-      const slug = "ups";
-      const tracking_number = "";
+      const param = {
+        slug: "ups",
+      };
       try {
-        await aftership.notification.removeNotification(
-          notification,
-          tracking_id,
-          slug,
-          tracking_number
-        );
+        await aftership.notification.removeNotification(param, notification);
       } catch (e) {
         expect(e.message).to.equal(expected_error);
       }
@@ -574,23 +565,18 @@ describe("Notification", function () {
     it("should throw exception when only specify tracking number", async function () {
       let expected_error =
         "HandlerError: You must specify the tracking number or tracking id";
-      const tracking_id = "";
-      const slug = "";
-      const tracking_number = "1234567890";
+      const param = {
+        tracking_number: "1234567890",
+      };
       try {
-        await aftership.notification.removeNotification(
-          notification,
-          tracking_id,
-          slug,
-          tracking_number
-        );
+        await aftership.notification.removeNotification(param, notification);
       } catch (e) {
         expect(e.message).to.equal(expected_error);
       }
     });
   });
 
-  describe("#removeNotification(slug, tracking_number)", function () {
+  describe("#removeNotification({slug, tracking_number})", function () {
     const notification = {
       notification: {
         emails: [
@@ -603,33 +589,37 @@ describe("Notification", function () {
     };
 
     it("should get notification when success", function (done) {
-      const slug = "ups";
-      const tracking_number = "1234567890";
+      const param = {
+        slug: "ups",
+        tracking_number: "1234567890",
+      };
 
       // This sets the mock adapter on the default instance
       var mock = new MockAdapter(axios);
-      mock.onPost(`/notifications/${slug}/${tracking_number}/remove`).reply(
-        200,
-        {
-          meta: {
-            code: 200,
-          },
-          data: {
-            notification: {
-              emails: ["user1@gmail.com", "user2@gmail.com"],
-              smses: ["+85291239123", "+85261236123"],
+      mock
+        .onPost(`/notifications/${param.slug}/${param.tracking_number}/remove`)
+        .reply(
+          200,
+          {
+            meta: {
+              code: 200,
+            },
+            data: {
+              notification: {
+                emails: ["user1@gmail.com", "user2@gmail.com"],
+                smses: ["+85291239123", "+85261236123"],
+              },
             },
           },
-        },
-        {
-          "x-ratelimit-reset": 1406096275,
-          "x-ratelimit-limit": 10,
-          "x-ratelimit-remaining": 9,
-        }
-      );
+          {
+            "x-ratelimit-reset": 1406096275,
+            "x-ratelimit-limit": 10,
+            "x-ratelimit-remaining": 9,
+          }
+        );
 
       aftership.notification
-        .removeNotification(notification, null, slug, tracking_number)
+        .removeNotification(param, notification)
         .then((result) => {
           if (result && result.data && result.data.notification) {
             const emails = result.data.notification.emails;
@@ -657,30 +647,34 @@ describe("Notification", function () {
     });
 
     it("should get error meta when no success", function (done) {
-      const slug = "ups";
-      const tracking_number = "1234567890";
+      const param = {
+        slug: "ups",
+        tracking_number: "1234567890",
+      };
 
       // This sets the mock adapter on the default instance
       var mock = new MockAdapter(axios);
-      mock.onPost(`/notifications/${slug}/${tracking_number}/remove`).reply(
-        404,
-        {
-          meta: {
-            code: 4004,
-            type: "BadRequest",
-            message: "Tracking does not exist.",
+      mock
+        .onPost(`/notifications/${param.slug}/${param.tracking_number}/remove`)
+        .reply(
+          404,
+          {
+            meta: {
+              code: 4004,
+              type: "BadRequest",
+              message: "Tracking does not exist.",
+            },
+            data: {},
           },
-          data: {},
-        },
-        {
-          "x-ratelimit-reset": 1406096275,
-          "x-ratelimit-limit": 10,
-          "x-ratelimit-remaining": 9,
-        }
-      );
+          {
+            "x-ratelimit-reset": 1406096275,
+            "x-ratelimit-limit": 10,
+            "x-ratelimit-remaining": 9,
+          }
+        );
 
       aftership.notification
-        .removeNotification(notification, null, slug, tracking_number)
+        .removeNotification(param, notification)
         .then((result) => {
           if (result && result.meta && result.meta.code === 4004) {
             done();
@@ -692,7 +686,7 @@ describe("Notification", function () {
     });
   });
 
-  describe("#removeNotification(tracking_id)", function () {
+  describe("#removeNotification({tracking_id})", function () {
     const notification = {
       notification: {
         emails: [
@@ -705,11 +699,13 @@ describe("Notification", function () {
     };
 
     it("should get notification when success", function (done) {
-      const tracking_id = "5b74f4958776db0e00b6f5ed";
+      const param = {
+        tracking_id: "5b74f4958776db0e00b6f5ed",
+      };
 
       // This sets the mock adapter on the default instance
       var mock = new MockAdapter(axios);
-      mock.onPost(`/notifications/${tracking_id}/remove`).reply(
+      mock.onPost(`/notifications/${param.tracking_id}/remove`).reply(
         200,
         {
           meta: {
@@ -730,7 +726,7 @@ describe("Notification", function () {
       );
 
       aftership.notification
-        .removeNotification(notification, tracking_id)
+        .removeNotification(param, notification)
         .then((result) => {
           if (result && result.data && result.data.notification) {
             const emails = result.data.notification.emails;
@@ -758,11 +754,13 @@ describe("Notification", function () {
     });
 
     it("should catch exception when error", function (done) {
-      const tracking_id = "5b74f4958776db0e00b6f5ed";
+      const param = {
+        tracking_id: "5b74f4958776db0e00b6f5ed",
+      };
 
       // This sets the mock adapter on the default instance
       var mock = new MockAdapter(axios);
-      mock.onPost(`/notifications/${tracking_id}/remove`).reply(
+      mock.onPost(`/notifications/${param.tracking_id}/remove`).reply(
         404,
         {
           meta: {
@@ -780,7 +778,7 @@ describe("Notification", function () {
       );
 
       aftership.notification
-        .removeNotification(notification, tracking_id)
+        .removeNotification(param, notification)
         .then((result) => {
           if (result && result.meta && result.meta.code === 4004) {
             done();
