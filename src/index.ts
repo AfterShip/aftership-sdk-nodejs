@@ -1,10 +1,9 @@
 import lodash from 'lodash';
-
 import { ApiRequestImplementation } from './lib/api_request';
 import { AftershipError } from './error/error';
 import { ErrorEnum } from './error/error_enum';
 import { CourierEndpoint } from './endpoint/courier_endpoint';
-import { LastCheckPointEndpoint } from './endpoint/last_checkpoint_endpoints';
+import { LastCheckPointEndpoint } from './endpoint/last_checkpoint_endpoint';
 import { NotificationEndpoint } from './endpoint/notification_endpoint';
 import { CourierImplementation } from './implementation/courier';
 import { LastCheckPointImplementation } from './implementation/last_checkpoint';
