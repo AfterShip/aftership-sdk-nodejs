@@ -1,5 +1,5 @@
 import { ApiRequest } from '../lib/api_request';
-import { CourierEndpoint } from '../endpoint';
+import { CourierEndpoint } from '../endpoint/courier_endpoint';
 import { AftershipResponse } from '../model/aftership_response';
 import { CourierList } from '../model/courier/courier_list';
 import { CourierDetectRequest } from '../model/courier/courier_detect_request';
@@ -9,7 +9,7 @@ import { CourierDetectList } from '../model/courier/courier_detect_list';
  * The implementation of the courier endpoint request
  */
 export class CourierImplementation implements CourierEndpoint {
-  private request: ApiRequest;
+  private readonly request: ApiRequest;
 
   constructor(request: ApiRequest) {
     this.request = request;

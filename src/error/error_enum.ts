@@ -42,6 +42,16 @@ export class ErrorEnum {
     'HandlerError: Invalid Timeout',
   );
 
+  public static handlerInvalidBothTrackingIdAndNumber = new AftershipError(
+    ErrorType.HandlerError,
+    'HandlerError: Cannot specify tracking number and tracking id at the same time',
+  );
+
+  public static handlerInvalidEmptyTrackingIdAndNumber = new AftershipError(
+    ErrorType.HandlerError,
+    'HandlerError: You must specify the tracking number or tracking id',
+  );
+
   // API InternalError
   public static internalError = new AftershipError(
     ErrorType.InternalError,

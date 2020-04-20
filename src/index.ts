@@ -1,10 +1,12 @@
 import lodash from 'lodash';
 
-import { CourierImplementation } from './implementation/courier';
 import { ApiRequestImplementation } from './lib/api_request';
 import { AftershipError } from './error/error';
 import { ErrorEnum } from './error/error_enum';
-import { CourierEndpoint } from './endpoint';
+import { CourierEndpoint } from './endpoint/courier_endpoint';
+import { NotificationEndpoint } from './endpoint/notification_endpoint';
+import { CourierImplementation } from './implementation/courier';
+import { NotificationImplementation } from './implementation/notification';
 
 const DEFAULT_API_KEY = process.env['AFTERSHIP_API_KEY'];
 const DEFAULT_ENDPOINT = 'https://api.aftership.com/v4';
@@ -15,9 +17,14 @@ export class AfterShip {
   private rateLimiting: any = {};
 
   /**
-   * Couriers endpoint
+   * Courier endpoint
    */
   public readonly courier: CourierEndpoint;
+
+  /**
+   * Notification endpoint
+   */
+  public readonly notification: NotificationEndpoint;
 
   constructor(apiKey: string) {
     if (apiKey !== undefined && apiKey !== '') {
@@ -34,6 +41,7 @@ export class AfterShip {
     const request = new ApiRequestImplementation(this, this.apiKey, this.endpoint);
 
     this.courier = new CourierImplementation(request);
+    this.notification = new NotificationImplementation(request);
   }
 
   public getRateLimiting(): any {
