@@ -1,4 +1,5 @@
 import { Courier } from './courier';
+import { Tracking } from '../tracking/tracking';
 
 /**
  * The response of couriers detect request
@@ -12,7 +13,7 @@ export interface CourierDetectList {
   /**
    * Hash describes the tracking information.
    */
-  tracking: string;
+  tracking: Tracking;
 
   /**
    * A list of matched couriers based on tracking number format.
