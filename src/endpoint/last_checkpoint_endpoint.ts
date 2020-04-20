@@ -1,5 +1,5 @@
 import { AftershipResponse } from '../model/aftership_response';
-import { LastCheckPoint } from '../model/checkpoint/last_checkpoint';
+import { LastCheckPoint } from '../model/last_checkpoint/last_checkpoint';
 import { SingleTrackingParam } from '../model/tracking/single_tracking_param';
 
 /**

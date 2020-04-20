@@ -1,8 +1,8 @@
 import { ApiRequest } from '../lib/api_request';
 import { AftershipResponse } from '../model/aftership_response';
-import { LastCheckPointEndpoint } from '../endpoint/last_checkpoint_endpoints';
+import { LastCheckPointEndpoint } from '../endpoint/last_checkpoint_endpoint';
 import { SingleTrackingParam } from '../model/tracking/single_tracking_param';
-import { LastCheckPoint } from '../model/checkpoint/last_checkpoint';
+import { LastCheckPoint } from '../model/last_checkpoint/last_checkpoint';
 import { buildTrackingUrl, isStringValid } from '../lib/util';
 
 export class LastCheckPointImplementation implements LastCheckPointEndpoint {
