@@ -42,7 +42,20 @@ export function buildTrackingUrl(param: SingleTrackingParam): string {
  * @param val string value
  */
 export function isStringValid(val: string | undefined): boolean {
-  return val !== undefined && val !== null && val !== '';
+  return val !== undefined && val !== null
+   && typeof val === 'string' && val !== '';
+}
+
+/**
+ * Get the version of Node.js SDK
+ */
+export function getSdkVersion(): string {
+  let version = process.env.npm_package_version;
+  if (version === undefined) {
+    version = '6.0.0-alpha';
+  }
+
+  return version;
 }
 
 /**

@@ -12,6 +12,21 @@ export class ErrorEnum {
     'ConstructorError: Invalid API key',
   );
 
+  public static constructorInvalidOptions = new AftershipError(
+    ErrorType.ConstructorError,
+    'ConstructorError: Invalid Options value',
+  );
+
+  public static constructorInvalidEndpoint = new AftershipError(
+    ErrorType.ConstructorError,
+    'ConstructorError: Invalid Endpoint value',
+  );
+
+  public static constructorInvalidProxy = new AftershipError(
+    ErrorType.ConstructorError,
+    'ConstructorError: Invalid Proxy value',
+  );
+
   public static constructorInvalidTrackingNumber = new AftershipError(
     ErrorType.ConstructorError,
     'ConstructorError: tracking_number',

@@ -27,25 +27,29 @@ export class LastCheckPointImplementation implements LastCheckPointEndpoint {
     fields?: string,
     lang?: string,
   ): Promise<AftershipResponse<LastCheckPoint>> {
-    let trackingUrl = buildTrackingUrl(tracking_param);
-    // Add optional params to tracking url
-    const optionalParams = [];
-    if (isStringValid(fields)) {
-      optionalParams.push(`fields=${fields}`);
-    }
+    try {
+      let trackingUrl = buildTrackingUrl(tracking_param);
+      // Add optional params to tracking url
+      const optionalParams = [];
+      if (isStringValid(fields)) {
+        optionalParams.push(`fields=${fields}`);
+      }
 
-    if (isStringValid(lang)) {
-      optionalParams.push(`lang=${lang}`);
-    }
+      if (isStringValid(lang)) {
+        optionalParams.push(`lang=${lang}`);
+      }
 
-    if (optionalParams.length > 0) {
-      trackingUrl += `?${optionalParams.join('&')}`;
-    }
+      if (optionalParams.length > 0) {
+        trackingUrl += `?${optionalParams.join('&')}`;
+      }
 
-    // make request
-    return this.request.makeRequest<null, LastCheckPoint>({
-      method: 'GET',
-      url: `/last_checkpoint/${trackingUrl}`,
-    });
+      // make request
+      return this.request.makeRequest<null, LastCheckPoint>({
+        method: 'GET',
+        url: `/last_checkpoint/${trackingUrl}`,
+      });
+    } catch (e) {
+      return Promise.reject(e);
+    }
   }
 }
