@@ -23,11 +23,15 @@ export class NotificationImplementation implements NotificationEndpoint {
   public getNotification(
     tracking_param: SingleTrackingParam,
   ): Promise<AftershipResponse<Notification>> {
-    const trackingUrl = buildTrackingUrl(tracking_param);
-    return this.request.makeRequest<null, Notification>({
-      method: 'GET',
-      url: `/notifications/${trackingUrl}`,
-    });
+    try {
+      const trackingUrl = buildTrackingUrl(tracking_param);
+      return this.request.makeRequest<null, Notification>({
+        method: 'GET',
+        url: `/notifications/${trackingUrl}`,
+      });
+    } catch (e) {
+      return Promise.reject(e);
+    }
   }
 
   /**
@@ -40,11 +44,15 @@ export class NotificationImplementation implements NotificationEndpoint {
     tracking_param: SingleTrackingParam,
     notification: NotificationRequest,
   ): Promise<AftershipResponse<Notification>> {
-    const trackingUrl = buildTrackingUrl(tracking_param);
-    return this.request.makeRequest<NotificationRequest, Notification>(
-      { method: 'POST', url: `/notifications/${trackingUrl}/add` },
-      notification,
-    );
+    try {
+      const trackingUrl = buildTrackingUrl(tracking_param);
+      return this.request.makeRequest<NotificationRequest, Notification>(
+        { method: 'POST', url: `/notifications/${trackingUrl}/add` },
+        notification,
+      );
+    } catch (e) {
+      return Promise.reject(e);
+    }
   }
 
   /**
@@ -57,13 +65,17 @@ export class NotificationImplementation implements NotificationEndpoint {
     tracking_param: SingleTrackingParam,
     notification: NotificationRequest,
   ): Promise<AftershipResponse<Notification>> {
-    const trackingUrl = buildTrackingUrl(tracking_param);
-    return this.request.makeRequest<NotificationRequest, Notification>(
-      {
-        method: 'POST',
-        url: `/notifications/${trackingUrl}/remove`,
-      },
-      notification,
-    );
+    try {
+      const trackingUrl = buildTrackingUrl(tracking_param);
+      return this.request.makeRequest<NotificationRequest, Notification>(
+        {
+          method: 'POST',
+          url: `/notifications/${trackingUrl}/remove`,
+        },
+        notification,
+      );
+    } catch (e) {
+      return Promise.reject(e);
+    }
   }
 }

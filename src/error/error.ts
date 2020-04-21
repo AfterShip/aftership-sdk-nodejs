@@ -17,9 +17,24 @@ export class AftershipError extends Error {
    * @param error error
    * @param errorData The object trigger the error
    */
-  public static getSdkError(error: AftershipError, errorData: any): AftershipError {
+  public static getSdkError(
+    error: AftershipError,
+    errorData: any,
+  ): AftershipError {
     error.data = errorData;
     Error.captureStackTrace(error);
+
+    return error;
+  }
+
+  /**
+   * Static Method for getting REQUEST error
+   * @param error error
+   * @param error_data The object trigger the error
+   */
+  public static getRequestError(error: any, error_data: any): AftershipError {
+    error.data = error_data;
+    error.type = error.code;
 
     return error;
   }
@@ -31,6 +46,9 @@ export class AftershipError extends Error {
   public static getApiError(responseBody: any): AftershipError {
     const error = new AftershipError();
     if (responseBody === null || responseBody === undefined) {
+      // Can't get the response body, set 500 error by default
+      error.type = 'InternalError';
+      error.code = '500';
       return error;
     }
 

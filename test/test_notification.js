@@ -144,14 +144,16 @@ describe("Notification", function () {
 
       aftership.notification
         .getNotification(param)
-        .then((result) => {
-          if (result && result.meta && result.meta.code === 4004) {
+        .then(_ => {
+          done("not catch the exception");
+        })
+        .catch(e => {
+          if (e.type === "BadRequest") {
             done();
           } else {
-            done("not get the error meta");
+            done("not parse the error type correctly");
           }
-        })
-        .catch((e) => done(e.message));
+        });
     });
   });
 
@@ -237,14 +239,16 @@ describe("Notification", function () {
 
       aftership.notification
         .getNotification(param)
-        .then((result) => {
-          if (result && result.meta && result.meta.code === 4004) {
+        .then(_ => {
+          done("not catch the exception");
+        })
+        .catch(e => {
+          if (e.type === "BadRequest") {
             done();
           } else {
-            done("not get the error meta");
+            done("not parse the error type correctly");
           }
-        })
-        .catch((e) => done(e.message));
+        });
     });
   });
 
@@ -404,14 +408,16 @@ describe("Notification", function () {
 
       aftership.notification
         .addNotification(param, notification)
-        .then((result) => {
-          if (result && result.meta && result.meta.code === 4004) {
+        .then(_ => {
+          done("not catch the exception");
+        })
+        .catch(e => {
+          if (e.type === "BadRequest") {
             done();
           } else {
-            done("not get the error meta");
+            done("not parse the error type correctly");
           }
-        })
-        .catch((e) => done(e.message));
+        });
     });
   });
 
@@ -500,14 +506,16 @@ describe("Notification", function () {
 
       aftership.notification
         .addNotification(param, notification)
-        .then((result) => {
-          if (result && result.meta && result.meta.code === 4004) {
+        .then(_ => {
+          done("not catch the exception");
+        })
+        .catch(e => {
+          if (e.type === "BadRequest") {
             done();
           } else {
-            done("not get the error meta");
+            done("not parse the error type correctly");
           }
-        })
-        .catch((e) => done(e.message));
+        });
     });
   });
 
@@ -675,14 +683,16 @@ describe("Notification", function () {
 
       aftership.notification
         .removeNotification(param, notification)
-        .then((result) => {
-          if (result && result.meta && result.meta.code === 4004) {
+        .then(_ => {
+          done("not catch the exception");
+        })
+        .catch(e => {
+          if (e.type === "BadRequest") {
             done();
           } else {
-            done("not get the error meta");
+            done("not parse the error type correctly");
           }
-        })
-        .catch((e) => done(e.message));
+        });
     });
   });
 
@@ -779,14 +789,16 @@ describe("Notification", function () {
 
       aftership.notification
         .removeNotification(param, notification)
-        .then((result) => {
-          if (result && result.meta && result.meta.code === 4004) {
+        .then(_ => {
+          done("not catch the exception");
+        })
+        .catch(e => {
+          if (e.type === "BadRequest") {
             done();
           } else {
-            done("not get the error meta");
+            done("not parse the error type correctly");
           }
-        })
-        .catch((e) => done(e.message));
+        });
     });
   });
 });

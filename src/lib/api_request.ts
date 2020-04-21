@@ -4,6 +4,7 @@ import { v4 as uuidv4 }  from 'uuid';
 import { AftershipResponse, Meta } from '../model/aftership_response';
 import { AfterShip } from '../index';
 import { getSdkVersion } from './util';
+import { AftershipError } from '../error/error';
 
 const debugMakeRequest = debug('aftership:makeRequest');
 const debugProcessResponse = debug('aftership:processResponse');
@@ -73,9 +74,6 @@ export class ApiRequestImplementation implements ApiRequest {
       baseURL: this.app.endpoint,
       data: data !== undefined ? { ...data } : null,
       timeout: TIMEOUT,
-      validateStatus: (status) => {
-        return status <= 504;
-      },
     });
 
     // return Promise
@@ -110,9 +108,28 @@ export class ApiRequestImplementation implements ApiRequest {
     };
   }
 
-  private processException(error: any): Error {
+  private processException(error: any): AftershipError {
     debugProcessException('UnexpectedError %s', error.message);
-    return new Error(error.message);
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      if (error.response.status !== 401) {
+        // Not UnauthorizedError
+        // Set rate_limit
+        this.setRateLimiting(this.app, error.response.headers);
+      }
+      return AftershipError.getApiError(error.response.data);
+    }
+
+    if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      return AftershipError.getRequestError(error, error.request);
+    }
+
+    // Something happened in setting up the request that triggered an Error
+    return new AftershipError('Setup Request Error', error.message);
   }
 
   private setRateLimiting(app: AfterShip, data: any): void {

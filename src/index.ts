@@ -65,6 +65,7 @@ export class AfterShip {
 
     const request = new ApiRequestImplementation(this);
 
+    // Endpoints
     this.courier = new CourierImplementation(request);
     this.last_checkpoint = new LastCheckPointImplementation(request);
     this.notification = new NotificationImplementation(request);

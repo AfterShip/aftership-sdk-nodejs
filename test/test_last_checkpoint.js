@@ -156,14 +156,16 @@ describe("LastCheckPoint", function () {
 
       aftership.last_checkpoint
         .getLastCheckPoint(param)
-        .then((result) => {
-          if (result && result.meta && result.meta.code === 4004) {
+        .then(_ => {
+          done("not catch the exception");
+        })
+        .catch(e => {
+          if (e.type === "BadRequest") {
             done();
           } else {
-            done("not get the error meta");
+            done("not parse the error type correctly");
           }
-        })
-        .catch((e) => done(e.message));
+        });
     });
   });
 
@@ -257,14 +259,16 @@ describe("LastCheckPoint", function () {
 
       aftership.last_checkpoint
         .getLastCheckPoint(param)
-        .then((result) => {
-          if (result && result.meta && result.meta.code === 4004) {
+        .then(_ => {
+          done("not catch the exception");
+        })
+        .catch(e => {
+          if (e.type === "BadRequest") {
             done();
           } else {
-            done("not get the error meta");
+            done("not parse the error type correctly");
           }
-        })
-        .catch((e) => done(e.message));
+        });
     });
   });
 });
