@@ -1,1 +1,1 @@
-export interface TrackingUpdate { }
+export interface TrackingUpdatParams { }
