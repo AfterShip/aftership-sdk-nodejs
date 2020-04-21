@@ -44,3 +44,15 @@ export function buildTrackingUrl(param: SingleTrackingParam): string {
 export function isStringValid(val: string | undefined): boolean {
   return val !== undefined && val !== null && val !== '';
 }
+
+/**
+ * Object to query string
+ * @param data Object
+ */
+export function getQueryString(data: object | undefined): string {
+
+  if (data === undefined) return '';
+
+  const getKeyValue = (key: string) => (obj: Record<string, any>) => obj[key];
+  return Object.keys(data).map(key => `${key}=${getKeyValue(key)}`).join('&');
+}

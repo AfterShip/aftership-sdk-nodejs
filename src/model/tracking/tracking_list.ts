@@ -1,4 +1,4 @@
-import { Tracking } from '../tracking/tracking'
+import { Tracking } from '../tracking/tracking';
 /**
  * tracking results.
  */
@@ -22,5 +22,5 @@ export interface TrackingList {
   /**
    * Array of Hash describes the tracking information.
    */
-  trackings?: Array<Tracking>;
+  trackings?: [Tracking];
 }

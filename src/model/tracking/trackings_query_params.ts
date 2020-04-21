@@ -1,4 +1,4 @@
-import { Tag } from '../tracking/tracking'
+import { Tag } from '../tracking/tracking';
 /**
  * Tracking list query params object
  */
@@ -39,12 +39,13 @@ export interface TrackingsQueryParams {
   origin?: string;
 
   /**
-   * Destination country of trackings. Use ISO Alpha-3 (three letters). Use comma for multiple values. (Example: USA,HKG)
+   * Destination country of trackings. Use ISO Alpha-3 (three letters).
+   * Use comma for multiple values. (Example: USA,HKG)
    */
   destination?: string;
 
   /**
-   * Current status of tracking. 
+   * Current status of tracking.
    */
   tag?: Tag;
 
@@ -61,8 +62,9 @@ export interface TrackingsQueryParams {
   created_at_max?: string;
 
   /**
-   * List of fields to include in the response. 
-   * Use comma for multiple values. Fields to include: title,  order_id,  tag,  checkpoints,  checkpoint_time,  message,  country_name
+   * List of fields to include in the response.
+   * Use comma for multiple values. Fields to include: title,  order_id,  tag,
+   * checkpoints,  checkpoint_time,  message,  country_name
    * Defaults: none, Example: title,order_id
    */
   fields?: string;

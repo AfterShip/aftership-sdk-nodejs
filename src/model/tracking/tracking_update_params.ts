@@ -1,18 +1,18 @@
-import { DeliveryType } from '../tracking/tracking'
+import { DeliveryType } from '../tracking/tracking';
 /**
- * Tracking update params object 
+ * Tracking update params object
  */
 export interface TrackingUpdatParams {
 
   /**
    * Phone number(s) to receive sms notifications.
    */
-  smses?: Array<string>;
+  smses?: [string];
 
   /**
    * Email address(es) to receive email notifications.
    */
-  emails?: Array<string>;
+  emails?: [string];
 
   /**
    * Title of the tracking.

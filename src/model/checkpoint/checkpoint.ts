@@ -1,6 +1,7 @@
-import { Tag } from '../tracking/tracking'
+import { Tag } from '../tracking/tracking';
+
 /**
- * checkpoint information. 
+ * checkpoint information.
  */
 export interface Checkpoint {
 
@@ -15,7 +16,7 @@ export interface Checkpoint {
   slug?: string;
 
   /**
-   * Date and time of the checkpoint, provided by courier. 
+   * Date and time of the checkpoint, provided by courier.
    * Value may be:YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+TIMEZONE
    */
   checkpoint_time?: string;
@@ -38,7 +39,7 @@ export interface Checkpoint {
   /**
    * Deprecated as of March 2013
    */
-  coordinates?: Array<any>;
+  coordinates?: [string];
 
   /**
    * Country ISO Alpha-3 (three letters) of the checkpoint
@@ -61,7 +62,7 @@ export interface Checkpoint {
   tag?: Tag;
 
   /**
-   * Current subtag of checkpoint. 
+   * Current subtag of checkpoint.
    */
   subtag?: string;
 
@@ -77,8 +78,6 @@ export interface Checkpoint {
 
   /**
    * Checkpoint status provided by courier (if any)
-
    */
   raw_tag?: string;
 }
-

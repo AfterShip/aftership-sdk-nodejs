@@ -13,13 +13,11 @@ import { SingleTrackingParam } from '../model/tracking/single_tracking_param';
 export interface TrackingEndpoint {
   /**
    * Create a tracking.
-   * @param single_tracking_param The param to identify the single tracking.
    * @param tracking_post_params Tracking post Request Object
    */
   createTracking(
-    single_tracking_param: SingleTrackingParam,
     tracking_post_params: TrackingPostParams,
-  ): Promise<AftershipResponse<Tracking>>
+  ): Promise<AftershipResponse<Tracking>>;
 
   /**
    * Delete a tracking.
@@ -27,7 +25,7 @@ export interface TrackingEndpoint {
    */
   deleteTracking(
     single_tracking_param: SingleTrackingParam,
-  ): Promise<AftershipResponse<Tracking>>
+  ): Promise<AftershipResponse<Tracking>>;
 
   /**
    * Get tracking results of multiple trackings.
@@ -36,8 +34,8 @@ export interface TrackingEndpoint {
    * @param trackings_query_params Tracking list query params object
    */
   listTrackings(
-    trackings_query_params?: TrackingsQueryParams
-  ): Promise<AftershipResponse<TrackingList>>
+    trackings_query_params?: TrackingsQueryParams,
+  ): Promise<AftershipResponse<TrackingList>>;
 
   /**
    * Get tracking results of a single tracking.
@@ -48,7 +46,7 @@ export interface TrackingEndpoint {
   getTracking(
     single_tracking_param: SingleTrackingParam,
     tracking_query_params?: TrackingQueryParams,
-  ): Promise<AftershipResponse<Tracking>>
+  ): Promise<AftershipResponse<Tracking>>;
 
   /**
    * Update a tracking.
@@ -60,7 +58,7 @@ export interface TrackingEndpoint {
   updateTracking(
     single_tracking_param: SingleTrackingParam,
     tracking_update_params?: TrackingUpdatParams,
-  ): Promise<AftershipResponse<Tracking>>
+  ): Promise<AftershipResponse<Tracking>>;
 
   /**
    * Retrack an expired tracking. Max 3 times per tracking.
@@ -68,5 +66,5 @@ export interface TrackingEndpoint {
    */
   retrack(
     single_tracking_param: SingleTrackingParam,
-  ): Promise<AftershipResponse<Tracking>>
+  ): Promise<AftershipResponse<Tracking>>;
 }

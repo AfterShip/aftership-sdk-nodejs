@@ -1,6 +1,6 @@
 import { AftershipError } from '../../error/error';
 import { ErrorEnum } from '../../error/error_enum';
-import { DeliveryType } from '../tracking/tracking'
+import { DeliveryType } from '../tracking/tracking';
 
 /**
  * The request object of tracking create
@@ -8,8 +8,8 @@ import { DeliveryType } from '../tracking/tracking'
 
 export class TrackingPostParams {
   /**
-  * Tracking Object.
-  */
+   * Tracking Object.
+   */
   public tracking: TrackingPost;
 
   /**
@@ -42,11 +42,11 @@ export interface TrackingPost {
   /**
    * Unique code of each courier.
    * Provide a single courier or array for a list of couriers.
-   * If you do not specify a slug, Aftership will automatically detect 
+   * If you do not specify a slug, Aftership will automatically detect
    * the courier based on the tracking number format and your selected couriers.
    * Get a list of courier slug using GET /couriers
    */
-  slug?: string | Array<string>;
+  slug?: string | [string];
 
   /**
    * The postal code of receiver's address. Required by some couriers, such asdeutsch-post
@@ -86,26 +86,26 @@ export interface TrackingPost {
    * Google cloud message registration IDs to receive the push notifications.
    * Accept either array or comma separated as input.
    */
-  android?: string | Array<string>;
+  android?: string | [string];
 
   /**
    * Apple iOS device IDs to receive the push notifications.
    * Accept either array or comma separated as input.
    */
-  ios?: string | Array<string>;
+  ios?: string | [string];
 
   /**
    * Email address(es) to receive email notifications.
    * Accept either array or comma separated as input.
    */
-  emails?: string | Array<string>;
+  emails?: string | [string];
 
   /**
-   * Phone number(s) to receive sms notifications. 
+   * Phone number(s) to receive sms notifications.
    * Enter+ andarea code before phone number.
    * Accept either array or comma separated as input.
    */
-  smses?: string | Array<string>;
+  smses?: string | [string];
 
   /**
    * Title of the tracking. Default value astracking_number
@@ -124,7 +124,7 @@ export interface TrackingPost {
 
   /**
    * Enter ISO Alpha-3 (three letters) to specify the destination of the shipment (e.g. USA for United States).
-   * If you use postal service to send international shipments, AfterShip will automatically 
+   * If you use postal service to send international shipments, AfterShip will automatically
    * get tracking results at destination courier as well.
    */
   destination_country_iso3?: string;
