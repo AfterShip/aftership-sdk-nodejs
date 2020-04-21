@@ -57,3 +57,15 @@ export function getSdkVersion(): string {
 
   return version;
 }
+
+/**
+ * Object to query string
+ * @param data Object
+ */
+export function getQueryString(data: object | undefined): string {
+
+  if (data === undefined) return '';
+
+  const getKeyValue = (key: string) => (obj: Record<string, any>) => obj[key];
+  return Object.keys(data).map(key => `${key}=${getKeyValue(key)}`).join('&');
+}
