@@ -1,7 +1,7 @@
 import { AftershipResponse } from '../model/aftership_response';
 import { Tracking } from '../model/tracking/tracking';
 import { TrackingList } from '../model/tracking/tracking_list';
-import { TrackingRequest } from '../model/tracking/tracking_request';
+import { TrackingPostParams } from '../model/tracking/tracking_post_params';
 import { TrackingsQueryParams } from '../model/tracking/trackings_query_params';
 import { TrackingQueryParams } from '../model/tracking/tracking_query_params';
 import { TrackingUpdatParams } from '../model/tracking/tracking_update_params';
@@ -14,11 +14,11 @@ export interface TrackingEndpoint {
   /**
    * Create a tracking.
    * @param single_tracking_param The param to identify the single tracking.
-   * @param tracking Tracking Request Object
+   * @param tracking_post_params Tracking post Request Object
    */
   createTracking(
     single_tracking_param: SingleTrackingParam,
-    tracking: TrackingRequest,
+    tracking_post_params: TrackingPostParams,
   ): Promise<AftershipResponse<Tracking>>
 
   /**
