@@ -140,7 +140,6 @@ describe("Courier", function () {
         .listCouriers()
         .then((result) => {
           const { total, couriers } = (result && result.data) || {};
-          console.log("Promise", total, couriers.length);
           if (couriers && couriers.length > 0 && total === couriers.length) {
             done();
           } else {
@@ -154,7 +153,6 @@ describe("Courier", function () {
       try {
         let result = await aftership.courier.listCouriers();
         const { total, couriers } = (result && result.data) || {};
-        console.log("Async/Await", total, couriers.length);
         if (couriers && couriers.length > 0 && total === couriers.length) {
           done();
         } else {
@@ -202,7 +200,6 @@ describe("Courier", function () {
         .listAllCouriers()
         .then((result) => {
           const { total, couriers } = (result && result.data) || {};
-          console.log("Promise", total, couriers.length);
           if (couriers && couriers.length > 0 && total === couriers.length) {
             done();
           } else {
@@ -216,7 +213,6 @@ describe("Courier", function () {
       try {
         let result = await aftership.courier.listAllCouriers();
         const { total, couriers } = (result && result.data) || {};
-        console.log("Async/Await", total, couriers.length);
         if (couriers && couriers.length > 0 && total === couriers.length) {
           done();
         } else {
@@ -255,7 +251,6 @@ describe("Courier", function () {
         .detectCouriers(payload)
         .then((result) => {
           const { total, couriers } = (result && result.data) || {};
-          console.log("Promise", total, couriers.length);
           if (couriers && couriers.length >= 0 && total === couriers.length) {
             done();
           } else {
@@ -269,7 +264,6 @@ describe("Courier", function () {
       try {
         let result = await aftership.courier.detectCouriers(payload);
         const { total, couriers } = (result && result.data) || {};
-        console.log("Async/Await", total, couriers.length);
         if (couriers && couriers.length >= 0 && total === couriers.length) {
           done();
         } else {
