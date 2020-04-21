@@ -1,11 +1,12 @@
 import lodash from 'lodash';
-
 import { ApiRequestImplementation } from './lib/api_request';
 import { AftershipError } from './error/error';
 import { ErrorEnum } from './error/error_enum';
 import { CourierEndpoint } from './endpoint/courier_endpoint';
+import { LastCheckPointEndpoint } from './endpoint/last_checkpoint_endpoint';
 import { NotificationEndpoint } from './endpoint/notification_endpoint';
 import { CourierImplementation } from './implementation/courier';
+import { LastCheckPointImplementation } from './implementation/last_checkpoint';
 import { NotificationImplementation } from './implementation/notification';
 
 const DEFAULT_API_KEY = process.env['AFTERSHIP_API_KEY'];
@@ -20,6 +21,11 @@ export class AfterShip {
    * Courier endpoint
    */
   public readonly courier: CourierEndpoint;
+
+  /**
+   * CheckPoint endpoint
+   */
+  public readonly last_checkpoint: LastCheckPointEndpoint;
 
   /**
    * Notification endpoint
@@ -41,6 +47,7 @@ export class AfterShip {
     const request = new ApiRequestImplementation(this, this.apiKey, this.endpoint);
 
     this.courier = new CourierImplementation(request);
+    this.last_checkpoint = new LastCheckPointImplementation(request);
     this.notification = new NotificationImplementation(request);
   }
 

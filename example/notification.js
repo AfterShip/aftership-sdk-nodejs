@@ -5,13 +5,13 @@ const AfterShip = require('../dist/index.js').AfterShip;
 
 const aftership = new AfterShip(API_KEY);
 
-// GET /notifications/:slug/:tracking_number
-aftership.notification.getNotification(null, 'ups', '1234567890')
-  .then(result => console.log(result))
-  .catch(e => console.log(e));
+let param = {
+  slug: "ups",
+  tracking_number: "1234567890",
+};
 
-// GET /notifications/:tracking_id
-aftership.notification.getNotification('5b74f4958776db0e00b6f5ed')
+// GET /notifications/:slug/:tracking_number
+aftership.notification.getNotification(param)
   .then(result => console.log(result))
   .catch(e => console.log(e));
 
@@ -23,12 +23,7 @@ let notification = {
 		'smses': ['+85291239123', '+85261236123', 'Invalid Mobile Phone Number']
 	}
 };
-aftership.notification.addNotification(notification, null, 'ups', '1234567890', )
-  .then(result => console.log(result))
-  .catch(e => console.log(e));
-
-// POST /notifications/:tracking_id/add
-aftership.notification.addNotification(notification, '5b74f4958776db0e00b6f5ed')
+aftership.notification.addNotification(param, notification)
   .then(result => console.log(result))
   .catch(e => console.log(e));
 
@@ -40,11 +35,7 @@ notification = {
 		'smses': ['+85291239123', '+85261236123', 'Invalid Mobile Phone Number']
 	}
 };
-aftership.notification.removeNotification(notification, null, 'ups', '1234567890')
+aftership.notification.removeNotification(param, notification)
   .then(result => console.log(result))
   .catch(e => console.log(e));
 
-// POST /notifications/:tracking_id/remove
-aftership.notification.removeNotification(notification, '5b74f4958776db0e00b6f5ed')
-  .then(result => console.log(result))
-  .catch(e => console.log(e));
