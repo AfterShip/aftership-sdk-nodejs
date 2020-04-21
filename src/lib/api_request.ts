@@ -1,6 +1,9 @@
 import axios, { Method } from 'axios';
 import debug from 'debug';
+import { v4 as uuidv4 }  from 'uuid';
 import { AftershipResponse, Meta } from '../model/aftership_response';
+import { AfterShip } from '../index';
+import { getSdkVersion } from './util';
 
 const debugMakeRequest = debug('aftership:makeRequest');
 const debugProcessResponse = debug('aftership:processResponse');
@@ -33,14 +36,10 @@ export interface ApiRequest {
  * The implementation of API request
  */
 export class ApiRequestImplementation implements ApiRequest {
-  private app: any;
-  private apiKey: string;
-  private endpoint: string;
+  private readonly app: AfterShip;
 
-  constructor(app: any, apiKey: string, endpoint: string) {
+  constructor(app: AfterShip) {
     this.app = app;
-    this.apiKey = apiKey;
-    this.endpoint = endpoint;
   }
 
   /**
@@ -55,14 +54,23 @@ export class ApiRequestImplementation implements ApiRequest {
     debugMakeRequest('config %o', {
       url,
       method,
-      apiKey: this.apiKey,
+      apiKey: this.app.apiKey,
     });
+
+    const request_id = uuidv4();
+    const headers = {
+      'aftership-api-key': this.app.apiKey,
+      'Content-Type': 'application/json',
+      'x-request-id': request_id,
+      'User-Agent': `${this.app.user_agent_prefix}/${request_id}`,
+      'x-aftership-agent': `nodejs-sdk-${getSdkVersion()}`,
+    };
 
     const request = axios.request({
       url,
       method,
-      baseURL: this.endpoint,
-      headers: { 'aftership-api-key': this.apiKey },
+      headers,
+      baseURL: this.app.endpoint,
       data: data !== undefined ? { ...data } : null,
       timeout: TIMEOUT,
       validateStatus: (status) => {
@@ -107,7 +115,7 @@ export class ApiRequestImplementation implements ApiRequest {
     return new Error(error.message);
   }
 
-  private setRateLimiting(app: any, data: any): void {
+  private setRateLimiting(app: AfterShip, data: any): void {
     if (!data) {
       return;
     }
@@ -119,6 +127,6 @@ export class ApiRequestImplementation implements ApiRequest {
     };
 
     debugRateLimiting('rateLimiting %o', rateLimiting);
-    app.setRateLimiting(rateLimiting);
+    app.rate_limit = rateLimiting;
   }
 }

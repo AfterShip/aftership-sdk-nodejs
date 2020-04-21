@@ -169,7 +169,7 @@ describe("Courier", function () {
       aftership.courier
         .listCouriers()
         .then((_) => {
-          const rateLimit = aftership.getRateLimiting();
+          const rateLimit = aftership.rate_limit;
           if (rateLimit && rateLimit.limit) {
             done();
           } else {

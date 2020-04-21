@@ -1,5 +1,3 @@
-import lodash from 'lodash';
-
 export class AftershipError extends Error {
   public type: string | undefined;
   public code: string;
@@ -32,10 +30,17 @@ export class AftershipError extends Error {
    */
   public static getApiError(responseBody: any): AftershipError {
     const error = new AftershipError();
-    error.type = lodash.get(responseBody, 'meta.type');
-    error.message = lodash.get(responseBody, 'meta.message');
-    error.code = lodash.get(responseBody, 'meta.code');
-    error.data = lodash.get(responseBody, 'data');
+    if (responseBody === null || responseBody === undefined) {
+      return error;
+    }
+
+    if (responseBody.meta !== null && responseBody.meta !== undefined) {
+      error.type = responseBody.meta.type;
+      error.message = responseBody.meta.message;
+      error.code = responseBody.meta.code;
+    }
+
+    error.data = responseBody.data;
     error.responseBody = JSON.stringify(responseBody);
 
     return error;
