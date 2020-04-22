@@ -12,7 +12,6 @@ import { LastCheckpointImplementation } from './implementation/last_checkpoint';
 import { NotificationImplementation } from './implementation/notification';
 import { TrackingImplementation } from './implementation/tracking';
 
-const DEFAULT_API_KEY = process.env['AFTERSHIP_API_KEY'];
 const DEFAULT_ENDPOINT = 'https://api.aftership.com/v4';
 const DEFAULT_USER_AGENT = 'aftership-sdk-nodejs';
 
@@ -47,8 +46,8 @@ export class AfterShip {
   public readonly tracking: TrackingImplementation;
 
   constructor(apiKey: string, options?: AftershipOption) {
-    this.apiKey = this.getApiKey(apiKey);
-    this.errorHandling(this.apiKey, options);
+    this.errorHandling(apiKey, options);
+    this.apiKey = apiKey;
 
     // Setup
     if (options !== null && options !== undefined) {
@@ -76,18 +75,6 @@ export class AfterShip {
     this.last_checkpoint = new LastCheckpointImplementation(request);
     this.notification = new NotificationImplementation(request);
     this.tracking = new TrackingImplementation(request);
-  }
-
-  private getApiKey(apiKey: string): string {
-    if (apiKey !== undefined && apiKey !== '') {
-      return apiKey;
-    }
-
-    if (DEFAULT_API_KEY !== undefined) {
-      return DEFAULT_API_KEY;
-    }
-
-    return '';
   }
 
   /**

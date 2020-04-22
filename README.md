@@ -12,6 +12,8 @@
 ![codecov.io](http://codecov.io/github/AfterShip/aftership-sdk-nodejs/branch.svg?branch=master)
 
 node.js SDK for AfterShip API
+> It could be used on both client and server side.
+
 ## Installation
 ```
 npm install aftership
@@ -315,7 +317,7 @@ aftership.tracking
   .catch((e) => console.log(e));
 ```
 
-> You can always use/:tracking_id to replace /:slug/:tracking_number.
+> You can always use /:tracking_id to replace /:slug/:tracking_number.
 ```javascript
 // GET /trackings/:tracking_id
 aftership.tracking
