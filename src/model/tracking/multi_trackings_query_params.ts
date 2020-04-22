@@ -1,8 +1,8 @@
-import { Tag } from '../tracking/tracking';
+import { DeliveryStatus } from './delivery_status';
 /**
  * Tracking list query params object
  */
-export interface TrackingsQueryParams {
+export interface MultiTrackingsQueryParams {
 
   /**
    * Page to show. (Default: 1)
@@ -47,7 +47,7 @@ export interface TrackingsQueryParams {
   /**
    * Current status of tracking.
    */
-  tag?: Tag;
+  tag?: DeliveryStatus;
 
   /**
    * Start date and time of trackings created. AfterShip only stores data of 90 days.

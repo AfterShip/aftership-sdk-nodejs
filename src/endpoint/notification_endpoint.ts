@@ -2,6 +2,7 @@ import { AftershipResponse } from '../model/aftership_response';
 import { Notification } from '../model/notification/notification';
 import { NotificationRequest } from '../model/notification/notification_request';
 import { SingleTrackingParam } from '../model/tracking/single_tracking_param';
+
 /**
  * Get, add or remove contacts (sms or email) to be notified when the status of a tracking has changed.
  */

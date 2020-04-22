@@ -1,4 +1,3 @@
-
 /**
  * Tracking query params object
  */

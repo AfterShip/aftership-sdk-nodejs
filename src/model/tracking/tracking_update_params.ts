@@ -1,4 +1,4 @@
-import { DeliveryType } from '../tracking/tracking';
+import { DeliveryType } from './delivery_type';
 /**
  * Tracking update params object
  */
