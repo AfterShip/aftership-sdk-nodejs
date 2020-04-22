@@ -1,11 +1,11 @@
 import { ApiRequest } from '../lib/api_request';
 import { AftershipResponse } from '../model/aftership_response';
-import { LastCheckPointEndpoint } from '../endpoint/last_checkpoint_endpoint';
+import { LastCheckpointEndpoint } from '../endpoint/last_checkpoint_endpoint';
 import { SingleTrackingParam } from '../model/tracking/single_tracking_param';
-import { LastCheckPoint } from '../model/last_checkpoint/last_checkpoint';
+import { LastCheckpoint } from '../model/last_checkpoint/last_checkpoint';
 import { buildTrackingUrl, isStringValid } from '../lib/util';
 
-export class LastCheckPointImplementation implements LastCheckPointEndpoint {
+export class LastCheckpointImplementation implements LastCheckpointEndpoint {
   private readonly request: ApiRequest;
 
   constructor(request: ApiRequest) {
@@ -22,11 +22,11 @@ export class LastCheckPointImplementation implements LastCheckPointEndpoint {
    * Default: none, Example: city,tag
    * @param lang Optional, Support Chinese to English translation for china-ems and china-post only. (Example: en)
    */
-  public getLastCheckPoint(
+  public getLastCheckpoint(
     tracking_param: SingleTrackingParam,
     fields?: string,
     lang?: string,
-  ): Promise<AftershipResponse<LastCheckPoint>> {
+  ): Promise<AftershipResponse<LastCheckpoint>> {
     try {
       let trackingUrl = buildTrackingUrl(tracking_param);
       // Add optional params to tracking url
@@ -44,7 +44,7 @@ export class LastCheckPointImplementation implements LastCheckPointEndpoint {
       }
 
       // make request
-      return this.request.makeRequest<null, LastCheckPoint>({
+      return this.request.makeRequest<null, LastCheckpoint>({
         method: 'GET',
         url: `/last_checkpoint/${trackingUrl}`,
       });

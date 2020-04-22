@@ -2,6 +2,8 @@ import { AftershipError } from '../error/error';
 import { ErrorEnum } from '../error/error_enum';
 import { SingleTrackingParam } from '../model/tracking/single_tracking_param';
 
+const VERSION = '6.0.0-alpha';
+
 /**
  * Build tracking url by param
  * @param param tracking param
@@ -50,9 +52,14 @@ export function isStringValid(val: string | undefined): boolean {
  * Get the version of Node.js SDK
  */
 export function getSdkVersion(): string {
-  let version = process.env.npm_package_version;
+  let version;
+
+  if (process !== undefined && process.env !== undefined) {
+    version = process.env.npm_package_version;
+  }
+
   if (version === undefined) {
-    version = '6.0.0-alpha';
+    version = VERSION;
   }
 
   return version;

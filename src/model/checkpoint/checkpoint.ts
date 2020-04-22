@@ -3,7 +3,7 @@ import { DeliveryStatus } from '../tracking/delivery_status';
 /**
  * checkpoint information.
  */
-export interface CheckPoint {
+export interface Checkpoint {
 
   /**
    * Date and time of the tracking created.
@@ -52,7 +52,7 @@ export interface CheckPoint {
   country_name?: string;
 
   /**
-   * CheckPoint message
+   * Checkpoint message
    */
   message?: string;
 
@@ -77,7 +77,7 @@ export interface CheckPoint {
   zip?: string;
 
   /**
-   * CheckPoint status provided by courier (if any)
+   * Checkpoint status provided by courier (if any)
    */
   raw_tag?: string;
 }

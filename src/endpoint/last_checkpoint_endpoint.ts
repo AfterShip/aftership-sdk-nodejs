@@ -1,11 +1,11 @@
 import { AftershipResponse } from '../model/aftership_response';
-import { LastCheckPoint } from '../model/last_checkpoint/last_checkpoint';
+import { LastCheckpoint } from '../model/last_checkpoint/last_checkpoint';
 import { SingleTrackingParam } from '../model/tracking/single_tracking_param';
 
 /**
  * Get tracking information of the last checkpoint of a tracking.
  */
-export interface LastCheckPointEndpoint {
+export interface LastCheckpointEndpoint {
   /**
    * Return the tracking information of the last checkpoint of a single tracking.
    * @param tracking_param The param to identify the single tracking.
@@ -16,9 +16,9 @@ export interface LastCheckPointEndpoint {
    * Default: none, Example: city,tag
    * @param lang Optional, Support Chinese to English translation for china-ems and china-post only. (Example: en)
    */
-  getLastCheckPoint(
+  getLastCheckpoint(
     tracking_param: SingleTrackingParam,
     fields?: string,
     lang?: string,
-  ): Promise<AftershipResponse<LastCheckPoint>>;
+  ): Promise<AftershipResponse<LastCheckpoint>>;
 }

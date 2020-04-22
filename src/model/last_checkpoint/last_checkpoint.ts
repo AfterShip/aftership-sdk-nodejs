@@ -1,10 +1,10 @@
-import { CheckPoint } from '../checkpoint/checkpoint';
+import { Checkpoint } from '../checkpoint/checkpoint';
 import { DeliveryStatus } from '../tracking/delivery_status';
 
 /**
- * Last CheckPoint Object
+ * Last Checkpoint Object
  */
-export interface LastCheckPoint {
+export interface LastCheckpoint {
   /**
    * Tracking number.
    */
@@ -36,5 +36,5 @@ export interface LastCheckPoint {
   /**
    * Hash describes the checkpoint information.
    */
-  checkpoint: CheckPoint;
+  checkpoint: Checkpoint;
 }

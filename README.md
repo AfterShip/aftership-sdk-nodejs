@@ -12,6 +12,8 @@
 ![codecov.io](http://codecov.io/github/AfterShip/aftership-sdk-nodejs/branch.svg?branch=master)
 
 node.js SDK for AfterShip API
+> It could be used on both client and server side.
+
 ## Installation
 ```
 npm install aftership
@@ -117,7 +119,10 @@ console.log(aftership.rate_limit);
 After making an API call, it will be set.
 ```javascript
 aftership.courier.listCouriers()
-  .then(result => console.log(result))
+  .then(result => {
+    console.log(result);
+    console.log(aftership.rate_limit);
+  })
   .catch(err => console.log(err));
 
 // console output
@@ -312,7 +317,7 @@ aftership.tracking
   .catch((e) => console.log(e));
 ```
 
-> You can always use/:tracking_id to replace /:slug/:tracking_number.
+> You can always use /:tracking_id to replace /:slug/:tracking_number.
 ```javascript
 // GET /trackings/:tracking_id
 aftership.tracking
@@ -340,7 +345,7 @@ aftership.tracking
 **GET** /last_checkpoint/:slug/:tracking_number
 
 ```javascript
-aftership.last_checkpoint.getLastCheckPoint({
+aftership.last_checkpoint.getLastCheckpoint({
     slug: 'ups',
     tracking_number: '1234567890',
   })

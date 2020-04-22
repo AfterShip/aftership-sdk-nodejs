@@ -1,4 +1,4 @@
-import { CheckPoint } from '../checkpoint/checkpoint';
+import { Checkpoint } from '../checkpoint/checkpoint';
 import { DeliveryStatus } from './delivery_status';
 import { DeliveryType } from './delivery_type';
 
@@ -288,6 +288,6 @@ export interface Tracking {
     /**
      * Array of Hash describes the checkpoint information.
      */
-    checkpoints?: [CheckPoint];
+    checkpoints?: [Checkpoint];
   };
 }
