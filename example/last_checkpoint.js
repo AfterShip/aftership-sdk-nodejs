@@ -6,7 +6,7 @@ const { AfterShip } = require('../dist/index.js');
 const aftership = new AfterShip(API_KEY);
 
 // GET /last_checkpoint/:slug/:tracking_number
-aftership.last_checkpoint.getLastCheckPoint({
+aftership.last_checkpoint.getLastCheckpoint({
     slug: 'ups',
     tracking_number: '1234567890',
   })
@@ -14,7 +14,7 @@ aftership.last_checkpoint.getLastCheckPoint({
   .catch(e => console.log(e));
 
 // GET /last_checkpoint/:tracking_id
-aftership.last_checkpoint.getLastCheckPoint({
+aftership.last_checkpoint.getLastCheckpoint({
     tracking_id: '5b74f4958776db0e00b6f5ed',
   })
   .then(result => console.log(result))

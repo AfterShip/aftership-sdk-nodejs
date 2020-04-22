@@ -6,13 +6,13 @@ var chai = require("chai");
 var expect = chai.expect;
 var aftership = new Aftership("SOME_API_KEY");
 
-describe("LastCheckPoint", function () {
-  describe("#getLastCheckPoint(), validate params", function () {
+describe("LastCheckpoint", function () {
+  describe("#getLastCheckpoint(), validate params", function () {
     it("should throw exception when not specify tracking id and tracking number", async function () {
       let expected_error =
         "HandlerError: You must specify the tracking number or tracking id";
       try {
-        await aftership.last_checkpoint.getLastCheckPoint();
+        await aftership.last_checkpoint.getLastCheckpoint();
       } catch (e) {
         expect(e.message).to.equal(expected_error);
       }
@@ -27,7 +27,7 @@ describe("LastCheckPoint", function () {
         tracking_number: "1234567890",
       };
       try {
-        await aftership.last_checkpoint.getLastCheckPoint(param);
+        await aftership.last_checkpoint.getLastCheckpoint(param);
       } catch (e) {
         expect(e.message).to.equal(expected_error);
       }
@@ -40,7 +40,7 @@ describe("LastCheckPoint", function () {
         slug: "ups",
       };
       try {
-        await aftership.last_checkpoint.getLastCheckPoint(param);
+        await aftership.last_checkpoint.getLastCheckpoint(param);
       } catch (e) {
         expect(e.message).to.equal(expected_error);
       }
@@ -53,14 +53,14 @@ describe("LastCheckPoint", function () {
         tracking_number: "1234567890",
       };
       try {
-        await aftership.last_checkpoint.getLastCheckPoint(param);
+        await aftership.last_checkpoint.getLastCheckpoint(param);
       } catch (e) {
         expect(e.message).to.equal(expected_error);
       }
     });
   });
 
-  describe("#getLastCheckPoint({slug, tracking_number})", function () {
+  describe("#getLastCheckpoint({slug, tracking_number})", function () {
     it("should get last checkpoint when success", function (done) {
       const param = {
         slug: "ups",
@@ -111,7 +111,7 @@ describe("LastCheckPoint", function () {
         );
 
       aftership.last_checkpoint
-        .getLastCheckPoint(param)
+        .getLastCheckpoint(param)
         .then((result) => {
           if (
             result &&
@@ -155,7 +155,7 @@ describe("LastCheckPoint", function () {
         );
 
       aftership.last_checkpoint
-        .getLastCheckPoint(param)
+        .getLastCheckpoint(param)
         .then(_ => {
           done("not catch the exception");
         })
@@ -169,7 +169,7 @@ describe("LastCheckPoint", function () {
     });
   });
 
-  describe("#getLastCheckPoint({tracking_id})", function () {
+  describe("#getLastCheckpoint({tracking_id})", function () {
     it("should get last checkpoint when success", function (done) {
       const param = {
         tracking_id: "5b74f4958776db0e00b6f5ed",
@@ -217,7 +217,7 @@ describe("LastCheckPoint", function () {
       );
 
       aftership.last_checkpoint
-        .getLastCheckPoint(param)
+        .getLastCheckpoint(param)
         .then((result) => {
           if (
             result &&
@@ -258,7 +258,7 @@ describe("LastCheckPoint", function () {
       );
 
       aftership.last_checkpoint
-        .getLastCheckPoint(param)
+        .getLastCheckpoint(param)
         .then(_ => {
           done("not catch the exception");
         })

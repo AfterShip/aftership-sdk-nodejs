@@ -5,10 +5,10 @@ import { AftershipOption } from './model/aftership_option';
 import { RateLimit } from './model/rate_limit';
 import { isStringValid } from './lib/util';
 import { CourierEndpoint } from './endpoint/courier_endpoint';
-import { LastCheckPointEndpoint } from './endpoint/last_checkpoint_endpoint';
+import { LastCheckpointEndpoint } from './endpoint/last_checkpoint_endpoint';
 import { NotificationEndpoint } from './endpoint/notification_endpoint';
 import { CourierImplementation } from './implementation/courier';
-import { LastCheckPointImplementation } from './implementation/last_checkpoint';
+import { LastCheckpointImplementation } from './implementation/last_checkpoint';
 import { NotificationImplementation } from './implementation/notification';
 import { TrackingImplementation } from './implementation/tracking';
 
@@ -32,9 +32,9 @@ export class AfterShip {
   public readonly courier: CourierEndpoint;
 
   /**
-   * Last CheckPoint endpoint
+   * Last Checkpoint endpoint
    */
-  public readonly last_checkpoint: LastCheckPointEndpoint;
+  public readonly last_checkpoint: LastCheckpointEndpoint;
 
   /**
    * Notification endpoint
@@ -73,7 +73,7 @@ export class AfterShip {
 
     // Endpoints
     this.courier = new CourierImplementation(request);
-    this.last_checkpoint = new LastCheckPointImplementation(request);
+    this.last_checkpoint = new LastCheckpointImplementation(request);
     this.notification = new NotificationImplementation(request);
     this.tracking = new TrackingImplementation(request);
   }

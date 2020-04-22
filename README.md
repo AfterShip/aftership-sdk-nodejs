@@ -117,7 +117,10 @@ console.log(aftership.rate_limit);
 After making an API call, it will be set.
 ```javascript
 aftership.courier.listCouriers()
-  .then(result => console.log(result))
+  .then(result => {
+    console.log(result);
+    console.log(aftership.rate_limit);
+  })
   .catch(err => console.log(err));
 
 // console output
@@ -340,7 +343,7 @@ aftership.tracking
 **GET** /last_checkpoint/:slug/:tracking_number
 
 ```javascript
-aftership.last_checkpoint.getLastCheckPoint({
+aftership.last_checkpoint.getLastCheckpoint({
     slug: 'ups',
     tracking_number: '1234567890',
   })
