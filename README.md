@@ -48,7 +48,7 @@ npm run test
 
 ## Table of contents
 
-- [Constructor(api_key, options)](#constructorapi_key-options)
+- [Constructor(api_key[, options])](#constructorapi_key-options)
 - [Endpoints](#endpoints)
 - [Rate Limiter](#rate-limiter)
 - [Error Handling](#error-handling)
@@ -61,7 +61,7 @@ npm run test
 - [Change log](#change-log)
 
 
-## Constructor(api_key, options)
+## Constructor(api_key[, options])
 
 Create AfterShip instance with options
 
@@ -93,11 +93,11 @@ Make request in a specific endpoint
 ```javascript
 // GET /trackings/:slug/:tracking_number
 aftership.tracking
-	.getTracking({
-		slug: "ups",
-		tracking_number: "1234567890",
-	})
-	.then(result => console.log(result))
+  .getTracking({
+    slug: "ups",
+    tracking_number: "1234567890",
+  })
+  .then(result => console.log(result))
   .catch(err => console.log(err));
 ```
 
@@ -236,13 +236,13 @@ aftership.courier.listAllCouriers()
 
 ```javascript
 const payload = {
-	'tracking': {
-		'tracking_number': '906587618687',
-		'tracking_postal_code': 'DA15BU',
-		'tracking_ship_date': '20131231',
-		'tracking_account_number': '1234567890',
-		'slug': ['dhl', 'ups', 'fedex']
-	}
+  'tracking': {
+    'tracking_number': '906587618687',
+    'tracking_postal_code': 'DA15BU',
+    'tracking_ship_date': '20131231',
+    'tracking_account_number': '1234567890',
+    'slug': ['dhl', 'ups', 'fedex']
+  }
 };
 aftership.courier.detectCouriers(payload)
   .then(result => console.log(result))
@@ -285,11 +285,11 @@ aftership.tracking
 
 ```javascript
 aftership.tracking
-	.deleteTracking({
-		slug: "ups",
-		tracking_number: "1234567890",
-	})
-	.then((result) => console.log(result))
+  .deleteTracking({
+    slug: "ups",
+    tracking_number: "1234567890",
+  })
+  .then((result) => console.log(result))
   .catch((e) => console.log(e));
 ```
 
@@ -297,23 +297,23 @@ aftership.tracking
 
 ```javascript
 const query = {
-	slug: 'dhl,ups,usps'
+  slug: 'dhl,ups,usps'
 };
 aftership.tracking
-	.listTrackings(query)
-	.then((result) => console.log(result))
-	.catch((e) => console.log(e));
+  .listTrackings(query)
+  .then((result) => console.log(result))
+  .catch((e) => console.log(e));
 ```
 
 **GET** /trackings/:slug/:tracking_number
 
 ```javascript
 aftership.tracking
-	.getTracking({
-		slug: "ups",
-		tracking_number: "1234567890",
-	})
-	.then((result) => console.log(result))
+  .getTracking({
+    slug: "ups",
+    tracking_number: "1234567890",
+  })
+  .then((result) => console.log(result))
   .catch((e) => console.log(e));
 ```
 
@@ -321,10 +321,10 @@ aftership.tracking
 ```javascript
 // GET /trackings/:tracking_id
 aftership.tracking
-	.getTracking({
-		tracking_id: "1234567890",
-	})
-	.then((result) => console.log(result))
+  .getTracking({
+    tracking_id: "1234567890",
+  })
+  .then((result) => console.log(result))
   .catch((e) => console.log(e));
 ```
 
@@ -332,11 +332,11 @@ aftership.tracking
 
 ```javascript
 aftership.tracking
-	.retrack({
-		slug: "ups",
-		tracking_number: "1234567890",
-	})
-	.then((result) => console.log(result))
+  .retrack({
+    slug: "ups",
+    tracking_number: "1234567890",
+  })
+  .then((result) => console.log(result))
   .catch((e) => console.log(e));
 ```
 
@@ -370,10 +370,10 @@ aftership.notification.getNotification({
 
 ```javascript
 const payload = {
-	'notification': {
-		'emails': ['user1@gmail.com','user2@gmail.com','invalid EMail @ Gmail. com'],
-		'smses': ['+85291239123', '+85261236123', 'Invalid Mobile Phone Number']
-	}
+  'notification': {
+    'emails': ['user1@gmail.com','user2@gmail.com','invalid EMail @ Gmail. com'],
+    'smses': ['+85291239123', '+85261236123', 'Invalid Mobile Phone Number']
+  }
 };
 aftership.notification.addNotification({
     slug: 'ups',
@@ -387,10 +387,10 @@ aftership.notification.addNotification({
 
 ```javascript
 const payload = {
-	'notification': {
-		'emails': ['user1@gmail.com','user2@gmail.com','invalid EMail @ Gmail. com'],
-		'smses': ['+85291239123', '+85261236123', 'Invalid Mobile Phone Number']
-	}
+  'notification': {
+    'emails': ['user1@gmail.com','user2@gmail.com','invalid EMail @ Gmail. com'],
+    'smses': ['+85291239123', '+85261236123', 'Invalid Mobile Phone Number']
+  }
 };
 aftership.notification.removeNotification({
     slug: 'ups',
@@ -406,9 +406,9 @@ aftership.notification.removeNotification({
 const Aftership = require('aftership')('YOUR_API_KEY');
 
 Aftership.call('GET', '/couriers/all').then(function (result) {
-	console.log(result);
+  console.log(result);
 }).catch(function (err) {
-	console.log(err);
+  console.log(err);
 });
 
 // v6 (new version)
