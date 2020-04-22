@@ -1,7 +1,7 @@
 "use strict";
 
 const API_KEY = "SOME_API_KEY";
-const AfterShip = require("../dist/index.js").AfterShip;
+const { AfterShip } = require('../dist/index.js');
 
 const aftership = new AfterShip(API_KEY);
 

@@ -32,9 +32,13 @@ export class AftershipError extends Error {
    * @param error error
    * @param error_data The object trigger the error
    */
-  public static getRequestError(error: any, error_data: any): AftershipError {
+  public static getRequestError(request_error: any, error_data: any): AftershipError {
+    const error = new AftershipError(
+      request_error.errno,
+      request_error.message,
+    );
     error.data = error_data;
-    error.type = error.code;
+    error.code = request_error.code;
 
     return error;
   }
