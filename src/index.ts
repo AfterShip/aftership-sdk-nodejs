@@ -7,6 +7,7 @@ import { isStringValid } from './lib/util';
 import { CourierEndpoint } from './endpoint/courier_endpoint';
 import { LastCheckpointEndpoint } from './endpoint/last_checkpoint_endpoint';
 import { NotificationEndpoint } from './endpoint/notification_endpoint';
+import { TrackingEndpoint } from './endpoint/tracking_endpoint';
 import { CourierImplementation } from './implementation/courier';
 import { LastCheckpointImplementation } from './implementation/last_checkpoint';
 import { NotificationImplementation } from './implementation/notification';
@@ -43,7 +44,7 @@ export class AfterShip {
   /**
    * Tracking endpoint
    */
-  public readonly tracking: TrackingImplementation;
+  public readonly tracking: TrackingEndpoint;
 
   constructor(apiKey: string, options?: AftershipOption) {
     this.errorHandling(apiKey, options);
