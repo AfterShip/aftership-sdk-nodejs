@@ -1,8 +1,8 @@
 import { AftershipResponse } from '../model/aftership_response';
 import { Tracking } from '../model/tracking/tracking';
 import { TrackingList } from '../model/tracking/tracking_list';
-import { TrackingPostParams } from '../model/tracking/tracking_post_params';
-import { TrackingsQueryParams } from '../model/tracking/trackings_query_params';
+import { TrackingCreateParams } from '../model/tracking/tracking_create_params';
+import { MultiTrackingsQueryParams } from '../model/tracking/multi_trackings_query_params';
 import { TrackingQueryParams } from '../model/tracking/tracking_query_params';
 import { TrackingUpdatParams } from '../model/tracking/tracking_update_params';
 import { SingleTrackingParam } from '../model/tracking/single_tracking_param';
@@ -16,7 +16,7 @@ export interface TrackingEndpoint {
    * @param tracking_post_params Tracking post Request Object
    */
   createTracking(
-    tracking_post_params: TrackingPostParams,
+    tracking_post_params: TrackingCreateParams,
   ): Promise<AftershipResponse<Tracking>>;
 
   /**
@@ -34,7 +34,7 @@ export interface TrackingEndpoint {
    * @param trackings_query_params Tracking list query params object
    */
   listTrackings(
-    trackings_query_params?: TrackingsQueryParams,
+    trackings_query_params?: MultiTrackingsQueryParams,
   ): Promise<AftershipResponse<TrackingList>>;
 
   /**

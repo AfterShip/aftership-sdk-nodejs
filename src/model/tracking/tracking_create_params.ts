@@ -1,22 +1,22 @@
 import { AftershipError } from '../../error/error';
 import { ErrorEnum } from '../../error/error_enum';
-import { DeliveryType } from '../tracking/tracking';
+import { DeliveryType } from './delivery_type';
 
 /**
  * The request object of tracking create
  */
 
-export class TrackingPostParams {
+export class TrackingCreateParams {
   /**
    * Tracking Object.
    */
-  public tracking: TrackingPost;
+  public tracking: TrackingCreate;
 
   /**
-   * TrackingPostParams constructor
+   * TrackingCreateParams constructor
    * @param tracking tracking object, the tracking_number field is required.
    */
-  constructor(tracking: TrackingPost) {
+  constructor(tracking: TrackingCreate) {
     if (tracking === undefined || tracking.tracking_number === undefined
       || tracking.tracking_number === '') {
       // Verify tracking_number
@@ -33,7 +33,7 @@ export class TrackingPostParams {
 /**
  * The tracking object in tracking create request
  */
-export interface TrackingPost {
+export interface TrackingCreate {
   /**
    * Tracking number. (Required)
    */

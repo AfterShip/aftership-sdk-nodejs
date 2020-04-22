@@ -1,14 +1,15 @@
-import { Checkpoint } from '../checkpoint/checkpoint';
+import { CheckPoint } from '../checkpoint/checkpoint';
+import { DeliveryStatus } from './delivery_status';
+import { DeliveryType } from './delivery_type';
+
 /**
  * Tracking Object
  */
 export interface Tracking {
-
   /**
    * Hash describes the tracking information.
    */
   tracking?: {
-
     /**
      * Date and time of the tracking created.
      */
@@ -201,7 +202,7 @@ export interface Tracking {
      * Phone number should begin with `+` and `Area Code` before phone number.
      * Comma separated for multiple values.
      */
-    smses?: [string]
+    smses?: [string];
 
     /**
      * Source of how this tracking is added.
@@ -213,7 +214,7 @@ export interface Tracking {
      * Values include: Pending,InfoReceived,InTransit,OutForDelivery,AttemptFail,
      * Delivered,AvailableForPickup,Exception,Expired
      */
-    tag?: Tag;
+    tag?: DeliveryStatus;
 
     /**
      * Current subtag of tracking.
@@ -223,7 +224,7 @@ export interface Tracking {
     /**
      * Normalized tracking message.
      */
-    subtag_message?: string
+    subtag_message?: string;
 
     /**
      * Title of the tracking.
@@ -287,31 +288,6 @@ export interface Tracking {
     /**
      * Array of Hash describes the checkpoint information.
      */
-    checkpoints?: [Checkpoint];
+    checkpoints?: [CheckPoint];
   };
-}
-
-/**
- * Current status of checkpoint.
- */
-export enum Tag {
-  Pending,
-  InfoReceived,
-  InTransit,
-  OutForDelivery,
-  AttemptFail,
-  Delivered,
-  AvailableForPickup,
-  Exception,
-  Expired,
-}
-
-/**
- * Shipment delivery type
- */
-
-export enum DeliveryType {
-  PickupAtStore = 'pickup_at_store',
-  PickupAtCourier = 'pickup_at_courier',
-  DoorToDoor = 'door_to_door',
 }

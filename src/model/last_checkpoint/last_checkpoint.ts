@@ -1,4 +1,5 @@
-import { CheckPoint } from './checkpoint';
+import { CheckPoint } from '../checkpoint/checkpoint';
+import { DeliveryStatus } from '../tracking/delivery_status';
 
 /**
  * Last CheckPoint Object
@@ -18,7 +19,7 @@ export interface LastCheckPoint {
    * Pending, InfoReceived, InTransit, OutForDelivery, AttemptFail, Delivered, AvailableForPickup, Exception, Expired
    * See tag definition: https://docs.aftership.com/api/4/delivery-status
    */
-  tag: string;
+  tag: DeliveryStatus;
 
   /**
    * Current subtag of tracking.

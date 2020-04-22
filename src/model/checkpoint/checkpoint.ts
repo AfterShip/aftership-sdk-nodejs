@@ -1,9 +1,9 @@
-import { Tag } from '../tracking/tracking';
+import { DeliveryStatus } from '../tracking/delivery_status';
 
 /**
  * checkpoint information.
  */
-export interface Checkpoint {
+export interface CheckPoint {
 
   /**
    * Date and time of the tracking created.
@@ -52,14 +52,14 @@ export interface Checkpoint {
   country_name?: string;
 
   /**
-   * Checkpoint message
+   * CheckPoint message
    */
   message?: string;
 
   /**
    * Current status of checkpoint.
    */
-  tag?: Tag;
+  tag?: DeliveryStatus;
 
   /**
    * Current subtag of checkpoint.
@@ -77,7 +77,7 @@ export interface Checkpoint {
   zip?: string;
 
   /**
-   * Checkpoint status provided by courier (if any)
+   * CheckPoint status provided by courier (if any)
    */
   raw_tag?: string;
 }

@@ -1,5 +1,5 @@
 var Aftership = require("../dist/index.js").AfterShip;
-var TrackingPostParams = require("../dist/model/tracking/tracking_post_params").TrackingPostParams
+var TrackingCreateParams = require("../dist/model/tracking/tracking_create_params").TrackingCreateParams
 var axios = require("axios");
 var MockAdapter = require("axios-mock-adapter");
 var chai = require("chai");
@@ -14,7 +14,7 @@ describe("Tracking", function () {
         "ConstructorError: tracking_number";
 
       try {
-        const param = new TrackingPostParams({
+        const param = new TrackingCreateParams({
           slug: "ups",
         });
 

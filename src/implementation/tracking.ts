@@ -4,8 +4,8 @@ import { TrackingEndpoint } from '../endpoint/tracking_endpoint';
 import { SingleTrackingParam } from '../model/tracking/single_tracking_param';
 import { Tracking } from '../model/tracking/tracking';
 import { TrackingList } from '../model/tracking/tracking_list';
-import { TrackingPostParams } from '../model/tracking/tracking_post_params';
-import { TrackingsQueryParams } from '../model/tracking/trackings_query_params';
+import { TrackingCreateParams } from '../model/tracking/tracking_create_params';
+import { MultiTrackingsQueryParams } from '../model/tracking/multi_trackings_query_params';
 import { TrackingQueryParams } from '../model/tracking/tracking_query_params';
 import { TrackingUpdatParams } from '../model/tracking/tracking_update_params';
 import { buildTrackingUrl, getQueryString } from '../lib/util';
@@ -22,11 +22,11 @@ export class TrackingImplementation implements TrackingEndpoint {
    * @param data Tracking post Request Object
    */
   public createTracking(
-    data: TrackingPostParams,
+    data: TrackingCreateParams,
   ): Promise<AftershipResponse<Tracking>> {
 
     // make request
-    return this.request.makeRequest<TrackingPostParams, Tracking>(
+    return this.request.makeRequest<TrackingCreateParams, Tracking>(
       { method: 'POST', url: '/trackings' },
       data,
     );
@@ -53,7 +53,7 @@ export class TrackingImplementation implements TrackingEndpoint {
    * @param trackings_query_params Tracking list query params object
    */
   public listTrackings(
-    trackings_query_params?: TrackingsQueryParams,
+    trackings_query_params?: MultiTrackingsQueryParams,
   ): Promise<AftershipResponse<TrackingList>> {
 
     const queryString = getQueryString(trackings_query_params);
