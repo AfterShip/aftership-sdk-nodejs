@@ -125,7 +125,7 @@ export class ApiRequestImplementation implements ApiRequest {
       // The request was made but no response was received
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
       // http.ClientRequest in node.js
-      return AftershipError.getRequestError(error, error.request);
+      return AftershipError.getRequestError(error, error.config);
     }
 
     // Something happened in setting up the request that triggered an Error

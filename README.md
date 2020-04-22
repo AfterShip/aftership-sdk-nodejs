@@ -20,23 +20,13 @@ npm install aftership
 ## Quick Start
 
 ```javascript
-const Aftership = require('aftership')('YOUR_API_KEY');
+const { AfterShip } = require('aftership');
+const aftership = new AfterShip('YOUR_API_KEY');
 
-Aftership.call('GET', '/couriers/all', function (err, result) {
-	if (err) {
-		console.log(err);
-	} else {
-		console.log(result);
-	}
-});
+aftership.courier.listAllCouriers()
+  .then(result => console.log(result))
+  .catch(err => console.log(err));
 
-// Or do it with promise 
-
-Aftership.call('GET', '/couriers/all').then(function (result) {
-	console.log(result);
-}).catch(function (err) {
-	console.log(err);
-});
 
 /** Console
 { meta: { code: 200 },
@@ -51,22 +41,22 @@ Aftership.call('GET', '/couriers/all').then(function (result) {
 
 ## Test
 ```
-mocha --recursive
+npm run test
 ```
 
 ## Table of contents
 
 - [Constructor(api_key, options)](#constructorapi_key-options)
-- [call(method, path, options, callback)](#callmethod-path-options-callback)
-- [Proxy Method](#proxy-method-get-post-put-delete)
+- [Endpoints](#endpoints)
 - [Rate Limiter](#rate-limiter)
-- [Retry policy](#retry-policy)
 - [Error Handling](#error-handling)
 - [Examples](#examples)
 	- [/couriers](#couriers)
 	- [/trackings](#trackings)
 	- [/last_checkpoint](#last_checkpoint)
 	- [/notifications](#notifications)
+- [Migrations](#migrations)
+- [Change log](#change-log)
 
 
 ## Constructor(api_key, options)
@@ -76,51 +66,39 @@ Create AfterShip instance with options
 - `api_key` - **Require** - your Aftership API key
 - `options` - **Optional** - object of request options
 	- `endpoint` - *string*, AfterShip endpoint, default 'https://api.aftership.com/v4'
-	- `proxy` - *string*, proxy, default is `null`
-	- `retry` - *boolean*, retry if fail? default is `true`, see [Retry policy](#retry-policy)
-	- `rate` - *boolean*, retry if response with `429 Too Many request error` see [Rate Limiter](#rate-limiter)
 	- `user_agent_prefix` - *string*, prefix of User-Agent in headers, default 'aftership-sdk-nodejs'
 
 
 Example:
 ```javascript
 // Construct with options
-const Aftership = require('aftership')('YOUR_API_KEY', {
-	endpoint: 'https://api.aftership.com/OLDER_VERSION',
-	proxy: 'http://username:password@my.proxy.com',
-	retry: false
-});
-
-// Make your call
-Aftership.call('GET', '/couriers/all', function (err, result) {
-	// ...
+const aftership = new AfterShip('YOUR_API_KEY', {
+	endpoint: 'https://api.aftership.com/OLDER_VERSION'
 });
 ```
 
-## call(method, path, options, callback)
-Make request with option
-- `method` - **Require** - Either `get`, `post`, `put` or `delete`, case insensitive
-- `path` - **Require** *string*, start with `/`, see available path [here](https://www.aftership.com/docs/)
-- `options` - **Optional** - object of request options
-	- `api_key` - *string*, AfterShip API key, override `default api_key` if set
-	- `body` - *object*, `POST` body
-	- `query` - *object*, `query` object
-	- `retry` - *boolean*, retry if fail? override `default retry` if set, see [Retry policy](#retry-policy)
-	- `raw` - *boolean*, if `true`, return result as `string`, else return as `object`, default is `false`
-- `callback` - the callback to handle error and result, the result is the response body of the request
+## Endpoints
 
+The AfterShip instance has the following properties which are exactly the same as the API endpoins:
 
-## Proxy Method (GET, POST, PUT, DELETE)
+- `courier` - Get a list of our supported couriers.
+- `tracking` - Create trackings, update trackings, and get tracking results.
+- `last_checkpoint` - Get tracking information of the last checkpoint of a tracking.
+- `notification` - Get, add or remove contacts (sms or email) to be notified when the status of a tracking has changed.
 
-There are also interface `GET`, `POST`, `PUT`, `DELETE` which are proxy to `Aftership.call(...)`
+Make request in a specific endpoint
 
 ```javascript
-Aftership.call('GET', '/path', options, callback);
-// is equivalent to
-Aftership.GET('/path', options, callback);
-
-// So as `POST`, `PUT` and `DELETE`
+// GET /trackings/:slug/:tracking_number
+aftership.tracking
+	.getTracking({
+		slug: "ups",
+		tracking_number: "1234567890",
+	})
+	.then(result => console.log(result))
+  .catch(err => console.log(err));
 ```
+
 
 ## Rate Limiter
 
@@ -128,43 +106,24 @@ To understand AfterShip rate limit policy, please see `limit` session in https:/
 
 You can get the recent rate limit by `aftership.rate_limit`. Initially all value are `null`.
 ```javascript
-const Aftership = require('aftership')('YOUR_API_KEY');
-console.log(Aftership.rate_limit);
+const { AfterShip } = require('aftership');
+const aftership = new AfterShip('YOUR_API_KEY');
+
+console.log(aftership.rate_limit);
 
 // console output
-// { 'YOUR_API-KEY' : { reset: null, limit: null, remaining: null } }
+// { reset: null, limit: null, remaining: null }
 ```
 After making an API call, it will be set.
 ```javascript
-Aftership.call('GET', '/couriers', function (err, result) {
-	console.log(Aftership.rate_limit);
-});
+aftership.courier.listCouriers()
+  .then(result => console.log(result))
+  .catch(err => console.log(err));
 
 // console output
-// { 'YOUR_API-KEY' : { limit: 600, remaining: 599, reset: 1453281417 } }
+// { limit: 600, remaining: 599, reset: 1453281417 }
 ```
 
-When the API response with `429 Too Many request error`
-- if `rate` is `true`, it wont throw, will delay the job, retry when the rate limit is reset.
-- if `rate` is `false`, it will return `429 Too Many request error` to the callback
-
-## Retry policy
-
-To understand error of AfterShip, please see https://www.aftership.com/docs/api/4/errors
-
-For this SDK, errors below are retriable.
-- `HTTP status code == [500, 502, 503, 504]` from API
-- `ETIMEDOUT`/`ECONNRESET`/`ECONNREFUSED` from node.js
-
-You can set the `retry` flag
-- in constructor as default `retry` flag
-- specify in `options` of `call()` method
-
-When an retriable error comes, 
-- if `retry` is `true`, 
-	- if `retry_count < 5`, use the same payload to retry after 1 second
-	- if `retry_count == 5`, return the error to the callback, with `retry_count`
-- if `retry` is `false`, return the error to the callback
 
 ## Error Handling
 
@@ -179,33 +138,30 @@ Error object of this SDK contain fields:
 - `data` - **Optional** - data lead to the error
 - `code` - **Optional** - error code for API Error
 - `response_body` - **Optional** - response body of API Error
-- `retry_count` - **Optional** - number of retry, if the error is retriable
 
 > Please handle each error by its `type`, since it is a require field
 
 ### SDK Error
 
-Error return by the SDK instance, mostly invalid param type when calling `constructor` or `call` function  
-`error.type` is one of [error_enum](https://github.com/AfterShip/aftership-sdk-nodejs/blob/master/lib/error/error_enum.js)  
+Error return by the SDK instance, mostly invalid param type when calling `constructor` or `endpoint method`  
+`error.type` is one of [error_enum](https://github.com/AfterShip/aftership-sdk-nodejs/blob/master/src/error/error_enum.js)  
 **Throw** by the SDK instance
 
 ```js
-const Aftership = require('aftership')('YOUR_API_KEY');
+const { AfterShip } = require('aftership');
+const aftership = new AfterShip('YOUR_API_KEY');
 
-try {
-	Aftership.call('INVALID_METHOD', '/couriers/all', function (err, result) {
-		// ...
-	});
-} catch (e) {
-	console.log(e);
-}
+// GET /notifications/:slug/:tracking_number
+aftership.notification.getNotification()
+  .then(result => console.log(result))
+  .catch(err => console.log(err));
 
 /*
-{ [Error: HandlerError: Invalid Method value]
+{ Error: HandlerError: You must specify the tracking number or tracking id
   type: 'HandlerError',
-  message: 'HandlerError: Invalid Method value',
-  data: 'INVALID_METHOD' 
-  ... }
+  code: '',
+  data: undefined,
+  responseBody: '' }
 */
 ```
 
@@ -213,20 +169,19 @@ try {
 
 Error return by the `request` module  
 `error.type` could be `ETIMEDOUT`, `ECONNRESET`, etc.  
-**Catch** by promise or **Pass** through the first param of callback
+**Catch** by promise
 
 ```js
-const Aftership = require('aftership')('YOUR_API_KEY');
+const { AfterShip } = require('aftership');
+const aftership = new AfterShip('YOUR_API_KEY');
 
-Aftership.call('GET', '/couriers/all', function (err, result) {
-	if (err) {
-		console.log(err);
-	}
-});
+aftership.courier.listCouriers()
+  .then(result => console.log(result))
+  .catch(err => console.log(err));
 /*
-{ [Error]
-  code: 'ECONNRESET',
-  type: 'ECONNRESET' 
+{ Error: getaddrinfo ENOTFOUND api.aftership.com api.aftership.com:443
+  type: 'ENOTFOUND',
+  code: 'ENOTFOUND',
   ... }
 */
 ```
@@ -235,16 +190,15 @@ Aftership.call('GET', '/couriers/all', function (err, result) {
 
 Error return by the Aftership API  
 `error.type` shuold be same as https://www.aftership.com/docs/api/4/errors  
-**Catch** by promise or **Pass** through the first param of callback
+**Catch** by promise
 
 ```js
-const Aftership = require('aftership')('INVALID_API_KEY');
+const { AfterShip } = require('aftership');
+const aftership = new AfterShip('INVALID_API_KEY');
 
-Aftership.call('GET', '/couriers/all', function (err, result) {
-	if (err) {
-		console.log(err);
-	}
-});
+aftership.courier.listCouriers()
+  .then(result => console.log(result))
+  .catch(err => console.log(err));
 /*
 { [Error: Invalid API key.]
   type: 'Unauthorized',
@@ -260,23 +214,23 @@ Aftership.call('GET', '/couriers/all', function (err, result) {
 **GET** /couriers
 
 ```javascript
-Aftership.call('GET', '/couriers', function (err, result) {
-	// Your code here
-});
+aftership.courier.listCouriers()
+  .then(result => console.log(result))
+  .catch(e => console.log(e));
 ```
 
 **GET** /couriers/all
 
 ```javascript
-Aftership.call('GET', '/couriers/all', function (err, result) {
-	// Your code here
-});
+aftership.courier.listAllCouriers()
+  .then(result => console.log(result))
+  .catch(e => console.log(e));
 ```
 
 **POST** /couriers/detect
 
 ```javascript
-let body = {
+const payload = {
 	'tracking': {
 		'tracking_number': '906587618687',
 		'tracking_postal_code': 'DA15BU',
@@ -285,11 +239,9 @@ let body = {
 		'slug': ['dhl', 'ups', 'fedex']
 	}
 };
-Aftership.call('POST', '/couriers/detect', {
-	body: body
-}, function (err, result) {
-	// Your code here
-});
+aftership.courier.detectCouriers(payload)
+  .then(result => console.log(result))
+  .catch(e => console.log(e));
 ```
 
 ### /trackings
@@ -297,7 +249,7 @@ Aftership.call('POST', '/couriers/detect', {
 **POST** /trackings
 
 ```javascript
-let body = {
+const payload = {
     'tracking': {
         'slug': 'dhl',
         'tracking_number': '123456789',
@@ -318,71 +270,69 @@ let body = {
         }
     }
 };
-Aftership.call('POST', '/trackings', {
-	body: body
-}, function (err, result) {
-	// Your code here
-});
+aftership.tracking
+  .createTracking(payload)
+  .then((result) => console.log(result))
+  .catch((e) => console.log(e));
 ```
 
 **DELETE** /trackings/:slug/:tracking_number
 
 ```javascript
-Aftership.call('DELETE', '/trackings/ups/1234567890', function (err, result) {
-	// Your code here
-});
+aftership.tracking
+	.deleteTracking({
+		slug: "ups",
+		tracking_number: "1234567890",
+	})
+	.then((result) => console.log(result))
+  .catch((e) => console.log(e));
 ```
 
 **GET** /trackings
 
 ```javascript
-let query = {
+const query = {
 	slug: 'dhl,ups,usps'
 };
-Aftership.call('GET', '/trackings', {
-	query: query
-}, function (err, result) {
-	// Your code here
-});
-```
-
-**GET** /trackings/exports
-
-```javascript
-Aftership.call('GET', '/trackings/exports', function (err, result) {
-	// Your code here
-});
+aftership.tracking
+	.listTrackings(query)
+	.then((result) => console.log(result))
+	.catch((e) => console.log(e));
 ```
 
 **GET** /trackings/:slug/:tracking_number
 
 ```javascript
-Aftership.call('GET', '/trackings/ups/1234567890', function (err, result) {
-	// Your code here
-});
+aftership.tracking
+	.getTracking({
+		slug: "ups",
+		tracking_number: "1234567890",
+	})
+	.then((result) => console.log(result))
+  .catch((e) => console.log(e));
 ```
 
-**GET** /trackings/:slug/:tracking_number
-
+> You can always use/:tracking_id to replace /:slug/:tracking_number.
 ```javascript
-let body = {
-	'tracking': {
-		'title': 'New Title'
-	}
-};
-Aftership.call('PUT', '/trackings/ups/1234567890', {
-	body: body
-}, function (err, result) {
-	// Your code here
-});
+// GET /trackings/:tracking_id
+aftership.tracking
+	.getTracking({
+		tracking_id: "1234567890",
+	})
+	.then((result) => console.log(result))
+  .catch((e) => console.log(e));
 ```
 
 **POST** /trackings/:slug/:tracking_number/retrack
 
 ```javascript
-Aftership.call('POST', '/trackings/ups/1234567890/retrack', function (err, result) {
-	// Your code here
-});
+aftership.tracking
+	.retrack({
+		slug: "ups",
+		tracking_number: "1234567890",
+	})
+	.then((result) => console.log(result))
+  .catch((e) => console.log(e));
 ```
 
 ### /last_checkpoint
@@ -390,9 +340,12 @@ Aftership.call('POST', '/trackings/ups/1234567890/retrack', function (err, resul
 **GET** /last_checkpoint/:slug/:tracking_number
 
 ```javascript
-Aftership.call('GET', '/last_checkpoint/ups/1234567890', function (err, result) {
-	// Your code here
-});
+aftership.last_checkpoint.getLastCheckPoint({
+    slug: 'ups',
+    tracking_number: '1234567890',
+  })
+  .then(result => console.log(result))
+  .catch(e => console.log(e));
 ```
 
 ### /notifications
@@ -400,45 +353,83 @@ Aftership.call('GET', '/last_checkpoint/ups/1234567890', function (err, result) 
 **GET** /notifications/:slug/:tracking_number
 
 ```javascript
-Aftership.call('GET', '/notifications/ups/1234567890', function (err, result) {
-	// Your code here
-});
+aftership.notification.getNotification({
+    slug: 'ups',
+    tracking_number: '1234567890',
+  })
+  .then(result => console.log(result))
+  .catch(e => console.log(e));
 ```
 
 **POST** /notifications/:slug/:tracking_number/add
 
 ```javascript
-let body = {
+const payload = {
 	'notification': {
 		'emails': ['user1@gmail.com','user2@gmail.com','invalid EMail @ Gmail. com'],
 		'smses': ['+85291239123', '+85261236123', 'Invalid Mobile Phone Number']
 	}
 };
-Aftership.call('POST', '/notifications/ups/1234567890/add', {
-	body: body
-}, function (err, result) {
-	// Your code here
-});
+aftership.notification.addNotification({
+    slug: 'ups',
+    tracking_number: '1234567890',
+  }, payload)
+  .then(result => console.log(result))
+  .catch(e => console.log(e));
 ```
-
 
 **POST** /notifications/:slug/:tracking_number/remove
 
 ```javascript
-let body = {
+const payload = {
 	'notification': {
 		'emails': ['user1@gmail.com','user2@gmail.com','invalid EMail @ Gmail. com'],
 		'smses': ['+85291239123', '+85261236123', 'Invalid Mobile Phone Number']
 	}
 };
-Aftership.call('POST', '/notifications/ups/1234567890/remove', {
-	body: body
-}, function (err, result) {
-	// Your code here
-});
+aftership.notification.removeNotification({
+    slug: 'ups',
+    tracking_number: '1234567890',
+  }, payload)
+  .then(result => console.log(result))
+  .catch(e => console.log(e));
 ```
 
+## Migrations
+```javascript
+// v5 (old version)
+const Aftership = require('aftership')('YOUR_API_KEY');
+
+Aftership.call('GET', '/couriers/all').then(function (result) {
+	console.log(result);
+}).catch(function (err) {
+	console.log(err);
+});
+
+// v6 (new version)
+const { AfterShip } = require('aftership');
+const aftership = new AfterShip('YOUR_API_KEY');
+
+aftership.courier.listAllCouriers()
+  .then(result => console.log(result))
+  .catch(err => console.log(err));
+```
+
+## Change log
+
+### 2020-04-22 v6.0.0-alpha
+- New features
+	- Support latest features in v4 API
+	- Support TypeScript
+	- Support IntelliSense, bring more convenient to consumers
+- Compatibility
+	- Node >=10.0
+- Breaking changes
+	- Don't support `callback` anymore, please use `Promise` instead.
+	- Removed `auto retry` feature, consumers need to retry the request by themselves.
+	- Removed `call` method
+
 ## License
-Copyright (c) 2016 AfterShip
+Copyright (c) 2016-2020 AfterShip
 
 Licensed under the MIT license.
