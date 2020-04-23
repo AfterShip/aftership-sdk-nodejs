@@ -62,9 +62,9 @@ export class ApiRequestImplementation implements ApiRequest {
     const headers = {
       'aftership-api-key': this.app.apiKey,
       'Content-Type': 'application/json',
-      'x-request-id': request_id,
+      'request-id': request_id,
       'User-Agent': `${this.app.user_agent_prefix}/${request_id}`,
-      'x-aftership-agent': `nodejs-sdk-${getSdkVersion()}`,
+      'aftership-agent': `nodejs-sdk-${getSdkVersion()}`,
     };
 
     const request = axios.request({
