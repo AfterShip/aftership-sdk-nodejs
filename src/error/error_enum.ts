@@ -67,6 +67,11 @@ export class ErrorEnum {
     'HandlerError: You must specify the tracking number or tracking id',
   );
 
+  public static handlerInvalidEmptySlugOrTrackNumber = new AftershipError(
+    ErrorType.HandlerError,
+    'HandlerError: You must specify both slug and tracking number',
+  );
+
   // API InternalError
   public static internalError = new AftershipError(
     ErrorType.InternalError,

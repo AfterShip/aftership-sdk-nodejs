@@ -42,7 +42,7 @@ describe("Tracking", function () {
 
     it("should throw exception when only specify slug", async function () {
       let expected_error =
-        "HandlerError: You must specify the tracking number or tracking id";
+        "HandlerError: You must specify both slug and tracking number";
       const param = {
         slug: "ups",
       };
@@ -55,7 +55,7 @@ describe("Tracking", function () {
 
     it("should throw exception when only specify tracking number", async function () {
       let expected_error =
-        "HandlerError: You must specify the tracking number or tracking id";
+        "HandlerError: You must specify both slug and tracking number";
       const param = {
         tracking_number: "1234567890",
       };
@@ -325,7 +325,7 @@ describe("Tracking", function () {
 
     it("should throw exception when only specify slug", async function () {
       let expected_error =
-        "HandlerError: You must specify the tracking number or tracking id";
+        "HandlerError: You must specify both slug and tracking number";
       const param = {
         slug: "ups",
       };
@@ -338,7 +338,7 @@ describe("Tracking", function () {
 
     it("should throw exception when only specify tracking number", async function () {
       let expected_error =
-        "HandlerError: You must specify the tracking number or tracking id";
+        "HandlerError: You must specify both slug and tracking number";
       const param = {
         tracking_number: "1234567890",
       };
@@ -368,7 +368,7 @@ describe("Tracking", function () {
 
     it("should throw exception when only specify slug", async function () {
       let expected_error =
-        "HandlerError: You must specify the tracking number or tracking id";
+        "HandlerError: You must specify both slug and tracking number";
       const param = {
         slug: "ups",
       };
@@ -381,7 +381,7 @@ describe("Tracking", function () {
 
     it("should throw exception when only specify tracking number", async function () {
       let expected_error =
-        "HandlerError: You must specify the tracking number or tracking id";
+        "HandlerError: You must specify both slug and tracking number";
       const param = {
         tracking_number: "1234567890",
       };

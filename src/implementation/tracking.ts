@@ -8,7 +8,7 @@ import { TrackingCreateParams } from '../model/tracking/tracking_create_params';
 import { MultiTrackingsQueryParams } from '../model/tracking/multi_trackings_query_params';
 import { TrackingQueryParams } from '../model/tracking/tracking_query_params';
 import { TrackingUpdatParams } from '../model/tracking/tracking_update_params';
-import { buildTrackingUrl, getQueryString } from '../lib/util';
+import { buildTrackingUrl, getQueryString, combineUrlQuery } from '../lib/util';
 
 export class TrackingImplementation implements TrackingEndpoint {
   private readonly request: ApiRequest;
@@ -79,7 +79,7 @@ export class TrackingImplementation implements TrackingEndpoint {
     let trackingUrl = `/trackings/${buildTrackingUrl(single_tracking_param)}`;
 
     const queryString = getQueryString(tracking_query_params);
-    trackingUrl = queryString === '' ? trackingUrl : `${trackingUrl}?${queryString}`;
+    trackingUrl = combineUrlQuery(trackingUrl, queryString);
 
     // make request
     return this.request.makeRequest<null, Tracking>(

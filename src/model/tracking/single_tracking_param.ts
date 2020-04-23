@@ -17,4 +17,44 @@ export interface SingleTrackingParam {
    * Tracking number of a shipment.
    */
   tracking_number?: string;
+
+  /**
+   * Optional parameters
+   */
+  optional_parameters?: {
+    /**
+     * The postal code of receiver's address. Required by some couriers, such asdeutsch-post
+     */
+    tracking_postal_code?: string;
+
+    /**
+     * Shipping date in YYYYMMDD format. Required by some couriers, such asdeutsch-post
+     */
+    tracking_ship_date?: string;
+
+    /**
+     * Destination Country of the shipment for a specific courier. Required by some couriers, such aspostnl-3s
+     */
+    tracking_destination_country?: string;
+
+    /**
+     * Account number of the shipper for a specific courier. Required by some couriers, such asdynamic-logistics
+     */
+    tracking_account_number?: string;
+
+    /**
+     * Key of the shipment for a specific courier. Required by some couriers, such assic-teliway
+     */
+    tracking_key?: string;
+
+    /**
+     * Origin Country of the shipment for a specific courier. Required by some couriers, such asdhl
+     */
+    tracking_origin_country?: string;
+
+    /**
+     * Located state of the shipment for a specific courier. Required by some couriers, such asstar-track-courier
+     */
+    tracking_state?: string;
+  };
 }
