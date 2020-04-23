@@ -314,7 +314,25 @@ aftership.tracking
   .catch((e) => console.log(e));
 ```
 
-> You can always use /:tracking_id to replace /:slug/:tracking_number.
+Tip: You can also add `optional_parameters` to `/:slug/:tracking_number`
+
+```javascript
+// GET /trackings/:slug/:tracking_number?tracking_postal_code=:postal_code&tracking_ship_date=:ship_date
+aftership.tracking
+  .getTracking({
+    slug: "ups",
+    tracking_number: "1234567890",
+    optional_parameters: {
+      tracking_postal_code: "1234",
+      tracking_ship_date: "20200423",
+    }
+  })
+  .then((result) => console.log(result))
+  .catch((e) => console.log(e));
+```
+
+
+> Pro Tip: You can always use /:tracking_id to replace /:slug/:tracking_number.
 ```javascript
 // GET /trackings/:tracking_id
 aftership.tracking
