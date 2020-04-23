@@ -16,27 +16,55 @@ export function buildTrackingUrl(param: SingleTrackingParam): string {
     );
   }
 
-  // tracking_id
-  if (isStringValid(param.tracking_id)) {
-    if (isStringValid(param.slug) || isStringValid(param.tracking_number)) {
-      throw AftershipError.getSdkError(
-        ErrorEnum.handlerInvalidBothTrackingIdAndNumber,
-        param.tracking_id,
-      );
-    }
-
-    return `${param.tracking_id}`;
-  }
-
-  // slug && tracking_number
-  if (!isStringValid(param.slug) || !isStringValid(param.tracking_number)) {
+  // validate
+  if (
+    isStringValid(param.tracking_id) &&
+    (isStringValid(param.slug) || isStringValid(param.tracking_number))
+  ) {
+    throw AftershipError.getSdkError(
+      ErrorEnum.handlerInvalidBothTrackingIdAndNumber,
+      param.tracking_id,
+    );
+  } else if (
+    !isStringValid(param.tracking_id) &&
+    !isStringValid(param.slug) &&
+    !isStringValid(param.tracking_number)
+  ) {
     throw AftershipError.getSdkError(
       ErrorEnum.handlerInvalidEmptyTrackingIdAndNumber,
       param.tracking_number,
     );
+  } else if (
+    !isStringValid(param.tracking_id) &&
+    (!isStringValid(param.slug) || !isStringValid(param.tracking_number))
+  ) {
+    throw AftershipError.getSdkError(
+      ErrorEnum.handlerInvalidEmptySlugOrTrackNumber,
+      param.tracking_number,
+    );
   }
 
-  return `${param.slug}/${param.tracking_number}`;
+  // Build url
+  let url = '';
+
+  // tracking_id
+  if (isStringValid(param.tracking_id)) {
+    url = `${param.tracking_id}`;
+  } else {
+    // slug && tracking_number
+
+    url = `${param.slug}/${param.tracking_number}`;
+  }
+
+  // Add the additional parameters to query string
+  if (param.optional_parameters !== undefined) {
+    const query_string = getQueryString(param.optional_parameters);
+    if (isStringValid(query_string)) {
+      url = `${url}?${query_string}`;
+    }
+  }
+
+  return url;
 }
 
 /**
@@ -44,8 +72,9 @@ export function buildTrackingUrl(param: SingleTrackingParam): string {
  * @param val string value
  */
 export function isStringValid(val: string | undefined): boolean {
-  return val !== undefined && val !== null
-   && typeof val === 'string' && val !== '';
+  return (
+    val !== undefined && val !== null && typeof val === 'string' && val !== ''
+  );
 }
 
 /**
@@ -69,10 +98,27 @@ export function getSdkVersion(): string {
  * Object to query string
  * @param data Object
  */
-export function getQueryString(data: object | undefined): string {
-
+export function getQueryString(data: any | undefined): string {
   if (data === undefined) return '';
 
-  const getKeyValue = (key: string) => (obj: Record<string, any>) => obj[key];
-  return Object.keys(data).map(key => `${key}=${getKeyValue(key)}`).join('&');
+  return Object.keys(data)
+    .map((key) => {
+      const val = encodeURIComponent(data[key]);
+      return `${key}=${val}`;
+    })
+    .join('&');
+}
+
+/**
+ * Combine the url and query string
+ * @param url url
+ * @param query query string
+ */
+export function combineUrlQuery(url: string, query: string): string {
+  // When url or query is invalid, don't need to combine the query string
+  if (!isStringValid(url) || !isStringValid(query)) {
+    return url;
+  }
+
+  return `${url}${url.indexOf('?') === 0 ? '?' : '&'}${query}`;
 }

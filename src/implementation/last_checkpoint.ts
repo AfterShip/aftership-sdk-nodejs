@@ -3,7 +3,7 @@ import { AftershipResponse } from '../model/aftership_response';
 import { LastCheckpointEndpoint } from '../endpoint/last_checkpoint_endpoint';
 import { SingleTrackingParam } from '../model/tracking/single_tracking_param';
 import { LastCheckpoint } from '../model/last_checkpoint/last_checkpoint';
-import { buildTrackingUrl, isStringValid } from '../lib/util';
+import { buildTrackingUrl, isStringValid, combineUrlQuery } from '../lib/util';
 
 export class LastCheckpointImplementation implements LastCheckpointEndpoint {
   private readonly request: ApiRequest;
@@ -40,7 +40,7 @@ export class LastCheckpointImplementation implements LastCheckpointEndpoint {
       }
 
       if (optionalParams.length > 0) {
-        trackingUrl += `?${optionalParams.join('&')}`;
+        trackingUrl = combineUrlQuery(trackingUrl, optionalParams.join('&'));
       }
 
       // make request
