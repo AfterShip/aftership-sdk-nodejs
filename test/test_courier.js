@@ -52,7 +52,7 @@ describe("Courier", function () {
       aftership.courier
         .listCouriers()
         .then((result) => {
-          const { total, couriers } = (result && result.data) || {};
+          const { total, couriers } = result || {};
           if (couriers && couriers.length > 0 && total === couriers.length) {
             done();
           } else {
@@ -80,7 +80,7 @@ describe("Courier", function () {
       aftership.courier
         .listCouriers()
         .then((result) => {
-          const { couriers } = (result && result.data) || {};
+          const { couriers } = result || {};
           if (couriers && couriers.length > 0 && couriers[0].slug === 'dhl') {
             done();
           } else {
@@ -146,7 +146,7 @@ describe("Courier", function () {
       aftership.courier
         .listAllCouriers()
         .then((result) => {
-          const { total, couriers } = (result && result.data) || {};
+          const { total, couriers } = result || {};
           if (couriers && couriers.length > 0 && total === couriers.length) {
             done();
           } else {
@@ -160,7 +160,7 @@ describe("Courier", function () {
       aftership.courier
         .listAllCouriers()
         .then((result) => {
-          const { couriers } = (result && result.data) || {};
+          const { couriers } = result || {};
           if (couriers && couriers.length > 0 && couriers[0].slug === 'india-post-int') {
             done();
           } else {
@@ -223,7 +223,7 @@ describe("Courier", function () {
       aftership.courier
         .detectCouriers(payload)
         .then((result) => {
-          const { total, couriers } = (result && result.data) || {};
+          const { total, couriers } = result || {};
           if (couriers && couriers.length >= 0 && total === couriers.length) {
             done();
           } else {
@@ -237,7 +237,7 @@ describe("Courier", function () {
       aftership.courier
         .detectCouriers(payload)
         .then((result) => {
-          const { couriers } = (result && result.data) || {};
+          const { couriers } = result || {};
           if (couriers && couriers.length > 0 && couriers[0].slug === 'fedex') {
             done();
           } else {

@@ -1,9 +1,8 @@
 import axios, { Method } from 'axios';
 import debug from 'debug';
 import { v4 as uuidv4 }  from 'uuid';
-import { AftershipResponse, Meta } from '../model/aftership_response';
 import { AfterShip } from '../index';
-import { getSdkVersion } from './util';
+import { VERSION } from './version';
 import { AftershipError } from '../error/error';
 
 const debugMakeRequest = debug('aftership:makeRequest');
@@ -30,7 +29,7 @@ export interface ApiRequest {
   makeRequest<T, R>(
     { url, method }: RequestConfig,
     data?: T,
-  ): Promise<AftershipResponse<R>>;
+  ): Promise<R>;
 }
 
 /**
@@ -51,7 +50,7 @@ export class ApiRequestImplementation implements ApiRequest {
   public makeRequest<T, R>(
     { url, method }: RequestConfig,
     data?: T,
-  ): Promise<AftershipResponse<R>> {
+  ): Promise<R> {
     debugMakeRequest('config %o', {
       url,
       method,
@@ -64,7 +63,7 @@ export class ApiRequestImplementation implements ApiRequest {
       'Content-Type': 'application/json',
       'request-id': request_id,
       'User-Agent': `${this.app.user_agent_prefix}/${request_id}`,
-      'aftership-agent': `nodejs-sdk-${getSdkVersion()}`,
+      'aftership-agent': `nodejs-sdk-${VERSION}`,
     };
 
     const request = axios.request({
@@ -87,25 +86,11 @@ export class ApiRequestImplementation implements ApiRequest {
     });
   }
 
-  private processResponse<T>(data: any): AftershipResponse<T> {
-    const meta: Meta = { code: data['meta']['code'] };
-    const message = data['meta']['message'];
-    const type = data['meta']['type'];
+  private processResponse<R>(data: any): R {
+    debugProcessResponse('body %o', data);
 
-    if (message) {
-      meta.message = message;
-    }
-
-    if (type) {
-      meta.type = type;
-    }
-
-    debugProcessResponse('body %o', { meta, data: data['data'] });
-
-    return {
-      meta,
-      data: data['data'],
-    };
+    // Return data in response
+    return data['data'];
   }
 
   private processException(error: any): AftershipError {

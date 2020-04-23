@@ -115,9 +115,8 @@ describe("LastCheckpoint", function () {
         .then((result) => {
           if (
             result &&
-            result.data &&
-            result.data.checkpoint &&
-            result.data.checkpoint.slug === "fedex"
+            result.checkpoint &&
+            result.checkpoint.slug === "fedex"
           ) {
             done();
           } else {
@@ -221,9 +220,8 @@ describe("LastCheckpoint", function () {
         .then((result) => {
           if (
             result &&
-            result.data &&
-            result.data.checkpoint &&
-            result.data.checkpoint.slug === "fedex"
+            result.checkpoint &&
+            result.checkpoint.slug === "fedex"
           ) {
             done();
           } else {
