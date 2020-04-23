@@ -1,5 +1,4 @@
 import { ApiRequest } from '../lib/api_request';
-import { AftershipResponse } from '../model/aftership_response';
 import { TrackingEndpoint } from '../endpoint/tracking_endpoint';
 import { SingleTrackingParam } from '../model/tracking/single_tracking_param';
 import { Tracking } from '../model/tracking/tracking';
@@ -23,7 +22,7 @@ export class TrackingImplementation implements TrackingEndpoint {
    */
   public createTracking(
     data: TrackingCreateParams,
-  ): Promise<AftershipResponse<Tracking>> {
+  ): Promise<Tracking> {
 
     // make request
     return this.request.makeRequest<TrackingCreateParams, Tracking>(
@@ -38,7 +37,7 @@ export class TrackingImplementation implements TrackingEndpoint {
    */
   public deleteTracking(
     single_tracking_param: SingleTrackingParam,
-  ): Promise<AftershipResponse<Tracking>> {
+  ): Promise<Tracking> {
     const trackingUrl = buildTrackingUrl(single_tracking_param);
     // make request
     return this.request.makeRequest<null, Tracking>(
@@ -54,7 +53,7 @@ export class TrackingImplementation implements TrackingEndpoint {
    */
   public listTrackings(
     trackings_query_params?: MultiTrackingsQueryParams,
-  ): Promise<AftershipResponse<TrackingList>> {
+  ): Promise<TrackingList> {
 
     const queryString = getQueryString(trackings_query_params);
     const trackingUrl = queryString === '' ? '/trackings' : `/trackings?${queryString}`;
@@ -74,7 +73,7 @@ export class TrackingImplementation implements TrackingEndpoint {
   public getTracking(
     single_tracking_param: SingleTrackingParam,
     tracking_query_params?: TrackingQueryParams,
-  ): Promise<AftershipResponse<Tracking>> {
+  ): Promise<Tracking> {
 
     let trackingUrl = `/trackings/${buildTrackingUrl(single_tracking_param)}`;
 
@@ -97,7 +96,7 @@ export class TrackingImplementation implements TrackingEndpoint {
   public updateTracking(
     single_tracking_param: SingleTrackingParam,
     data?: TrackingUpdatParams,
-  ): Promise<AftershipResponse<Tracking>> {
+  ): Promise<Tracking> {
     const trackingUrl = `/trackings/${buildTrackingUrl(single_tracking_param)}`;
 
     // make request
@@ -113,7 +112,7 @@ export class TrackingImplementation implements TrackingEndpoint {
    */
   public retrack(
     single_tracking_param: SingleTrackingParam,
-  ): Promise<AftershipResponse<Tracking>> {
+  ): Promise<Tracking> {
     const trackingUrl = `/trackings/${buildTrackingUrl(single_tracking_param)}/retrack`;
 
     // make request

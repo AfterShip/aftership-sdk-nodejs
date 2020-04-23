@@ -1,4 +1,3 @@
-import { AftershipResponse } from '../model/aftership_response';
 import { Tracking } from '../model/tracking/tracking';
 import { TrackingList } from '../model/tracking/tracking_list';
 import { TrackingCreateParams } from '../model/tracking/tracking_create_params';
@@ -17,7 +16,7 @@ export interface TrackingEndpoint {
    */
   createTracking(
     tracking_post_params: TrackingCreateParams,
-  ): Promise<AftershipResponse<Tracking>>;
+  ): Promise<Tracking>;
 
   /**
    * Delete a tracking.
@@ -25,7 +24,7 @@ export interface TrackingEndpoint {
    */
   deleteTracking(
     single_tracking_param: SingleTrackingParam,
-  ): Promise<AftershipResponse<Tracking>>;
+  ): Promise<Tracking>;
 
   /**
    * Get tracking results of multiple trackings.
@@ -35,7 +34,7 @@ export interface TrackingEndpoint {
    */
   listTrackings(
     trackings_query_params?: MultiTrackingsQueryParams,
-  ): Promise<AftershipResponse<TrackingList>>;
+  ): Promise<TrackingList>;
 
   /**
    * Get tracking results of a single tracking.
@@ -46,7 +45,7 @@ export interface TrackingEndpoint {
   getTracking(
     single_tracking_param: SingleTrackingParam,
     tracking_query_params?: TrackingQueryParams,
-  ): Promise<AftershipResponse<Tracking>>;
+  ): Promise<Tracking>;
 
   /**
    * Update a tracking.
@@ -58,7 +57,7 @@ export interface TrackingEndpoint {
   updateTracking(
     single_tracking_param: SingleTrackingParam,
     tracking_update_params?: TrackingUpdatParams,
-  ): Promise<AftershipResponse<Tracking>>;
+  ): Promise<Tracking>;
 
   /**
    * Retrack an expired tracking. Max 3 times per tracking.
@@ -66,5 +65,5 @@ export interface TrackingEndpoint {
    */
   retrack(
     single_tracking_param: SingleTrackingParam,
-  ): Promise<AftershipResponse<Tracking>>;
+  ): Promise<Tracking>;
 }

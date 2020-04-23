@@ -92,9 +92,9 @@ describe("Notification", function () {
       aftership.notification
         .getNotification(param)
         .then((result) => {
-          if (result && result.data && result.data.notification) {
-            const emails = result.data.notification.emails;
-            const smses = result.data.notification.smses;
+          if (result && result.notification) {
+            const emails = result.notification.emails;
+            const smses = result.notification.smses;
             if (
               !emails ||
               emails[0] != "user1@gmail.com" ||
@@ -188,9 +188,9 @@ describe("Notification", function () {
       aftership.notification
         .getNotification(param)
         .then((result) => {
-          if (result && result.data && result.data.notification) {
-            const emails = result.data.notification.emails;
-            const smses = result.data.notification.smses;
+          if (result && result.notification) {
+            const emails = result.notification.emails;
+            const smses = result.notification.smses;
             if (
               !emails ||
               emails[0] != "user1@gmail.com" ||
@@ -362,9 +362,9 @@ describe("Notification", function () {
       aftership.notification
         .addNotification(param, notification)
         .then((result) => {
-          if (result && result.data && result.data.notification) {
-            const emails = result.data.notification.emails;
-            const smses = result.data.notification.smses;
+          if (result && result.notification) {
+            const emails = result.notification.emails;
+            const smses = result.notification.smses;
             if (!emails) {
               done("not get emails in notification");
             } else if (!smses || smses[0] != "+85261236888") {
@@ -463,9 +463,9 @@ describe("Notification", function () {
       aftership.notification
         .addNotification(param, notification)
         .then((result) => {
-          if (result && result.data && result.data.notification) {
-            const emails = result.data.notification.emails;
-            const smses = result.data.notification.smses;
+          if (result && result.notification) {
+            const emails = result.notification.emails;
+            const smses = result.notification.smses;
             if (!emails) {
               done("not get emails in notification");
             } else if (!smses || smses[0] != "+85261236888") {
@@ -629,9 +629,9 @@ describe("Notification", function () {
       aftership.notification
         .removeNotification(param, notification)
         .then((result) => {
-          if (result && result.data && result.data.notification) {
-            const emails = result.data.notification.emails;
-            const smses = result.data.notification.smses;
+          if (result && result.notification) {
+            const emails = result.notification.emails;
+            const smses = result.notification.smses;
             if (
               !emails ||
               emails[0] != "user1@gmail.com" ||
@@ -738,9 +738,9 @@ describe("Notification", function () {
       aftership.notification
         .removeNotification(param, notification)
         .then((result) => {
-          if (result && result.data && result.data.notification) {
-            const emails = result.data.notification.emails;
-            const smses = result.data.notification.smses;
+          if (result && result.notification) {
+            const emails = result.notification.emails;
+            const smses = result.notification.smses;
             if (
               !emails ||
               emails[0] != "user1@gmail.com" ||

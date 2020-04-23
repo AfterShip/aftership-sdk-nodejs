@@ -1,5 +1,4 @@
 import { ApiRequest } from '../lib/api_request';
-import { AftershipResponse } from '../model/aftership_response';
 import { LastCheckpointEndpoint } from '../endpoint/last_checkpoint_endpoint';
 import { SingleTrackingParam } from '../model/tracking/single_tracking_param';
 import { LastCheckpoint } from '../model/last_checkpoint/last_checkpoint';
@@ -26,7 +25,7 @@ export class LastCheckpointImplementation implements LastCheckpointEndpoint {
     tracking_param: SingleTrackingParam,
     fields?: string,
     lang?: string,
-  ): Promise<AftershipResponse<LastCheckpoint>> {
+  ): Promise<LastCheckpoint> {
     try {
       let trackingUrl = buildTrackingUrl(tracking_param);
       // Add optional params to tracking url

@@ -31,13 +31,10 @@ aftership.courier.listAllCouriers()
 
 
 /** Console
-{ meta: { code: 200 },
-  data:
-   { total: 335,
-     couriers:
-      [ ... ]
-   }
-}
+  { total: 335,
+    couriers:
+     [ ... ]
+  }
 */
 ```
 
@@ -422,7 +419,7 @@ aftership.courier.listAllCouriers()
 
 ## Change log
 
-### 2020-04-22 v6.0.0-alpha
+### 2020-04-23 v6.0.0-alpha
 - New features
 	- Support latest features in v4 API
 	- Support TypeScript
@@ -433,6 +430,7 @@ aftership.courier.listAllCouriers()
 	- Don't support `callback` anymore, please use `Promise` instead.
 	- Removed `auto retry` feature, consumers need to retry the request by themselves.
 	- Removed `call` method
+  - Remove `meta` in SDK `response` object.
 
 ## License
 Copyright (c) 2016-2020 AfterShip

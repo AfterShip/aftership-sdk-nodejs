@@ -181,7 +181,7 @@ describe("Tracking", function () {
       aftership
         .tracking.listTrackings()
         .then(x => {
-          const trackings = x.data.trackings
+          const trackings = x.trackings
           if (trackings.length === 1) {
             done()
           } else {
@@ -296,7 +296,7 @@ describe("Tracking", function () {
         .tracking.getTracking(param)
         .then(x => {
 
-          const tracking = x.data.tracking
+          const tracking = x.tracking
           if (tracking.slug === 'ups') {
             done()
           } else {

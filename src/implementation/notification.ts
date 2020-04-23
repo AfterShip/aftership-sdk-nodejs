@@ -1,5 +1,4 @@
 import { ApiRequest } from '../lib/api_request';
-import { AftershipResponse } from '../model/aftership_response';
 import { NotificationEndpoint } from '../endpoint/notification_endpoint';
 import { Notification } from '../model/notification/notification';
 import { NotificationRequest } from '../model/notification/notification_request';
@@ -22,7 +21,7 @@ export class NotificationImplementation implements NotificationEndpoint {
    */
   public getNotification(
     tracking_param: SingleTrackingParam,
-  ): Promise<AftershipResponse<Notification>> {
+  ): Promise<Notification> {
     try {
       const trackingUrl = buildTrackingUrl(tracking_param);
       return this.request.makeRequest<null, Notification>({
@@ -43,7 +42,7 @@ export class NotificationImplementation implements NotificationEndpoint {
   public addNotification(
     tracking_param: SingleTrackingParam,
     notification: NotificationRequest,
-  ): Promise<AftershipResponse<Notification>> {
+  ): Promise<Notification> {
     try {
       const trackingUrl = buildTrackingUrl(tracking_param);
       return this.request.makeRequest<NotificationRequest, Notification>(
@@ -64,7 +63,7 @@ export class NotificationImplementation implements NotificationEndpoint {
   public removeNotification(
     tracking_param: SingleTrackingParam,
     notification: NotificationRequest,
-  ): Promise<AftershipResponse<Notification>> {
+  ): Promise<Notification> {
     try {
       const trackingUrl = buildTrackingUrl(tracking_param);
       return this.request.makeRequest<NotificationRequest, Notification>(

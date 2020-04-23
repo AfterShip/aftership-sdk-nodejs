@@ -1,4 +1,3 @@
-import { AftershipResponse } from '../model/aftership_response';
 import { LastCheckpoint } from '../model/last_checkpoint/last_checkpoint';
 import { SingleTrackingParam } from '../model/tracking/single_tracking_param';
 
@@ -20,5 +19,5 @@ export interface LastCheckpointEndpoint {
     tracking_param: SingleTrackingParam,
     fields?: string,
     lang?: string,
-  ): Promise<AftershipResponse<LastCheckpoint>>;
+  ): Promise<LastCheckpoint>;
 }

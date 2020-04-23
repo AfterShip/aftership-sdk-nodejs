@@ -1,4 +1,3 @@
-import { AftershipResponse } from '../model/aftership_response';
 import { Notification } from '../model/notification/notification';
 import { NotificationRequest } from '../model/notification/notification_request';
 import { SingleTrackingParam } from '../model/tracking/single_tracking_param';
@@ -16,7 +15,7 @@ export interface NotificationEndpoint {
    */
   getNotification(
     tracking_param: SingleTrackingParam,
-  ): Promise<AftershipResponse<Notification>>;
+  ): Promise<Notification>;
 
   /**
    * Add notification receivers to a tracking id (number).
@@ -27,7 +26,7 @@ export interface NotificationEndpoint {
   addNotification(
     tracking_param: SingleTrackingParam,
     notification: NotificationRequest,
-  ): Promise<AftershipResponse<Notification>>;
+  ): Promise<Notification>;
 
   /**
    * Remove notification receivers from a tracking id (number).
@@ -38,5 +37,5 @@ export interface NotificationEndpoint {
   removeNotification(
     tracking_param: SingleTrackingParam,
     notification: NotificationRequest,
-  ): Promise<AftershipResponse<Notification>>;
+  ): Promise<Notification>;
 }
