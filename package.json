@@ -22,10 +22,10 @@
   "scripts": {
     "prepare": "npm run build",
     "build": "npm run build:clean && tsc",
-    "build:clean": "shx rm -rf ./dist ./coverage ./.nyc_output",
+    "build:clean": "shx rm -rf ./dist ./coverage",
     "lint": "tslint --project .",
-    "test": "nyc mocha -c --config .mocharc.json test/*.js",
-    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov -t ${CODECOV_TOKEN} -F aftership"
+    "test": "jest",
+    "coverage": "jest && codecov -t ${CODECOV_TOKEN} -F aftership"
   },
   "dependencies": {
     "axios": "^0.19.2",
@@ -36,14 +36,11 @@
     "@types/node": "^13.11.1",
     "@types/uuid": "^7.0.2",
     "axios-mock-adapter": "^1.18.1",
-    "chai": "^3.4.1",
     "codecov": "^3.0.4",
     "debug": "^4.1.1",
-    "mocha": "^2.3.4",
-    "nyc": "^14.1.1",
+    "jest": "^25.4.0",
     "pre-commit": "^1.1.2",
     "shx": "^0.3.2",
-    "sinon": "^1.17.2",
     "ts-node": "^8.2.0",
     "tslint": "^5.17.0",
     "tslint-config-airbnb": "^5.11.1",
@@ -56,5 +53,9 @@
   "pre-commit": [
     "lint"
   ],
-  "private": false
+  "private": false,
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
+  }
 }

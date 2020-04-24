@@ -1,8 +1,4 @@
-var chai = require("chai");
-var expect = chai.expect;
 var util = require("../dist/lib/util.js");
-
-let api_key = "SOME_API_KEY";
 
 describe("Test util", function () {
   describe("Test correct cases in buildTrackingUrl()", function () {
@@ -14,7 +10,7 @@ describe("Test util", function () {
         tracking_number,
       });
 
-      expect(url).to.equal(`${slug}/${tracking_number}`);
+      expect(url).toEqual(`${slug}/${tracking_number}`);
     });
 
     it("should build url with slug, tracking_number and one optional parameter correctly", function () {
@@ -29,7 +25,7 @@ describe("Test util", function () {
         optional_parameters,
       });
 
-      expect(url).to.equal(
+      expect(url).toEqual(
         `${slug}/${tracking_number}?tracking_postal_code=${optional_parameters.tracking_postal_code}`
       );
     });
@@ -47,7 +43,7 @@ describe("Test util", function () {
         optional_parameters,
       });
 
-      expect(url).to.equal(
+      expect(url).toEqual(
         `${slug}/${tracking_number}?tracking_postal_code=${optional_parameters.tracking_postal_code}&tracking_ship_date=${optional_parameters.tracking_ship_date}`
       );
     });
@@ -58,7 +54,7 @@ describe("Test util", function () {
         tracking_id,
       });
 
-      expect(url).to.equal(tracking_id);
+      expect(url).toEqual(tracking_id);
     });
 
     it("should build url with tracking_id and one optional parameter correctly", function () {
@@ -71,7 +67,7 @@ describe("Test util", function () {
         optional_parameters,
       });
 
-      expect(url).to.equal(
+      expect(url).toEqual(
         `${tracking_id}?tracking_postal_code=${optional_parameters.tracking_postal_code}`
       );
     });
@@ -87,7 +83,7 @@ describe("Test util", function () {
         optional_parameters,
       });
 
-      expect(url).to.equal(
+      expect(url).toEqual(
         `${tracking_id}?tracking_postal_code=${optional_parameters.tracking_postal_code}&tracking_ship_date=${optional_parameters.tracking_ship_date}`
       );
     });
@@ -100,7 +96,7 @@ describe("Test util", function () {
       try {
         util.buildTrackingUrl();
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -113,7 +109,7 @@ describe("Test util", function () {
           tracking_number: "1234567890",
         });
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -127,7 +123,7 @@ describe("Test util", function () {
           tracking_number: "1234567890",
         });
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -139,7 +135,7 @@ describe("Test util", function () {
           tracking_number: "1234567890",
         });
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -151,7 +147,7 @@ describe("Test util", function () {
           slug: "ups",
         });
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
   });

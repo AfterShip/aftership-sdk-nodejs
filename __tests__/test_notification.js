@@ -1,9 +1,6 @@
 var Aftership = require("../dist/index.js").AfterShip;
 var axios = require("axios");
 var MockAdapter = require("axios-mock-adapter");
-var chai = require("chai");
-
-var expect = chai.expect;
 var aftership = new Aftership("SOME_API_KEY");
 
 describe("Notification", function () {
@@ -14,7 +11,7 @@ describe("Notification", function () {
       try {
         await aftership.notification.getNotification();
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -29,7 +26,7 @@ describe("Notification", function () {
       try {
         await aftership.notification.getNotification(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -42,7 +39,7 @@ describe("Notification", function () {
       try {
         await aftership.notification.getNotification(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -55,7 +52,7 @@ describe("Notification", function () {
       try {
         await aftership.notification.getNotification(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
   });
@@ -271,7 +268,7 @@ describe("Notification", function () {
       try {
         await aftership.notification.addNotification(param, notification);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -286,7 +283,7 @@ describe("Notification", function () {
       try {
         await aftership.notification.addNotification(param, notification);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -299,7 +296,7 @@ describe("Notification", function () {
       try {
         await aftership.notification.addNotification(param, notification);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -312,7 +309,7 @@ describe("Notification", function () {
       try {
         await aftership.notification.addNotification(param, notification);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
   });
@@ -538,7 +535,7 @@ describe("Notification", function () {
       try {
         await aftership.notification.removeNotification(param, notification);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -553,7 +550,7 @@ describe("Notification", function () {
       try {
         await aftership.notification.removeNotification(param, notification);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -566,7 +563,7 @@ describe("Notification", function () {
       try {
         await aftership.notification.removeNotification(param, notification);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -579,7 +576,7 @@ describe("Notification", function () {
       try {
         await aftership.notification.removeNotification(param, notification);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
   });

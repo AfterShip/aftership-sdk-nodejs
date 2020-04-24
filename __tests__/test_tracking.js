@@ -2,9 +2,7 @@ var Aftership = require("../dist/index.js").AfterShip;
 var TrackingCreateParams = require("../dist/model/tracking/tracking_create_params").TrackingCreateParams
 var axios = require("axios");
 var MockAdapter = require("axios-mock-adapter");
-var chai = require("chai");
 
-var expect = chai.expect;
 var aftership = new Aftership("SOME_API_KEY");
 
 describe("Tracking", function () {
@@ -19,7 +17,7 @@ describe("Tracking", function () {
         });
 
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
   });
@@ -36,7 +34,7 @@ describe("Tracking", function () {
       try {
         await aftership.tracking.deleteTracking(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -49,7 +47,7 @@ describe("Tracking", function () {
       try {
         await aftership.tracking.deleteTracking(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -62,7 +60,7 @@ describe("Tracking", function () {
       try {
         await aftership.tracking.deleteTracking(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
   });
@@ -319,7 +317,7 @@ describe("Tracking", function () {
       try {
         await aftership.tracking.updateTracking(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -332,7 +330,7 @@ describe("Tracking", function () {
       try {
         await aftership.tracking.updateTracking(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -345,7 +343,7 @@ describe("Tracking", function () {
       try {
         await aftership.tracking.updateTracking(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
   });
@@ -362,7 +360,7 @@ describe("Tracking", function () {
       try {
         await aftership.tracking.retrack(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -375,7 +373,7 @@ describe("Tracking", function () {
       try {
         await aftership.tracking.retrack(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -388,7 +386,7 @@ describe("Tracking", function () {
       try {
         await aftership.tracking.retrack(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
   });
