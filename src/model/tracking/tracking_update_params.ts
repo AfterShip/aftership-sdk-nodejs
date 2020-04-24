@@ -2,7 +2,14 @@ import { DeliveryType } from './delivery_type';
 /**
  * Tracking update params object
  */
-export interface TrackingUpdatParams {
+export interface TrackingUpdateParams {
+  /**
+   * Tracking Update Object.
+   */
+  tracking: TrackingUpdate;
+}
+
+interface TrackingUpdate {
 
   /**
    * Phone number(s) to receive sms notifications.

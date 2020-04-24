@@ -59,12 +59,12 @@ export class ErrorEnum {
 
   public static handlerInvalidBothTrackingIdAndNumber = new AftershipError(
     ErrorType.HandlerError,
-    'HandlerError: Cannot specify tracking number and tracking id at the same time',
+    'HandlerError: Cannot specify id and tracking number at the same time',
   );
 
   public static handlerInvalidEmptyTrackingIdAndNumber = new AftershipError(
     ErrorType.HandlerError,
-    'HandlerError: You must specify the tracking number or tracking id',
+    'HandlerError: You must specify the id or slug and tracking number',
   );
 
   public static handlerInvalidEmptySlugOrTrackNumber = new AftershipError(

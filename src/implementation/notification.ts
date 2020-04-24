@@ -17,7 +17,7 @@ export class NotificationImplementation implements NotificationEndpoint {
    * Please note that only customer receivers will be returned.
    * Any email, sms or webhook that belongs to the Store will not be returned.
    * @param tracking_param The param to identify the single tracking.
-   * Either tracking_id or (slug + tracking_number) should be specified.
+   * Either id or (slug + tracking_number) should be specified.
    */
   public getNotification(
     tracking_param: SingleTrackingParam,
@@ -34,9 +34,9 @@ export class NotificationImplementation implements NotificationEndpoint {
   }
 
   /**
-   * Add notification receivers to a tracking tracking id (number).
+   * Add notification receivers to a tracking id (number).
    * @param tracking_param The param to identify the single tracking.
-   * Either tracking_id or (slug + tracking_number) should be specified.
+   * Either id or (slug + tracking_number) should be specified.
    * @param notification Notification Request Object
    */
   public addNotification(
@@ -55,9 +55,9 @@ export class NotificationImplementation implements NotificationEndpoint {
   }
 
   /**
-   * Remove notification receivers from a tracking tracking id (number).
+   * Remove notification receivers from a tracking id (number).
    * @param tracking_param The param to identify the single tracking.
-   * Either tracking_id or (slug + tracking_number) should be specified.
+   * Either id or (slug + tracking_number) should be specified.
    * @param notification Notification Request Object
    */
   public removeNotification(

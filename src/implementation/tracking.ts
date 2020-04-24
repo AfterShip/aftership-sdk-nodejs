@@ -6,7 +6,7 @@ import { TrackingList } from '../model/tracking/tracking_list';
 import { TrackingCreateParams } from '../model/tracking/tracking_create_params';
 import { MultiTrackingsQueryParams } from '../model/tracking/multi_trackings_query_params';
 import { TrackingQueryParams } from '../model/tracking/tracking_query_params';
-import { TrackingUpdatParams } from '../model/tracking/tracking_update_params';
+import { TrackingUpdateParams } from '../model/tracking/tracking_update_params';
 import { buildTrackingUrl, getQueryString, combineUrlQuery } from '../lib/util';
 
 export class TrackingImplementation implements TrackingEndpoint {
@@ -95,12 +95,12 @@ export class TrackingImplementation implements TrackingEndpoint {
    */
   public updateTracking(
     single_tracking_param: SingleTrackingParam,
-    data?: TrackingUpdatParams,
+    data?: TrackingUpdateParams,
   ): Promise<Tracking> {
     const trackingUrl = `/trackings/${buildTrackingUrl(single_tracking_param)}`;
 
     // make request
-    return this.request.makeRequest<TrackingUpdatParams, Tracking>(
+    return this.request.makeRequest<TrackingUpdateParams, Tracking>(
       { method: 'PUT', url: trackingUrl },
       data,
     );

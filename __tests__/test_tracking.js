@@ -2,9 +2,7 @@ var Aftership = require("../dist/index.js").AfterShip;
 var TrackingCreateParams = require("../dist/model/tracking/tracking_create_params").TrackingCreateParams
 var axios = require("axios");
 var MockAdapter = require("axios-mock-adapter");
-var chai = require("chai");
 
-var expect = chai.expect;
 var aftership = new Aftership("SOME_API_KEY");
 
 describe("Tracking", function () {
@@ -19,24 +17,24 @@ describe("Tracking", function () {
         });
 
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
   });
 
   describe("#deleteTracking(), validate url params", function () {
-    it("should throw exception when both specify tracking id and tracking number", async function () {
+    it("should throw exception when both specify id and tracking number", async function () {
       let expected_error =
-        "HandlerError: Cannot specify tracking number and tracking id at the same time";
+        "HandlerError: Cannot specify id and tracking number at the same time";
       const param = {
-        tracking_id: "5b74f4958776db0e00b6f5ed",
+        id: "5b74f4958776db0e00b6f5ed",
         slug: "ups",
         tracking_number: "1234567890",
       };
       try {
         await aftership.tracking.deleteTracking(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -49,7 +47,7 @@ describe("Tracking", function () {
       try {
         await aftership.tracking.deleteTracking(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -62,7 +60,7 @@ describe("Tracking", function () {
       try {
         await aftership.tracking.deleteTracking(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
   });
@@ -308,18 +306,18 @@ describe("Tracking", function () {
   });
 
   describe("#updateTracking(), validate url params", function () {
-    it("should throw exception when both specify tracking id and tracking number", async function () {
+    it("should throw exception when both specify id and tracking number", async function () {
       let expected_error =
-        "HandlerError: Cannot specify tracking number and tracking id at the same time";
+        "HandlerError: Cannot specify id and tracking number at the same time";
       const param = {
-        tracking_id: "5b74f4958776db0e00b6f5ed",
+        id: "5b74f4958776db0e00b6f5ed",
         slug: "ups",
         tracking_number: "1234567890",
       };
       try {
         await aftership.tracking.updateTracking(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -332,7 +330,7 @@ describe("Tracking", function () {
       try {
         await aftership.tracking.updateTracking(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -345,24 +343,24 @@ describe("Tracking", function () {
       try {
         await aftership.tracking.updateTracking(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
   });
 
   describe("#retrack(), validate url params", function () {
-    it("should throw exception when both specify tracking id and tracking number", async function () {
+    it("should throw exception when both specify id and tracking number", async function () {
       let expected_error =
-        "HandlerError: Cannot specify tracking number and tracking id at the same time";
+        "HandlerError: Cannot specify id and tracking number at the same time";
       const param = {
-        tracking_id: "5b74f4958776db0e00b6f5ed",
+        id: "5b74f4958776db0e00b6f5ed",
         slug: "ups",
         tracking_number: "1234567890",
       };
       try {
         await aftership.tracking.retrack(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -375,7 +373,7 @@ describe("Tracking", function () {
       try {
         await aftership.tracking.retrack(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -388,7 +386,7 @@ describe("Tracking", function () {
       try {
         await aftership.tracking.retrack(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
   });

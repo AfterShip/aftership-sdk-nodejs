@@ -1,35 +1,33 @@
 var Aftership = require("../dist/index.js").AfterShip;
 var axios = require("axios");
 var MockAdapter = require("axios-mock-adapter");
-var chai = require("chai");
 
-var expect = chai.expect;
 var aftership = new Aftership("SOME_API_KEY");
 
 describe("LastCheckpoint", function () {
   describe("#getLastCheckpoint(), validate params", function () {
-    it("should throw exception when not specify tracking id and tracking number", async function () {
+    it("should throw exception when not specify id and tracking number", async function () {
       let expected_error =
-        "HandlerError: You must specify the tracking number or tracking id";
+        "HandlerError: You must specify the id or slug and tracking number";
       try {
         await aftership.last_checkpoint.getLastCheckpoint();
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
-    it("should throw exception when both specify tracking id and tracking number", async function () {
+    it("should throw exception when both specify id and tracking number", async function () {
       let expected_error =
-        "HandlerError: Cannot specify tracking number and tracking id at the same time";
+        "HandlerError: Cannot specify id and tracking number at the same time";
       const param = {
-        tracking_id: "5b74f4958776db0e00b6f5ed",
+        id: "5b74f4958776db0e00b6f5ed",
         slug: "ups",
         tracking_number: "1234567890",
       };
       try {
         await aftership.last_checkpoint.getLastCheckpoint(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -42,7 +40,7 @@ describe("LastCheckpoint", function () {
       try {
         await aftership.last_checkpoint.getLastCheckpoint(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
 
@@ -55,7 +53,7 @@ describe("LastCheckpoint", function () {
       try {
         await aftership.last_checkpoint.getLastCheckpoint(param);
       } catch (e) {
-        expect(e.message).to.equal(expected_error);
+        expect(e.message).toEqual(expected_error);
       }
     });
   });
@@ -168,15 +166,15 @@ describe("LastCheckpoint", function () {
     });
   });
 
-  describe("#getLastCheckpoint({tracking_id})", function () {
+  describe("#getLastCheckpoint({id})", function () {
     it("should get last checkpoint when success", function (done) {
       const param = {
-        tracking_id: "5b74f4958776db0e00b6f5ed",
+        id: "5b74f4958776db0e00b6f5ed",
       };
 
       // This sets the mock adapter on the default instance
       var mock = new MockAdapter(axios);
-      mock.onGet(`/last_checkpoint/${param.tracking_id}`).reply(
+      mock.onGet(`/last_checkpoint/${param.id}`).reply(
         200,
         {
           meta: {
@@ -233,12 +231,12 @@ describe("LastCheckpoint", function () {
 
     it("should catch exception when error", function (done) {
       const param = {
-        tracking_id: "5b74f4958776db0e00b6f5ed",
+        id: "5b74f4958776db0e00b6f5ed",
       };
 
       // This sets the mock adapter on the default instance
       var mock = new MockAdapter(axios);
-      mock.onGet(`/last_checkpoint/${param.tracking_id}`).reply(
+      mock.onGet(`/last_checkpoint/${param.id}`).reply(
         404,
         {
           meta: {
