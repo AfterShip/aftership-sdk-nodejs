@@ -55,7 +55,6 @@ npm run test
 	- [/last_checkpoint](#last_checkpoint)
 	- [/notifications](#notifications)
 - [Migrations](#migrations)
-- [Change log](#change-log)
 
 
 ## Constructor(api_key[, options])
@@ -435,20 +434,6 @@ aftership.courier.listAllCouriers()
   .catch(err => console.log(err));
 ```
 
-## Change log
-
-### 2020-04-23 v6.0.0-alpha
-- New features
-	- Support latest features in v4 API
-	- Support TypeScript
-	- Support IntelliSense, bring more convenient to consumers
-- Compatibility
-	- Node >=10.0
-- Breaking changes
-	- Don't support `callback` anymore, please use `Promise` instead.
-	- Removed `auto retry` feature, consumers need to retry the request by themselves.
-	- Removed `call` method
-  - Remove `meta` in SDK `response` object.
 
 ## License
 Copyright (c) 2016-2020 AfterShip
