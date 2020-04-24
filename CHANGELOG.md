@@ -2,7 +2,7 @@
 
 ## Change log
 
-### v6.0.0-alpha (2020-04-24)
+### 6.0.0 (2020-04-24)
 - New features
 	- Support latest features in v4 API
 	- Support TypeScript
