@@ -11,16 +11,16 @@ export interface NotificationEndpoint {
    * Please note that only customer receivers will be returned.
    * Any email, sms or webhook that belongs to the Store will not be returned.
    * @param tracking_param The param to identify the single tracking.
-   * Either tracking_id or (slug + tracking_number) should be specified.
+   * Either id or (slug + tracking_number) should be specified.
    */
   getNotification(
     tracking_param: SingleTrackingParam,
   ): Promise<Notification>;
 
   /**
-   * Add notification receivers to a tracking id (number).
+   * Add notification receivers to a id (number).
    * @param tracking_param The param to identify the single tracking.
-   * Either tracking_id or (slug + tracking_number) should be specified.
+   * Either id or (slug + tracking_number) should be specified.
    * @param notification Notification Request Object
    */
   addNotification(
@@ -29,9 +29,9 @@ export interface NotificationEndpoint {
   ): Promise<Notification>;
 
   /**
-   * Remove notification receivers from a tracking id (number).
+   * Remove notification receivers from a id (number).
    * @param tracking_param The param to identify the single tracking.
-   * Either tracking_id or (slug + tracking_number) should be specified.
+   * Either id or (slug + tracking_number) should be specified.
    * @param notification Notification Request Object
    */
   removeNotification(

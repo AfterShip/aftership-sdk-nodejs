@@ -5,9 +5,9 @@ var aftership = new Aftership("SOME_API_KEY");
 
 describe("Notification", function () {
   describe("#getNotification(), validate params", function () {
-    it("should throw exception when not specify tracking id and tracking number", async function () {
+    it("should throw exception when not specify id and tracking number", async function () {
       let expected_error =
-        "HandlerError: You must specify the tracking number or tracking id";
+        "HandlerError: You must specify the id or slug and tracking number";
       try {
         await aftership.notification.getNotification();
       } catch (e) {
@@ -15,11 +15,11 @@ describe("Notification", function () {
       }
     });
 
-    it("should throw exception when both specify tracking id and tracking number", async function () {
+    it("should throw exception when both specify id and tracking number", async function () {
       let expected_error =
-        "HandlerError: Cannot specify tracking number and tracking id at the same time";
+        "HandlerError: Cannot specify id and tracking number at the same time";
       const param = {
-        tracking_id: "5b74f4958776db0e00b6f5ed",
+        id: "5b74f4958776db0e00b6f5ed",
         slug: "ups",
         tracking_number: "1234567890",
       };
@@ -154,15 +154,15 @@ describe("Notification", function () {
     });
   });
 
-  describe("#getNotification({tracking_id})", function () {
+  describe("#getNotification({id})", function () {
     it("should get notification when success", function (done) {
       const param = {
-        tracking_id: "5b74f4958776db0e00b6f5ed",
+        id: "5b74f4958776db0e00b6f5ed",
       };
 
       // This sets the mock adapter on the default instance
       var mock = new MockAdapter(axios);
-      mock.onGet(`/notifications/${param.tracking_id}`).reply(
+      mock.onGet(`/notifications/${param.id}`).reply(
         200,
         {
           meta: {
@@ -212,12 +212,12 @@ describe("Notification", function () {
 
     it("should catch exception when error", function (done) {
       const param = {
-        tracking_id: "5b74f4958776db0e00b6f5ed",
+        id: "5b74f4958776db0e00b6f5ed",
       };
 
       // This sets the mock adapter on the default instance
       var mock = new MockAdapter(axios);
-      mock.onGet(`/notifications/${param.tracking_id}`).reply(
+      mock.onGet(`/notifications/${param.id}`).reply(
         404,
         {
           meta: {
@@ -261,9 +261,9 @@ describe("Notification", function () {
       },
     };
 
-    it("should throw exception when not specify tracking id and tracking number", async function () {
+    it("should throw exception when not specify id and tracking number", async function () {
       let expected_error =
-        "HandlerError: You must specify the tracking number or tracking id";
+        "HandlerError: You must specify the id or slug and tracking number";
       const param = {};
       try {
         await aftership.notification.addNotification(param, notification);
@@ -272,11 +272,11 @@ describe("Notification", function () {
       }
     });
 
-    it("should throw exception when both specify tracking id and tracking number", async function () {
+    it("should throw exception when both specify id and tracking number", async function () {
       let expected_error =
-        "HandlerError: Cannot specify tracking number and tracking id at the same time";
+        "HandlerError: Cannot specify id and tracking number at the same time";
       const param = {
-        tracking_id: "5b74f4958776db0e00b6f5ed",
+        id: "5b74f4958776db0e00b6f5ed",
         slug: "ups",
         tracking_number: "1234567890",
       };
@@ -418,7 +418,7 @@ describe("Notification", function () {
     });
   });
 
-  describe("#addNotification({tracking_id})", function () {
+  describe("#addNotification({id})", function () {
     const notification = {
       notification: {
         emails: [
@@ -432,12 +432,12 @@ describe("Notification", function () {
 
     it("should get notification when success", function (done) {
       const param = {
-        tracking_id: "5b74f4958776db0e00b6f5ed",
+        id: "5b74f4958776db0e00b6f5ed",
       };
 
       // This sets the mock adapter on the default instance
       var mock = new MockAdapter(axios);
-      mock.onPost(`/notifications/${param.tracking_id}/add`).reply(
+      mock.onPost(`/notifications/${param.id}/add`).reply(
         200,
         {
           meta: {
@@ -479,12 +479,12 @@ describe("Notification", function () {
 
     it("should catch exception when error", function (done) {
       const param = {
-        tracking_id: "5b74f4958776db0e00b6f5ed",
+        id: "5b74f4958776db0e00b6f5ed",
       };
 
       // This sets the mock adapter on the default instance
       var mock = new MockAdapter(axios);
-      mock.onPost(`/notifications/${param.tracking_id}/add`).reply(
+      mock.onPost(`/notifications/${param.id}/add`).reply(
         404,
         {
           meta: {
@@ -528,10 +528,10 @@ describe("Notification", function () {
       },
     };
 
-    it("should throw exception when not specify tracking id and tracking number", async function () {
+    it("should throw exception when not specify id and tracking number", async function () {
       const param = {};
       let expected_error =
-        "HandlerError: You must specify the tracking number or tracking id";
+        "HandlerError: You must specify the id or slug and tracking number";
       try {
         await aftership.notification.removeNotification(param, notification);
       } catch (e) {
@@ -539,11 +539,11 @@ describe("Notification", function () {
       }
     });
 
-    it("should throw exception when both specify tracking id and tracking number", async function () {
+    it("should throw exception when both specify id and tracking number", async function () {
       let expected_error =
-        "HandlerError: Cannot specify tracking number and tracking id at the same time";
+        "HandlerError: Cannot specify id and tracking number at the same time";
       const param = {
-        tracking_id: "5b74f4958776db0e00b6f5ed",
+        id: "5b74f4958776db0e00b6f5ed",
         slug: "ups",
         tracking_number: "1234567890",
       };
@@ -693,7 +693,7 @@ describe("Notification", function () {
     });
   });
 
-  describe("#removeNotification({tracking_id})", function () {
+  describe("#removeNotification({id})", function () {
     const notification = {
       notification: {
         emails: [
@@ -707,12 +707,12 @@ describe("Notification", function () {
 
     it("should get notification when success", function (done) {
       const param = {
-        tracking_id: "5b74f4958776db0e00b6f5ed",
+        id: "5b74f4958776db0e00b6f5ed",
       };
 
       // This sets the mock adapter on the default instance
       var mock = new MockAdapter(axios);
-      mock.onPost(`/notifications/${param.tracking_id}/remove`).reply(
+      mock.onPost(`/notifications/${param.id}/remove`).reply(
         200,
         {
           meta: {
@@ -762,12 +762,12 @@ describe("Notification", function () {
 
     it("should catch exception when error", function (done) {
       const param = {
-        tracking_id: "5b74f4958776db0e00b6f5ed",
+        id: "5b74f4958776db0e00b6f5ed",
       };
 
       // This sets the mock adapter on the default instance
       var mock = new MockAdapter(axios);
-      mock.onPost(`/notifications/${param.tracking_id}/remove`).reply(
+      mock.onPost(`/notifications/${param.id}/remove`).reply(
         404,
         {
           meta: {

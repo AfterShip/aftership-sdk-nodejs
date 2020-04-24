@@ -13,9 +13,9 @@ aftership.last_checkpoint.getLastCheckpoint({
   .then(result => console.log(result))
   .catch(e => console.log(e));
 
-// GET /last_checkpoint/:tracking_id
+// GET /last_checkpoint/:id
 aftership.last_checkpoint.getLastCheckpoint({
-    tracking_id: '5b74f4958776db0e00b6f5ed',
+    id: '5b74f4958776db0e00b6f5ed',
   })
   .then(result => console.log(result))
   .catch(e => console.log(e));

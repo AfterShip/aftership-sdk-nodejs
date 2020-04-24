@@ -23,11 +23,11 @@ describe("Tracking", function () {
   });
 
   describe("#deleteTracking(), validate url params", function () {
-    it("should throw exception when both specify tracking id and tracking number", async function () {
+    it("should throw exception when both specify id and tracking number", async function () {
       let expected_error =
-        "HandlerError: Cannot specify tracking number and tracking id at the same time";
+        "HandlerError: Cannot specify id and tracking number at the same time";
       const param = {
-        tracking_id: "5b74f4958776db0e00b6f5ed",
+        id: "5b74f4958776db0e00b6f5ed",
         slug: "ups",
         tracking_number: "1234567890",
       };
@@ -306,11 +306,11 @@ describe("Tracking", function () {
   });
 
   describe("#updateTracking(), validate url params", function () {
-    it("should throw exception when both specify tracking id and tracking number", async function () {
+    it("should throw exception when both specify id and tracking number", async function () {
       let expected_error =
-        "HandlerError: Cannot specify tracking number and tracking id at the same time";
+        "HandlerError: Cannot specify id and tracking number at the same time";
       const param = {
-        tracking_id: "5b74f4958776db0e00b6f5ed",
+        id: "5b74f4958776db0e00b6f5ed",
         slug: "ups",
         tracking_number: "1234567890",
       };
@@ -349,11 +349,11 @@ describe("Tracking", function () {
   });
 
   describe("#retrack(), validate url params", function () {
-    it("should throw exception when both specify tracking id and tracking number", async function () {
+    it("should throw exception when both specify id and tracking number", async function () {
       let expected_error =
-        "HandlerError: Cannot specify tracking number and tracking id at the same time";
+        "HandlerError: Cannot specify id and tracking number at the same time";
       const param = {
-        tracking_id: "5b74f4958776db0e00b6f5ed",
+        id: "5b74f4958776db0e00b6f5ed",
         slug: "ups",
         tracking_number: "1234567890",
       };

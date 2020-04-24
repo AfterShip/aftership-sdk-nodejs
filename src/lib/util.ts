@@ -16,15 +16,15 @@ export function buildTrackingUrl(param: SingleTrackingParam): string {
 
   // validate
   if (
-    isStringValid(param.tracking_id) &&
+    isStringValid(param.id) &&
     (isStringValid(param.slug) || isStringValid(param.tracking_number))
   ) {
     throw AftershipError.getSdkError(
       ErrorEnum.handlerInvalidBothTrackingIdAndNumber,
-      param.tracking_id,
+      param.id,
     );
   } else if (
-    !isStringValid(param.tracking_id) &&
+    !isStringValid(param.id) &&
     !isStringValid(param.slug) &&
     !isStringValid(param.tracking_number)
   ) {
@@ -33,7 +33,7 @@ export function buildTrackingUrl(param: SingleTrackingParam): string {
       param.tracking_number,
     );
   } else if (
-    !isStringValid(param.tracking_id) &&
+    !isStringValid(param.id) &&
     (!isStringValid(param.slug) || !isStringValid(param.tracking_number))
   ) {
     throw AftershipError.getSdkError(
@@ -45,9 +45,9 @@ export function buildTrackingUrl(param: SingleTrackingParam): string {
   // Build url
   let url = '';
 
-  // tracking_id
-  if (isStringValid(param.tracking_id)) {
-    url = `${param.tracking_id}`;
+  // id
+  if (isStringValid(param.id)) {
+    url = `${param.id}`;
   } else {
     // slug && tracking_number
 

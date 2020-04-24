@@ -159,7 +159,7 @@ aftership.notification.getNotification()
   .catch(err => console.log(err));
 
 /*
-{ Error: HandlerError: You must specify the tracking number or tracking id
+{ Error: HandlerError: You must specify the id or slug and tracking number
   type: 'HandlerError',
   code: '',
   data: undefined,
@@ -332,12 +332,12 @@ aftership.tracking
 ```
 
 
-> Pro Tip: You can always use /:tracking_id to replace /:slug/:tracking_number.
+> Pro Tip: You can always use /:id to replace /:slug/:tracking_number.
 ```javascript
-// GET /trackings/:tracking_id
+// GET /trackings/:id
 aftership.tracking
   .getTracking({
-    tracking_id: "1234567890",
+    id: "1234567890",
   })
   .then((result) => console.log(result))
   .catch((e) => console.log(e));
