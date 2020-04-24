@@ -3,7 +3,7 @@ import { TrackingList } from '../model/tracking/tracking_list';
 import { TrackingCreateParams } from '../model/tracking/tracking_create_params';
 import { MultiTrackingsQueryParams } from '../model/tracking/multi_trackings_query_params';
 import { TrackingQueryParams } from '../model/tracking/tracking_query_params';
-import { TrackingUpdatParams } from '../model/tracking/tracking_update_params';
+import { TrackingUpdateParams } from '../model/tracking/tracking_update_params';
 import { SingleTrackingParam } from '../model/tracking/single_tracking_param';
 
 /**
@@ -56,7 +56,7 @@ export interface TrackingEndpoint {
    */
   updateTracking(
     single_tracking_param: SingleTrackingParam,
-    tracking_update_params?: TrackingUpdatParams,
+    tracking_update_params?: TrackingUpdateParams,
   ): Promise<Tracking>;
 
   /**
