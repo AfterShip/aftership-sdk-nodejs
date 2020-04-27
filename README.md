@@ -56,6 +56,7 @@ npm run test
 	- [/notifications](#notifications)
 - [Migrations](#migrations)
 - [Help](#help)
+- [Contributing](#contributing)
 
 
 ## Constructor(api_key[, options])
@@ -440,6 +441,9 @@ If you get stuck, we're here to help. The following are the best ways to get ass
 
 - [Issue Tracker](https://github.com/AfterShip/aftership-sdk-nodejs/issues) for questions, feature requests, bug reports and general discussion related to this package. Try searching before you create a new issue.
 - [Slack AfterShip-SDKs](https://aftership-sdk-slackin.herokuapp.com/): a Slack community, you can find the maintainers and users of this package in #aftership-sdks.
+
+## Contributing
+For details on contributing to this repository, see the [contributing guide](https://github.com/AfterShip/aftership-sdk-nodejs/blob/master/CONTRIBUTING.md).
 
 ## License
 Copyright (c) 2016-2020 AfterShip
