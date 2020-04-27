@@ -7,6 +7,7 @@
 [![npm](https://img.shields.io/npm/v/aftership.svg)](https://www.npmjs.com/package/aftership)
 [![npm](https://img.shields.io/npm/dm/aftership.svg)](https://www.npmjs.com/package/aftership)
 [![npm](https://img.shields.io/npm/l/aftership.svg)](https://www.npmjs.com/package/aftership)
+[![AfterShip SDKs channel](https://aftership-sdk-slackin.herokuapp.com/badge.svg)](https://aftership-sdk-slackin.herokuapp.com/)
 
 ![codecov.io](http://codecov.io/github/AfterShip/aftership-sdk-nodejs/branch.svg?branch=master)
 
@@ -54,6 +55,7 @@ npm run test
 	- [/last_checkpoint](#last_checkpoint)
 	- [/notifications](#notifications)
 - [Migrations](#migrations)
+- [Help](#help)
 
 
 ## Constructor(api_key[, options])
@@ -433,6 +435,11 @@ aftership.courier.listAllCouriers()
   .catch(err => console.log(err));
 ```
 
+## Help
+If you get stuck, we're here to help. The following are the best ways to get assistance working through your issue:
+
+- [Issue Tracker](https://github.com/AfterShip/aftership-sdk-nodejs/issues) for questions, feature requests, bug reports and general discussion related to this package. Try searching before you create a new issue.
+- [Slack AfterShip-SDKs](https://aftership-sdk-slackin.herokuapp.com/): a Slack community, you can find the maintainers and users of this package in #aftership-sdks.
 
 ## License
 Copyright (c) 2016-2020 AfterShip
