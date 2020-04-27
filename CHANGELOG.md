@@ -7,6 +7,7 @@
 	- Support latest features in v4 API
 	- Support TypeScript
 	- Support IntelliSense, bring more convenient to consumers
+  - The SDK is now isomorphic
 - Compatibility
 	- Node >=10.0
 - Breaking changes
