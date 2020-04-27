@@ -58,13 +58,17 @@ export class ApiRequestImplementation implements ApiRequest {
     });
 
     const request_id = uuidv4();
-    const headers = {
+    const headers: any = {
       'aftership-api-key': this.app.apiKey,
       'Content-Type': 'application/json',
       'request-id': request_id,
-      'User-Agent': `${this.app.user_agent_prefix}/${VERSION}`,
       'aftership-agent': `nodejs-sdk-${VERSION}`,
     };
+
+    // Only set User-Agent header in Node
+    if (typeof window === 'undefined') {
+      headers['User-Agent'] = `${this.app.user_agent_prefix}/${VERSION}`;
+    }
 
     const request = axios.request({
       url,
