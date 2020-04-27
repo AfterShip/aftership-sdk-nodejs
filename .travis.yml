@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "4.2.3"
+  - "10.0.0"
 sudo: false
 
 notifications:
@@ -20,5 +20,4 @@ script:
   - . ./scripts/ci/run.sh
 
 after_script:
-  - bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN > /dev/null
-
+  - npm run coverage

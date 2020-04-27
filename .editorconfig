@@ -7,7 +7,8 @@ root = true
 [*]
 charset = utf-8
 end_of_line = lf
-indent_style = tab
+indent_style = space
+indent_size = 2
 insert_final_newline = true
 trim_trailing_whitespace = true
 
@@ -20,3 +21,6 @@ indent_size = 2
 # http://www.yaml.org/spec/1.2/spec.html#id2777534
 # https://github.com/npm/npm/issues/4718
 indent_style = space
+
+[*.ts]
+quote_type = single
