@@ -62,7 +62,7 @@ export class ApiRequestImplementation implements ApiRequest {
       'aftership-api-key': this.app.apiKey,
       'Content-Type': 'application/json',
       'request-id': request_id,
-      'User-Agent': `${this.app.user_agent_prefix}/${request_id}`,
+      'User-Agent': `${this.app.user_agent_prefix}/${VERSION}`,
       'aftership-agent': `nodejs-sdk-${VERSION}`,
     };
 
