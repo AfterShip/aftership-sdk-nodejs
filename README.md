@@ -2,12 +2,12 @@
 
 [![Build Status](https://travis-ci.org/AfterShip/aftership-sdk-nodejs.svg?branch=master)](https://travis-ci.org/AfterShip/aftership-sdk-nodejs)
 [![codecov.io](https://codecov.io/github/AfterShip/aftership-sdk-nodejs/coverage.svg?branch=master)](https://codecov.io/github/AfterShip/aftership-sdk-nodejs?branch=master)
+[![AfterShip SDKs channel](https://aftership-sdk-slackin.herokuapp.com/badge.svg)](https://aftership-sdk-slackin.herokuapp.com/)
 
 [![node](https://img.shields.io/node/v/aftership.svg)](https://nodejs.org/en/)
 [![npm](https://img.shields.io/npm/v/aftership.svg)](https://www.npmjs.com/package/aftership)
 [![npm](https://img.shields.io/npm/dm/aftership.svg)](https://www.npmjs.com/package/aftership)
 [![npm](https://img.shields.io/npm/l/aftership.svg)](https://www.npmjs.com/package/aftership)
-[![AfterShip SDKs channel](https://aftership-sdk-slackin.herokuapp.com/badge.svg)](https://aftership-sdk-slackin.herokuapp.com/)
 
 ![codecov.io](http://codecov.io/github/AfterShip/aftership-sdk-nodejs/branch.svg?branch=master)
 
