@@ -5,8 +5,9 @@ import { SingleTrackingParam } from '../model/tracking/single_tracking_param';
 /**
  * Build tracking url by param
  * @param param tracking param
+ * @param sub_path the sub path behind /:slug/:tracking_number, f.e. /:slug/:tracking_number/retrack
  */
-export function buildTrackingUrl(param: SingleTrackingParam): string {
+export function buildTrackingUrl(param: SingleTrackingParam, sub_path?: string): string {
   if (param === undefined) {
     throw AftershipError.getSdkError(
       ErrorEnum.handlerInvalidEmptyTrackingIdAndNumber,
@@ -52,6 +53,11 @@ export function buildTrackingUrl(param: SingleTrackingParam): string {
     // slug && tracking_number
 
     url = `${param.slug}/${param.tracking_number}`;
+  }
+
+  // Add sub path
+  if (isStringValid(sub_path)) {
+    url += `/${sub_path}`;
   }
 
   // Add the additional parameters to query string

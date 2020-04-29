@@ -48,6 +48,38 @@ describe("Test util", function () {
       );
     });
 
+    it("should build url with slug, tracking_number and sub path correctly", function () {
+      const slug = "ups";
+      const tracking_number = "1234567890";
+      const sub_path = "retrack";
+      const url = util.buildTrackingUrl({
+        slug,
+        tracking_number,
+      }, sub_path);
+
+      expect(url).toEqual(
+        `${slug}/${tracking_number}/${sub_path}`
+      );
+    });
+
+    it("should build url with slug, tracking_number, sub path and optional parameters correctly", function () {
+      const slug = "ups";
+      const tracking_number = "1234567890";
+      const optional_parameters = {
+        tracking_postal_code: "1234",
+      };
+      const sub_path = "retrack";
+      const url = util.buildTrackingUrl({
+        slug,
+        tracking_number,
+        optional_parameters,
+      }, sub_path);
+
+      expect(url).toEqual(
+        `${slug}/${tracking_number}/${sub_path}?tracking_postal_code=${optional_parameters.tracking_postal_code}`
+      );
+    });
+
     it("should build url with id correctly", function () {
       const id = "1234567890";
       const url = util.buildTrackingUrl({
@@ -85,6 +117,34 @@ describe("Test util", function () {
 
       expect(url).toEqual(
         `${id}?tracking_postal_code=${optional_parameters.tracking_postal_code}&tracking_ship_date=${optional_parameters.tracking_ship_date}`
+      );
+    });
+
+    it("should build url with id and sub path correctly", function () {
+      const id = "1234567890";
+      const sub_path = "retrack";
+      const url = util.buildTrackingUrl({
+        id,
+      }, sub_path);
+
+      expect(url).toEqual(
+        `${id}/${sub_path}`
+      );
+    });
+
+    it("should build url with id, sub path and optional parameters correctly", function () {
+      const id = "1234567890";
+      const optional_parameters = {
+        tracking_postal_code: "1234",
+      };
+      const sub_path = "retrack";
+      const url = util.buildTrackingUrl({
+        id,
+        optional_parameters,
+      }, sub_path);
+
+      expect(url).toEqual(
+        `${id}/${sub_path}?tracking_postal_code=${optional_parameters.tracking_postal_code}`
       );
     });
   });

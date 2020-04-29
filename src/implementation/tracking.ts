@@ -113,7 +113,7 @@ export class TrackingImplementation implements TrackingEndpoint {
   public retrack(
     single_tracking_param: SingleTrackingParam,
   ): Promise<Tracking> {
-    const trackingUrl = `/trackings/${buildTrackingUrl(single_tracking_param)}/retrack`;
+    const trackingUrl = `/trackings/${buildTrackingUrl(single_tracking_param, 'retrack')}`;
 
     // make request
     return this.request.makeRequest<null, Tracking>(
