@@ -44,9 +44,9 @@ export class NotificationImplementation implements NotificationEndpoint {
     notification: NotificationRequest,
   ): Promise<Notification> {
     try {
-      const trackingUrl = buildTrackingUrl(tracking_param);
+      const trackingUrl = buildTrackingUrl(tracking_param, 'add');
       return this.request.makeRequest<NotificationRequest, Notification>(
-        { method: 'POST', url: `/notifications/${trackingUrl}/add` },
+        { method: 'POST', url: `/notifications/${trackingUrl}` },
         notification,
       );
     } catch (e) {
@@ -65,11 +65,11 @@ export class NotificationImplementation implements NotificationEndpoint {
     notification: NotificationRequest,
   ): Promise<Notification> {
     try {
-      const trackingUrl = buildTrackingUrl(tracking_param);
+      const trackingUrl = buildTrackingUrl(tracking_param, 'remove');
       return this.request.makeRequest<NotificationRequest, Notification>(
         {
           method: 'POST',
-          url: `/notifications/${trackingUrl}/remove`,
+          url: `/notifications/${trackingUrl}`,
         },
         notification,
       );
