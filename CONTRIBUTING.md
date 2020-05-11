@@ -1,6 +1,6 @@
 # Contributing
 
-# How to contribute to the AfterShip SDK for Node.js
+## How to contribute to the AfterShip SDK for Node.js
 
 There are many ways that you can contribute to the AfterShip SDK project:
 
@@ -10,6 +10,8 @@ There are many ways that you can contribute to the AfterShip SDK project:
 - Submit a feature request
 
 All code submissions will be reviewed and tested by the team, and those that meet a high bar for both quality and design/roadmap appropriateness will be merged into the source. Be sure to follow the existing structure when adding new files/folders.
+
+All code should follow `ESLint` with Airbnb style and error-free when run through `npm run lint`.
 
 If you encounter any bugs with the library please file an issue in the [Issues](https://github.com/AfterShip/aftership-sdk-nodejs/issues) section of the project.
 

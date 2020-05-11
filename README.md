@@ -12,7 +12,13 @@
 ![codecov.io](http://codecov.io/github/AfterShip/aftership-sdk-nodejs/branch.svg?branch=master)
 
 node.js SDK for AfterShip API
-> It could be used on both client and server side.
+
+## Key features
+
+- The SDK is now isomorphic, you can use it on both client and server side.
+- Support IntelliSense in IDE
+- Support TypeScript
+
 
 ## Installation
 ```
