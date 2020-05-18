@@ -7,7 +7,10 @@ import { TrackingCreateParams } from '../model/tracking/tracking_create_params';
 import { MultiTrackingsQueryParams } from '../model/tracking/multi_trackings_query_params';
 import { TrackingQueryParams } from '../model/tracking/tracking_query_params';
 import { TrackingUpdateParams } from '../model/tracking/tracking_update_params';
+import { MarkAsCompletedParam } from '../model/tracking/mark_as_complated_param';
 import { buildTrackingUrl, getQueryString, combineUrlQuery } from '../lib/util';
+import { AftershipError } from '../error/error';
+import { ErrorEnum } from '../error/error_enum';
 
 export class TrackingImplementation implements TrackingEndpoint {
   private readonly request: ApiRequest;
@@ -118,6 +121,32 @@ export class TrackingImplementation implements TrackingEndpoint {
     // make request
     return this.request.makeRequest<null, Tracking>(
       { method: 'POST', url: trackingUrl },
+    );
+  }
+
+  /**
+   * Mark a tracking as completed. The tracking won't auto update until retrack it.
+   * @param single_tracking_param The param to identify the single tracking.
+   * @param reason_param The param to mark tracking as complete.
+   */
+  public markAsCompleted(
+    single_tracking_param: SingleTrackingParam,
+    reason_param: MarkAsCompletedParam,
+  ): Promise<Tracking> {
+    const trackingUrl = `/trackings/${buildTrackingUrl(single_tracking_param, 'mark-as-completed')}`;
+
+    if (reason_param === undefined || (reason_param.reason !== 'DELIVERED'
+     && reason_param.reason !== 'LOST' && reason_param.reason !== 'RETURNED_TO_SENDER')) {
+      throw AftershipError.getSdkError(
+        ErrorEnum.handlerInvalidMarkAsCompletedReason,
+        reason_param,
+      );
+    }
+
+    // make request
+    return this.request.makeRequest<MarkAsCompletedParam, Tracking>(
+      { method: 'POST', url: trackingUrl },
+      reason_param,
     );
   }
 }

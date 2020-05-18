@@ -62,6 +62,20 @@ aftership.tracking
 	.then((result) => console.log(result))
   .catch((e) => console.log(e));
 
+// PUT /trackings/:slug/:tracking_number
+payload = {
+  tracking: {
+    title: "New Title",
+  },
+};
+aftership.tracking
+  .updateTracking({
+    slug: "ups",
+    tracking_number: "1234567890",
+  }, payload)
+  .then((result) => console.log(result))
+  .catch((e) => console.log(e));
+
 
 // POST /trackings/:slug/:tracking_number/retrack
 aftership.tracking
@@ -71,3 +85,15 @@ aftership.tracking
 	})
 	.then((result) => console.log(result))
   .catch((e) => console.log(e));
+
+
+  // POST /trackings/:slug/:tracking_number/mark-as-completed
+  aftership.tracking
+    .markAsCompleted({
+      slug: "ups",
+      tracking_number: "1234567890",
+    }, {
+      reason: "DELIVERED"
+    })
+    .then((result) => console.log(result))
+    .catch((e) => console.log(e));

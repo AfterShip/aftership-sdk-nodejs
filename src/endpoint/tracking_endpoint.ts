@@ -5,6 +5,7 @@ import { MultiTrackingsQueryParams } from '../model/tracking/multi_trackings_que
 import { TrackingQueryParams } from '../model/tracking/tracking_query_params';
 import { TrackingUpdateParams } from '../model/tracking/tracking_update_params';
 import { SingleTrackingParam } from '../model/tracking/single_tracking_param';
+import { MarkAsCompletedParam } from '../model/tracking/mark_as_complated_param';
 
 /**
  * Create trackings, update trackings, and get tracking results.
@@ -65,5 +66,15 @@ export interface TrackingEndpoint {
    */
   retrack(
     single_tracking_param: SingleTrackingParam,
+  ): Promise<Tracking>;
+
+  /**
+   * Mark a tracking as completed. The tracking won't auto update until retrack it.
+   * @param single_tracking_param The param to identify the single tracking.
+   * @param reason_param The param to mark tracking as complete.
+   */
+  markAsCompleted(
+    single_tracking_param: SingleTrackingParam,
+    reason_param: MarkAsCompletedParam,
   ): Promise<Tracking>;
 }
