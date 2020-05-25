@@ -365,6 +365,7 @@ aftership.tracking
   }, payload)
   .then((result) => console.log(result))
   .catch((e) => console.log(e));
+```
 
 **POST** /trackings/:slug/:tracking_number/retrack
 
