@@ -2,6 +2,10 @@
 
 ## Change log
 
+### 6.1.0 (2020-07-29)
+- Added support for markAsCompleted() of tracking resource
+- Updated package dependencies
+
 ### 6.0.0 (2020-04-24)
 - New features
 	- Support latest features in v4 API
