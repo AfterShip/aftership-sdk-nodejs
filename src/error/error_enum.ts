@@ -72,6 +72,11 @@ export class ErrorEnum {
     'HandlerError: You must specify both slug and tracking number',
   );
 
+  public static handlerInvalidMarkAsCompletedReason = new AftershipError(
+    ErrorType.HandlerError,
+    'HandlerError: Reason must be one of "DELIVERED", "LOST" or "RETURNED_TO_SENDER"',
+  );
+
   // API InternalError
   public static internalError = new AftershipError(
     ErrorType.InternalError,

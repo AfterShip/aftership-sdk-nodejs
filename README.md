@@ -108,7 +108,7 @@ aftership.tracking
 
 ## Rate Limiter
 
-To understand AfterShip rate limit policy, please see `limit` session in https://www.aftership.com/docs/api/4
+To understand AfterShip rate limit policy, please see `limit` section in https://www.aftership.com/docs/api/4
 
 You can get the recent rate limit by `aftership.rate_limit`. Initially all value are `null`.
 ```javascript
@@ -350,6 +350,23 @@ aftership.tracking
   .catch((e) => console.log(e));
 ```
 
+**PUT** /trackings/:slug/:tracking_number
+
+```javascript
+const payload = {
+  tracking: {
+    title: "New Title",
+  },
+};
+aftership.tracking
+  .updateTracking({
+    slug: "ups",
+    tracking_number: "1234567890",
+  }, payload)
+  .then((result) => console.log(result))
+  .catch((e) => console.log(e));
+```
+
 **POST** /trackings/:slug/:tracking_number/retrack
 
 ```javascript
@@ -357,6 +374,20 @@ aftership.tracking
   .retrack({
     slug: "ups",
     tracking_number: "1234567890",
+  })
+  .then((result) => console.log(result))
+  .catch((e) => console.log(e));
+```
+
+**POST** /trackings/:slug/:tracking_number/mark-as-completed
+
+```javascript
+aftership.tracking
+  .markAsCompleted({
+    slug: "ups",
+    tracking_number: "1234567890",
+  }, {
+    reason: "DELIVERED"
   })
   .then((result) => console.log(result))
   .catch((e) => console.log(e));

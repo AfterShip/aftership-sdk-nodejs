@@ -390,4 +390,140 @@ describe("Tracking", function () {
       }
     });
   });
+
+  describe("#markAsCompleted({slug, tracking_number}, { reason })", function () {
+    it("should get tracking when success", function (done) {
+      const param = {
+        slug: "ups",
+        tracking_number: "1234567890",
+      };
+
+      const reason = {
+        reason: "DELIVERED",
+      }
+
+      // This sets the mock adapter on the default instance
+      var mock = new MockAdapter(axios);
+      mock.onPost(`/trackings/${param.slug}/${param.tracking_number}/mark-as-completed`).reply(
+        200,
+        {
+          "meta": {
+            "code": 200
+          },
+          "data": {
+            "tracking":
+            {
+              "id": "5b74f4958776db0e00b6f5ed",
+              "created_at": "2018-08-16T03:50:45+00:00",
+              "updated_at": "2018-08-16T03:50:54+00:00",
+              "last_updated_at": "2018-08-16T03:50:53+00:00",
+              "tracking_number": "1234567890",
+              "slug": "ups",
+              "active": false,
+              "android": [],
+              "custom_fields": null,
+              "customer_name": null,
+              "delivery_time": 2,
+              "destination_country_iso3": null,
+              "courier_destination_country_iso3": null,
+            }
+          }
+        },
+        {
+          "x-ratelimit-reset": 1406096275,
+          "x-ratelimit-limit": 10,
+          "x-ratelimit-remaining": 9,
+        }
+      );
+
+      aftership
+        .tracking.markAsCompleted(param, reason)
+        .then(x => {
+          const tracking = x.tracking
+          if (tracking) {
+            done()
+          } else {
+            done('not return tracking after markAsCompleted')
+          }
+        })
+        .catch(e => done(e))
+    });
+  });
+
+  describe("#markAsCompleted(), validate params", function () {
+    it("should throw exception when both specify id and tracking number", async function () {
+      let expected_error =
+        "HandlerError: Cannot specify id and tracking number at the same time";
+      const param = {
+        id: "5b74f4958776db0e00b6f5ed",
+        slug: "ups",
+        tracking_number: "1234567890",
+      };
+
+      const reason = {
+        reason: "DELIVERED",
+      }
+
+      try {
+        await aftership.tracking.markAsCompleted(param, reason);
+      } catch (e) {
+        expect(e.message).toEqual(expected_error);
+      }
+    });
+
+    it("should throw exception when only specify slug", async function () {
+      let expected_error =
+        "HandlerError: You must specify both slug and tracking number";
+      const param = {
+        slug: "ups",
+      };
+
+      const reason = {
+        reason: "DELIVERED",
+      }
+
+      try {
+        await aftership.tracking.markAsCompleted(param, reason);
+      } catch (e) {
+        expect(e.message).toEqual(expected_error);
+      }
+    });
+
+    it("should throw exception when only specify tracking number", async function () {
+      let expected_error =
+        "HandlerError: You must specify both slug and tracking number";
+      const param = {
+        tracking_number: "1234567890",
+      };
+
+      const reason = {
+        reason: "DELIVERED",
+      }
+      
+      try {
+        await aftership.tracking.markAsCompleted(param, reason);
+      } catch (e) {
+        expect(e.message).toEqual(expected_error);
+      }
+    });
+
+    it("should throw exception when reason is incorrect", async function () {
+      let expected_error =
+        `HandlerError: Reason must be one of "DELIVERED", "LOST" or "RETURNED_TO_SENDER"`;
+      const param = {
+        slug: "ups",
+        tracking_number: "1234567890",
+      };
+
+      const reason = {
+        reason: "INVALID REASON",
+      }
+      
+      try {
+        await aftership.tracking.markAsCompleted(param, reason);
+      } catch (e) {
+        expect(e.message).toEqual(expected_error);
+      }
+    });
+  });
 });
