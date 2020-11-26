@@ -4,13 +4,13 @@
  * https://docs.aftership.com/api/4/delivery-status
  */
 export enum DeliveryStatus {
-  Pending,
-  InfoReceived,
-  InTransit,
-  OutForDelivery,
-  AttemptFail,
-  Delivered,
-  AvailableForPickup,
-  Exception,
-  Expired,
+  Pending = 'Pending',
+  InfoReceived = 'InfoReceived',
+  InTransit = 'InTransit',
+  OutForDelivery = 'OutForDelivery',
+  AttemptFail = 'AttemptFail',
+  Delivered = 'Delivered',
+  AvailableForPickup = 'AvailableForPickup',
+  Exception = 'Exception',
+  Expired = 'Expired',
 }
