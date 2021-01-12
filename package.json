@@ -28,7 +28,7 @@
     "coverage": "jest && codecov -t ${CODECOV_TOKEN} -F aftership"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "uuid": "^8.3.0"
   },
   "devDependencies": {
