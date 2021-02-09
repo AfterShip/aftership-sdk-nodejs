@@ -2,6 +2,9 @@
 
 ## Change log
 
+### 7.0.0 (2021-02-09)
+- DeliveryStatus Enum change to string instead of 
+
 ### 6.1.0 (2020-07-29)
 - Added support for markAsCompleted() of tracking resource
 - Updated package dependencies
