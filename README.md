@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/AfterShip/aftership-sdk-nodejs.svg?branch=master)](https://travis-ci.org/AfterShip/aftership-sdk-nodejs)
 [![codecov.io](https://codecov.io/github/AfterShip/aftership-sdk-nodejs/coverage.svg?branch=master)](https://codecov.io/github/AfterShip/aftership-sdk-nodejs?branch=master)
 [![AfterShip SDKs channel](https://aftership-sdk-slackin.herokuapp.com/badge.svg)](https://aftership-sdk-slackin.herokuapp.com/)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FAfterShip%2Faftership-sdk-nodejs.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FAfterShip%2Faftership-sdk-nodejs?ref=badge_shield)
 
 [![node](https://img.shields.io/node/v/aftership.svg)](https://nodejs.org/en/)
 [![npm](https://img.shields.io/npm/v/aftership.svg)](https://www.npmjs.com/package/aftership)
@@ -486,3 +487,6 @@ For details on contributing to this repository, see the [contributing guide](htt
 Copyright (c) 2016-2020 AfterShip
 
 Licensed under the MIT license.
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FAfterShip%2Faftership-sdk-nodejs.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FAfterShip%2Faftership-sdk-nodejs?ref=badge_large)
