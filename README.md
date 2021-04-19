@@ -1,7 +1,6 @@
 # aftership-sdk-node
 
 [![Build Status](https://travis-ci.org/AfterShip/aftership-sdk-nodejs.svg?branch=master)](https://travis-ci.org/AfterShip/aftership-sdk-nodejs)
-[![codecov.io](https://codecov.io/github/AfterShip/aftership-sdk-nodejs/coverage.svg?branch=master)](https://codecov.io/github/AfterShip/aftership-sdk-nodejs?branch=master)
 [![AfterShip SDKs channel](https://aftership-sdk-slackin.herokuapp.com/badge.svg)](https://aftership-sdk-slackin.herokuapp.com/)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FAfterShip%2Faftership-sdk-nodejs.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FAfterShip%2Faftership-sdk-nodejs?ref=badge_shield)
 
@@ -9,8 +8,6 @@
 [![npm](https://img.shields.io/npm/v/aftership.svg)](https://www.npmjs.com/package/aftership)
 [![npm](https://img.shields.io/npm/dm/aftership.svg)](https://www.npmjs.com/package/aftership)
 [![npm](https://img.shields.io/npm/l/aftership.svg)](https://www.npmjs.com/package/aftership)
-
-![codecov.io](http://codecov.io/github/AfterShip/aftership-sdk-nodejs/branch.svg?branch=master)
 
 node.js SDK for AfterShip API
 
