@@ -24,8 +24,7 @@
     "build": "npm run build:clean && tsc",
     "build:clean": "shx rm -rf ./dist ./coverage",
     "lint": "tslint --project .",
-    "test": "jest",
-    "coverage": "jest && codecov -t ${CODECOV_TOKEN} -F aftership"
+    "test": "jest"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -36,7 +35,6 @@
     "@types/node": "^14.14.25",
     "@types/uuid": "^8.3.0",
     "axios-mock-adapter": "^1.19.0",
-    "codecov": "^3.8.1",
     "debug": "^4.3.1",
     "jest": "^26.6.3",
     "pre-commit": "^1.2.2",
