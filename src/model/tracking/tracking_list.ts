@@ -22,5 +22,5 @@ export interface TrackingList {
   /**
    * Array of Hash describes the tracking information.
    */
-  trackings?: [Tracking];
+  trackings?: [Tracking['tracking']];
 }
