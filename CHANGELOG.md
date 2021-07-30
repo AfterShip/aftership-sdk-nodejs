@@ -2,6 +2,9 @@
 
 ## Change log
 
+### 7.0.1 (2021-07-30)
+- fix list trackings interface
+
 ### 7.0.0 (2021-02-09)
 - Breaking changes
 	- DeliveryStatus Enum change to string instead of integer
