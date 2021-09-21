@@ -1,6 +1,5 @@
 # aftership-sdk-node
 
-[![Build Status](https://travis-ci.org/AfterShip/aftership-sdk-nodejs.svg?branch=master)](https://travis-ci.org/AfterShip/aftership-sdk-nodejs)
 [![AfterShip SDKs channel](https://aftership-sdk-slackin.herokuapp.com/badge.svg)](https://aftership-sdk-slackin.herokuapp.com/)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FAfterShip%2Faftership-sdk-nodejs.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FAfterShip%2Faftership-sdk-nodejs?ref=badge_shield)
 
