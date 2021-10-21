@@ -75,7 +75,7 @@ export class ApiRequestImplementation implements ApiRequest {
       method,
       headers,
       baseURL: this.app.endpoint,
-      data: data !== undefined ? { ...data } : null,
+      data: data !== undefined ? { ...data } : undefined,
       timeout: TIMEOUT,
     });
 
