@@ -61,6 +61,11 @@ export interface Tracking {
     tracking_key?: string;
 
     /**
+     * Tracking number.
+     */
+    tracking_number: string;
+
+    /**
      * Unique code of courier. Get courier slug here
      */
     slug?: string;
