@@ -164,7 +164,8 @@ describe("Tracking", function () {
                 "pickup_location": null,
                 "pickup_note": null,
                 "courier_tracking_link": "https://www.fedex.com/fedextrack/?tracknumbers=111111111111&cntry_code=us",
-                "first_attempted_at": "2018-08-01T13:19:47-04:00"
+                "first_attempted_at": "2018-08-01T13:19:47-04:00",
+                "aftership_estimated_delivery_date": null
               }
             ]
           }
@@ -279,7 +280,8 @@ describe("Tracking", function () {
               "pickup_location": null,
               "pickup_note": null,
               "courier_tracking_link": "https://www.fedex.com/fedextrack/?tracknumbers=111111111111&cntry_code=us",
-              "first_attempted_at": "2018-08-01T13:19:47-04:00"
+              "first_attempted_at": "2018-08-01T13:19:47-04:00",
+              "aftership_estimated_delivery_date": null
             }
           }
         },
@@ -499,7 +501,7 @@ describe("Tracking", function () {
       const reason = {
         reason: "DELIVERED",
       }
-      
+
       try {
         await aftership.tracking.markAsCompleted(param, reason);
       } catch (e) {
@@ -518,7 +520,7 @@ describe("Tracking", function () {
       const reason = {
         reason: "INVALID REASON",
       }
-      
+
       try {
         await aftership.tracking.markAsCompleted(param, reason);
       } catch (e) {

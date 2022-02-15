@@ -1,4 +1,5 @@
 import { Checkpoint } from '../checkpoint/checkpoint';
+import { EstimatedDeliveryDate } from '../estimated_delivery_date/estimated_delivery_date';
 import { DeliveryStatus } from './delivery_status';
 import { DeliveryType } from './delivery_type';
 
@@ -294,5 +295,10 @@ export interface Tracking {
      * Array of Hash describes the checkpoint information.
      */
     checkpoints?: [Checkpoint];
+
+    /**
+     * Estimated delivery time of the shipment provided by AfterShip, indicate when the shipment should arrive.
+     */
+    aftership_estimated_delivery_date?: EstimatedDeliveryDate;
   };
 }
