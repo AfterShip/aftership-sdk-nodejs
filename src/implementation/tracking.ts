@@ -92,7 +92,8 @@ export class TrackingImplementation implements TrackingEndpoint {
   /**
    * Update a tracking.
    * tracking_update_params to include: smses, emails,title,customer_name,order_id,
-   * order_id_path,custom_fields,note,language,order_promised_delivery_date,delivery_type,pickup_location,pickup_note
+   * order_id_path,order_number,order_date,custom_fields,note,language,
+   * order_promised_delivery_date,delivery_type,pickup_location,pickup_note
    * @param single_tracking_param The param to identify the single tracking.
    * @param tracking_update_params Tracking update params object
    */

@@ -140,6 +140,16 @@ export interface TrackingCreate {
   order_id_path?: string;
 
   /**
+   * Text field for order number
+   */
+  order_number?: string;
+
+  /**
+   * Date and time of the order created
+   */
+  order_date?: string;
+
+  /**
    * Custom fields that accept a hash with string, boolean or number fields
    */
   custom_fields?: Object;

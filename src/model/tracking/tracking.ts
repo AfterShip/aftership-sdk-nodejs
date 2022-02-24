@@ -142,6 +142,16 @@ export interface Tracking {
     order_id_path?: string;
 
     /**
+     * Text field for order number
+     */
+    order_number?: string;
+
+    /**
+     * Date and time of the order created
+     */
+    order_date?: string;
+
+    /**
      * Origin country of the tracking. ISO Alpha-3 (three letters).
      */
     origin_country_iso3?: string;
