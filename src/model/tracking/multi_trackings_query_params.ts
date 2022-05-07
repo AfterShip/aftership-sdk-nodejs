@@ -1,4 +1,5 @@
 import { DeliveryStatus } from './delivery_status';
+
 /**
  * Tracking list query params object
  */
@@ -19,6 +20,12 @@ export interface MultiTrackingsQueryParams {
    * tracking_number,  title,  order_id,  customer_name,  custom_fields,  order_id,  emails,  smses
    */
   keyword?: string;
+
+  /**
+   * Tracking number of shipments. Use comma to separate multiple values
+   * (Example: RA123456789US,LE123456789US)
+   */
+  tracking_numbers?: string;
 
   /**
    * Unique courier code Use comma for multiple values. (Example: dhl,ups,usps)
@@ -62,6 +69,17 @@ export interface MultiTrackingsQueryParams {
   created_at_max?: string;
 
   /**
+   * Start date and time of trackings updated.
+   * (Example: 2013-04-15T16:41:56+08:00)
+   */
+  updated_at_min?: string;
+
+  /**
+   * End date and time of trackings updated. (Example: 2013-04-15T16:41:56+08:00)
+   */
+  updated_at_max?: string;
+
+  /**
    * List of fields to include in the response.
    * Use comma for multiple values. Fields to include: title,  order_id,  tag,
    * checkpoints,  checkpoint_time,  message,  country_name
@@ -74,4 +92,24 @@ export interface MultiTrackingsQueryParams {
    * Support Chinese to English translation for  china-ems  and  china-post  only
    */
   lang?: string;
+
+  /**
+   * Tracking last updated at
+   * (Example: 2013-03-15T16:41:56+08:00)
+   */
+  last_updated_at?: string;
+
+  /**
+   * Select return to sender, the value should be true or false,
+   * with optional comma separated.
+   */
+  return_to_sender?: string;
+
+  /**
+   * Destination country of trackings returned by courier.
+   * Use ISO Alpha-3 (three letters).
+   * Use comma for multiple values. (Example: USA,HKG)
+   */
+  courier_destination_country_iso3?: string;
+
 }
