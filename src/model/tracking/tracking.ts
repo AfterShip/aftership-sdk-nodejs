@@ -79,6 +79,11 @@ export interface Tracking {
     destination_country_iso3?: string;
 
     /**
+     * Shipping address that the shipment is shipping to.
+     */
+    destination_raw_location?: string;
+
+    /**
      * Destination country of the tracking detected from the courier.
      * ISO Alpha-3 (three letters). Value will be null if the courier doesn't provide the destination country.
      */
@@ -100,6 +105,11 @@ export interface Tracking {
      * Accept either array or comma separated as input.
      */
     ios?: string | [string];
+
+    /**
+     * Text field for the note.
+     */
+    note?: string;
 
     /**
      * Text field for order ID
@@ -264,7 +274,12 @@ export interface Tracking {
      * date and time of the first attempt by the carrier to deliver the package to the addressee
      * Available format:YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+TIMEZONE
      */
-    first_attempted_at?: string | null;
+    first_attempted_at?: string;
+
+    /**
+     * Delivery instructions (delivery date or address) can be modified by visiting the link if supported by a carrier.
+     */
+    courier_redirect_link?: string;
 
     /**
      * Account number of the shipper for a specific courier. Required by some couriers, such asdynamic-logistics
@@ -300,6 +315,21 @@ export interface Tracking {
      * Located state of the shipment for a specific courier. Required by some couriers, such asstar-track-courier
      */
     tracking_state?: string;
+
+    /**
+     * Whether the tracking is delivered on time or not.
+     */
+    on_time_status?: string;
+
+    /**
+     * The difference days of the on time.
+     */
+    on_time_difference?: number;
+
+    /**
+     * The tags of the order.
+     */
+    order_tags?: [string];
 
     /**
      * Estimated delivery time of the shipment provided by AfterShip, indicate when the shipment should arrive.
