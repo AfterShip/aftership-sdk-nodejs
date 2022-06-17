@@ -195,7 +195,7 @@ aftership.courier.listCouriers()
 ### API Error
 
 Error return by the Aftership API  
-`error.type` should be same as [request error](https://www.aftership.com/docs/aftership/quickstart/request-errors#http-status-code-summary)
+`error.type` should be same as [request error](https://www.aftership.com/docs/aftership/quickstart/request-errors#http-status-code-summary).
 **Catch** by promise
 
 ```js
