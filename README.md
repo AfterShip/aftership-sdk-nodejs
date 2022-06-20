@@ -105,7 +105,7 @@ aftership.tracking
 
 ## Rate Limiter
 
-To understand AfterShip rate limit policy, please see `limit` section in https://www.aftership.com/docs/api/4
+See the [Rate Limit](https://www.aftership.com/docs/aftership/quickstart/rate-limit) to understand the AfterShip rate limit policy.
 
 You can get the recent rate limit by `aftership.rate_limit`. Initially all value are `null`.
 ```javascript
@@ -195,7 +195,7 @@ aftership.courier.listCouriers()
 ### API Error
 
 Error return by the Aftership API  
-`error.type` shuold be same as https://www.aftership.com/docs/api/4/errors  
+`error.type` should be same as [request error](https://www.aftership.com/docs/aftership/quickstart/request-errors#http-status-code-summary).
 **Catch** by promise
 
 ```js
