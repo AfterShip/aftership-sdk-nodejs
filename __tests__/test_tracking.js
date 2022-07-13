@@ -167,7 +167,14 @@ describe("Tracking", function () {
                 "pickup_note": null,
                 "courier_tracking_link": "https://www.fedex.com/fedextrack/?tracknumbers=111111111111&cntry_code=us",
                 "first_attempted_at": "2018-08-01T13:19:47-04:00",
-                "aftership_estimated_delivery_date": null
+                "aftership_estimated_delivery_date": null,
+                "latest_estimated_delivery": {
+                  "type": "specific",
+                  "source": "Custom EDD",
+                  "datetime": "2022-07-06",
+                  "datetime_min": null,
+                  "datetime_max": null
+                }
               }
             ]
           }
@@ -285,7 +292,14 @@ describe("Tracking", function () {
               "pickup_note": null,
               "courier_tracking_link": "https://www.fedex.com/fedextrack/?tracknumbers=111111111111&cntry_code=us",
               "first_attempted_at": "2018-08-01T13:19:47-04:00",
-              "aftership_estimated_delivery_date": null
+              "aftership_estimated_delivery_date": null,
+              "latest_estimated_delivery": {
+                "type": "specific",
+                "source": "Custom EDD",
+                "datetime": "2022-07-06",
+                "datetime_min": null,
+                "datetime_max": null
+              }
             }
           }
         },

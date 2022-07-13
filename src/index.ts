@@ -8,10 +8,12 @@ import { CourierEndpoint } from './endpoint/courier_endpoint';
 import { LastCheckpointEndpoint } from './endpoint/last_checkpoint_endpoint';
 import { NotificationEndpoint } from './endpoint/notification_endpoint';
 import { TrackingEndpoint } from './endpoint/tracking_endpoint';
+import { EstimatedDeliveryDateEndpoint } from './endpoint/estimated_delivery_date_endpoint';
 import { CourierImplementation } from './implementation/courier';
 import { LastCheckpointImplementation } from './implementation/last_checkpoint';
 import { NotificationImplementation } from './implementation/notification';
 import { TrackingImplementation } from './implementation/tracking';
+import { EstimatedDeliveryDateImplementation } from './implementation/estimated_delivery_date';
 
 const DEFAULT_ENDPOINT = 'https://api.aftership.com/v4';
 const DEFAULT_USER_AGENT = 'aftership-sdk-nodejs';
@@ -46,6 +48,11 @@ export class AfterShip {
    */
   public readonly tracking: TrackingEndpoint;
 
+  /**
+   * EstimatedDeliveryDate endpoint
+   */
+  public readonly estimated_delivery_date: EstimatedDeliveryDateEndpoint;
+
   constructor(apiKey: string, options?: AftershipOption) {
     this.errorHandling(apiKey, options);
     this.apiKey = apiKey;
@@ -76,6 +83,7 @@ export class AfterShip {
     this.last_checkpoint = new LastCheckpointImplementation(request);
     this.notification = new NotificationImplementation(request);
     this.tracking = new TrackingImplementation(request);
+    this.estimated_delivery_date = new EstimatedDeliveryDateImplementation(request);
   }
 
   /**

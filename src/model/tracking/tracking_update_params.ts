@@ -85,4 +85,9 @@ interface TrackingUpdate {
    * Shipment pickup note for receiver
    */
   pickup_note?: string;
+
+  /**
+   * The carrier’s shipment type. When you input this field, AfterShip will not get updates from the carrier.
+   */
+  shipment_type?: string;
 }

@@ -192,4 +192,9 @@ export interface TrackingCreate {
    * Text field for order number
    */
   order_number?: string;
+
+  /**
+   * The carrier’s shipment type. When you input this field, AfterShip will not get updates from the carrier.
+   */
+  shipment_type?: string;
 }
