@@ -264,3 +264,36 @@ describe.skip('notification', () => {
     });
   });
 });
+describe.skip('estimated_delivery_date', () => {
+  describe('batchPredict', () => {
+    test('batch predict successfully', async () => {
+      const data = {
+        estimated_delivery_dates: [{
+          "slug": "fedex",
+          "service_type_name": "FEDEX HOME DELIVERY",
+          "origin_address": {
+            "country": "USA",
+            "state": "WA",
+            "postal_code": "98108",
+            "raw_location": "Seattle, Washington, 98108, USA, United States"
+          },
+          "destination_address": {
+            "country": "USA",
+            "state": "CA",
+            "postal_code": "92019",
+            "raw_location": "El Cajon, California, 92019, USA, United States"
+          },
+          "weight": {
+            "unit": "kg",
+            "value": 11
+          },
+          "package_count": 1,
+          "pickup_time": "2021-07-01 15:00:00"
+        }]
+      };
+      const result = await aftership.estimated_delivery_date.batchPredict(data);
+      expect(typeof result.estimated_delivery_dates).toBe('object');
+      expect(result.estimated_delivery_dates.length).toEqual(1);
+    });
+  });
+});
