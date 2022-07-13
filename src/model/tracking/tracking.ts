@@ -2,6 +2,7 @@ import { Checkpoint } from '../checkpoint/checkpoint';
 import { EstimatedDeliveryDate } from '../estimated_delivery_date/estimated_delivery_date';
 import { DeliveryStatus } from './delivery_status';
 import { DeliveryType } from './delivery_type';
+import { LatestEstimatedDelivery } from './latest_estimated_delivery';
 
 /**
  * Tracking Object
@@ -340,5 +341,15 @@ export interface Tracking {
      * Text field for order number
      */
     order_number?: string;
+
+    /**
+     * The latest estimated delivery date.
+     * May come from the carrier, AfterShip AI, or based on your custom settings.
+     * This can appear in 1 of 3 formats based on the data received.
+     *  1. Date only: `YYYY-MM-DD`
+     *  2. Date and time: `YYYY-MM-DDTHH:mm:ss`
+     *  3. Date, time, and time zone: `YYYY-MM-DDTHH:mm:ssZ`
+     */
+    latest_estimated_delivery?: LatestEstimatedDelivery;
   };
 }
