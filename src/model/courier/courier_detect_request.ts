@@ -58,6 +58,41 @@ export interface CourierDetectTracking {
   tracking_destination_country?: string;
 
   /**
+   * Account number of the shipper for a specific courier. Required by some couriers.
+   * Refer to this page for more details
+   */
+  tracking_account_number?: string;
+
+  /**
+   * Origin Country/Region of the shipment for a specific courier. Required by some couriers
+   */
+  tracking_origin_country?: string;
+
+  /**
+   * State of the destination shipping address of the shipment. Required by some couriers
+   */
+  tracking_state?: string;
+
+  /**
+   * Slug group is a group of slugs which belong to same courier.
+   * For example, when you inpit "fedex-group" as slug_group,
+   * AfterShip will detect the tracking with "fedex-uk", "fedex-fims",
+   * and other slugs which belong to "fedex".
+   * It cannot be used with slug at the same time
+   */
+  slug_group?: string;
+
+  /**
+   * Enter ISO Alpha-3 (three letters) to specify the origin of the shipment (e.g. USA for United States)
+   */
+  origin_country_iso3?: string;
+
+  /**
+   * Enter ISO Alpha-3 (three letters) to specify the destination of the shipment (e.g. USA for United States)
+   */
+  destination_country_iso3?: string;
+
+  /**
    * If not specified, Aftership will automatically detect the courier based on the tracking number format
    * and your selected couriers. Use array or comma separated to input a list of couriers for auto detect.
    */

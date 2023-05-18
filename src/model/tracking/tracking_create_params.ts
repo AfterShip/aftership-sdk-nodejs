@@ -1,6 +1,7 @@
 import { AftershipError } from '../../error/error';
 import { ErrorEnum } from '../../error/error_enum';
 import { DeliveryType } from './delivery_type';
+import { NextCourier } from './next_courier';
 
 /**
  * The request object of tracking create
@@ -197,4 +198,77 @@ export interface TrackingCreate {
    * The carrier’s shipment type. When you input this field, AfterShip will not get updates from the carrier.
    */
   shipment_type?: string;
+
+  /**
+   * The state of the sender’s address. This can help AfterShip with various functions like tracking,
+   * carrier auto-detection and auto-correction, calculating an EDD, etc.
+   */
+  origin_state?: string;
+
+  /**
+   * The city of the sender’s address. This can help AfterShip with various functions like tracking,
+   * carrier auto-detection and auto-correction, calculating an EDD, etc.
+   */
+  origin_city?: string;
+
+  /**
+   * The postal of the sender’s address. This can help AfterShip with various functions like tracking,
+   * carrier auto-detection and auto-correction, calculating an EDD, etc.
+   */
+  origin_postal_code?: string;
+
+  /**
+   * The sender address that the shipment is shipping from.
+   * This can help AfterShip with various functions like tracking,
+   * carrier auto-detection and auto-correction, calculating an EDD, etc.
+   */
+  origin_raw_location?: string;
+
+  /**
+   * The state of the recipient’s address. This can help AfterShip with various functions like tracking,
+   * carrier auto-detection and auto-correction, calculating an EDD, etc.
+   * Also the additional field required by some carriers to retrieve the tracking info.
+   * The state/province of the recipient’s address.
+   */
+  destination_state?: string;
+
+  /**
+   * The city of the recipient’s address. This can help AfterShip with various functions like tracking,
+   * carrier auto-detection and auto-correction, calculating an EDD, etc.
+   */
+  destination_city?: string;
+
+  /**
+   * The postal of the recipient’s address. This can help AfterShip with various functions like tracking,
+   * carrier auto-detection and auto-correction, calculating an EDD, etc.
+   * Also the additional field required by some carriers to retrieve the tracking info.
+   * The postal code of the recipient’s address.
+   */
+  destination_postal_code?: string;
+
+  /**
+   * The shipping address that the shipment is shipping to.
+   * This can help AfterShip with various functions like tracking,
+   * carrier auto-detection and auto-correction, calculating an EDD, etc.
+   */
+  destination_raw_location?: string;
+
+  /**
+   * Used to add tags to your shipments to help categorize and filter them easily.
+   */
+  shipment_tags?: string[];
+
+  /**
+   * If you’ve connected multiple accounts for a single carrier on AfterShip,
+   * you can now use the courier_connection_id field to tell AfterShip which
+   * carrier account you’ve used to handle a shipment so we can track it.
+   */
+  courier_connection_id?: string;
+
+  /**
+   * If a shipment has multiple carriers, you can use the next_couriers
+   * field to tell AfterShip who the second carrier is.
+   * This is useful if the first carrier does not send us this information.
+   */
+  next_couriers?: NextCourier[];
 }
