@@ -6,7 +6,53 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.0.6] 2023-05-18
 ### Added
-- update tracking fields
+- tracking object add new fileds
+  - origin_state
+  - origin_city
+  - origin_postal_code
+  - origin_raw_location
+  - destination_state
+  - destination_city
+  - destination_postal_code
+  - custom_estimated_delivery_date
+  - first_estimated_delivery
+  - shipment_tags
+  - courier_connection_id
+  - next_couriers
+- create tracking add new params
+  - origin_state
+  - origin_city
+  - origin_postal_code
+  - origin_raw_location
+  - destination_state
+  - destination_city
+  - destination_postal_code
+  - destination_raw_location
+  - shipment_tags
+  - courier_connection_id
+  - next_couriers
+- update tracking add new params
+  - slug
+  - tracking_account_number
+  - tracking_key
+  - tracking_ship_date
+  - origin_country_iso3
+  - origin_state
+  - origin_city
+  - origin_postal_code
+  - origin_raw_location
+  - destination_country_iso3
+  - destination_state
+  - destination_city
+  - destination_postal_code
+  - destination_raw_location
+- courier detect add new params
+  - tracking_account_number
+  - tracking_origin_country
+  - tracking_state
+  - slug_group
+  - origin_country_iso3
+  - destination_country_iso3
 
 ## [7.0.5] 2022-07-20
 ### Added

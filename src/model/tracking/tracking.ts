@@ -406,7 +406,7 @@ export interface Tracking {
     /**
      * Used to add tags to your shipments to help categorize and filter them easily
      */
-    shipment_tags?: string[];
+    shipment_tags: string[];
 
     /**
      * The courier connection id tells which carrier account you’ve used to handle a shipment so we can track it
@@ -416,7 +416,7 @@ export interface Tracking {
     /**
      * The next couriers get the second carrier information from user or AfterShip
      */
-    next_couriers?: NextCourier[];
+    next_couriers: NextCourier[];
 
   };
 }
