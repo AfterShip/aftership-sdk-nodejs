@@ -3,6 +3,9 @@ import { EstimatedDeliveryDate } from '../estimated_delivery_date/estimated_deli
 import { DeliveryStatus } from './delivery_status';
 import { DeliveryType } from './delivery_type';
 import { LatestEstimatedDelivery } from './latest_estimated_delivery';
+import { CustomEstimatedDeliveryDate } from './custom_estimated_delivery_date';
+import { FirstEstimatedDelivery } from './first_estimated_delivery';
+import { NextCourier } from './next_courier';
 
 /**
  * Tracking Object
@@ -351,5 +354,69 @@ export interface Tracking {
      *  3. Date, time, and time zone: `YYYY-MM-DDTHH:mm:ssZ`
      */
     latest_estimated_delivery?: LatestEstimatedDelivery;
+
+    /**
+     * The state of the sender’s address
+     */
+    origin_state: string | null;
+
+    /**
+     * The city of the sender’s address
+     */
+    origin_city: string | null;
+
+    /**
+     * The postal code of the sender’s address
+     */
+    origin_postal_code: string | null;
+
+    /**
+     * The sender address that the shipment is shipping from
+     */
+    origin_raw_location: string | null;
+
+    /**
+     * The state of the recipient’s address
+     */
+    destination_state: string | null;
+
+    /**
+     * The city of the recipient’s address
+     */
+    destination_city: string | null;
+
+    /**
+     * The postal code of the recipient’s address
+     */
+    destination_postal_code: string | null;
+
+    /**
+     * Estimated delivery time of the shipment based on your
+     * custom EDD settings(https://admin.aftership.com/settings/promised-delivery-date).
+     * It uses the format YYYY-MM-DD based on the shipment recipient’s timezone.
+     */
+    custom_estimated_delivery_date: CustomEstimatedDeliveryDate | null;
+
+    /**
+     * The shipment’s original estimated delivery date. It could be provided by the carrier,
+     * AfterShip AI,or based on your custom settings
+     */
+    first_estimated_delivery: FirstEstimatedDelivery | null;
+
+    /**
+     * Used to add tags to your shipments to help categorize and filter them easily
+     */
+    shipment_tags: string[];
+
+    /**
+     * The courier connection id tells which carrier account you’ve used to handle a shipment so we can track it
+     */
+    courier_connection_id: string | null;
+
+    /**
+     * The next couriers get the second carrier information from user or AfterShip
+     */
+    next_couriers: NextCourier[];
+
   };
 }
