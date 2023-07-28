@@ -1,7 +1,7 @@
 {
   "name": "aftership",
   "description": "node.js SDK for AfterShip API",
-  "version": "7.0.6",
+  "version": "7.0.7",
   "homepage": "https://github.com/aftership/aftership-sdk-nodejs",
   "author": {
     "name": "AfterShip",
@@ -28,14 +28,14 @@
   },
   "dependencies": {
     "axios": "^0.22.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "debug": "^4.3.2"
   },
   "devDependencies": {
     "@types/debug": "^4.1.7",
     "@types/node": "^14.14.25",
     "@types/uuid": "^8.3.1",
     "axios-mock-adapter": "^1.20.0",
-    "debug": "^4.3.2",
     "jest": "^27.2.4",
     "pre-commit": "^1.2.2",
     "shx": "^0.3.3",
