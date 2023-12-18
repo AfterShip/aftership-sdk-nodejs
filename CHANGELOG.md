@@ -4,9 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [7.1.0] 2023-12-20
+## [8.0.0] 2023-12-18
 ### Breaking Changes
-- change ApiError.code type to number|null. 
+- #98 fix AftershipError.code type not number
+- upgrade axios library to 1.6.0 version
+- upgrade jest library to 29.0.0 version
 
 ## [7.0.6] 2023-05-18
 ### Added
