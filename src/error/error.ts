@@ -1,13 +1,13 @@
 export class AftershipError extends Error {
   public type: string | undefined;
-  public code: string;
+  public code: number | null;
   public data: any;
   public responseBody: string;
 
   constructor(type?: string, message?: string) {
     super(message);
     this.type = type;
-    this.code = '';
+    this.code = null;
     this.data = {};
     this.responseBody = '';
   }
@@ -52,7 +52,7 @@ export class AftershipError extends Error {
     if (responseBody === null || responseBody === undefined) {
       // Can't get the response body, set 500 error by default
       error.type = 'InternalError';
-      error.code = '500';
+      error.code = 500;
       return error;
     }
 
