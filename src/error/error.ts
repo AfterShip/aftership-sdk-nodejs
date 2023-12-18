@@ -1,13 +1,13 @@
 export class AftershipError extends Error {
   public type: string | undefined;
-  public code: number;
+  public code: number | null;
   public data: any;
   public responseBody: string;
 
   constructor(type?: string, message?: string) {
     super(message);
     this.type = type;
-    this.code = 0;
+    this.code = null;
     this.data = {};
     this.responseBody = '';
   }
