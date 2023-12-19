@@ -1,7 +1,7 @@
 {
   "name": "aftership",
   "description": "node.js SDK for AfterShip API",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "homepage": "https://github.com/aftership/aftership-sdk-nodejs",
   "author": {
     "name": "AfterShip",
