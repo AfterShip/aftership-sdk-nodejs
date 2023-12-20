@@ -1,9 +1,11 @@
 import axios, { Method } from 'axios';
 import debug from 'debug';
-import { v4 as uuidv4 }  from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { AfterShip } from '../index';
 import { VERSION } from './version';
 import { AftershipError } from '../error/error';
+import { ApiSignature, ApiSignatureImplement } from './signature';
+import { AuthType } from './auth_enum';
 
 const debugMakeRequest = debug('aftership:makeRequest');
 const debugProcessResponse = debug('aftership:processResponse');
@@ -37,9 +39,11 @@ export interface ApiRequest {
  */
 export class ApiRequestImplementation implements ApiRequest {
   private readonly app: AfterShip;
+  private readonly signer: ApiSignature;
 
   constructor(app: AfterShip) {
     this.app = app;
+    this.signer = new ApiSignatureImplement(app.apiSecret);
   }
 
   /**
@@ -59,7 +63,7 @@ export class ApiRequestImplementation implements ApiRequest {
 
     const request_id = uuidv4();
     const headers: any = {
-      'aftership-api-key': this.app.apiKey,
+      'as-api-key': this.app.apiKey,
       'Content-Type': 'application/json',
       'request-id': request_id,
       'aftership-agent': `nodejs-sdk-${VERSION}`,
@@ -69,6 +73,16 @@ export class ApiRequestImplementation implements ApiRequest {
     if (typeof window === 'undefined') {
       headers['User-Agent'] = `${this.app.user_agent_prefix}/${VERSION}`;
     }
+
+    const date = new Date().toUTCString();
+
+    if (this.app.authType === AuthType.Aes) {
+      headers['as-signature-hmac-sha256'] = this.signer.sign(
+        this.app.endpoint + url, date, method, JSON.stringify(data),
+        'application/json', headers);
+    }
+
+    headers['date'] = date;
 
     const request = axios.request({
       url,

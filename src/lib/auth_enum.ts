@@ -1,5 +1,5 @@
 export enum AuthType {
-    ApiKey,
-    Aes,
-    Rsa,
+  ApiKey,
+  Aes,
+  Rsa,
 }

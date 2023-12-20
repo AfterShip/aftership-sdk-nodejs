@@ -28,10 +28,12 @@
   },
   "dependencies": {
     "axios": "^1.6.2",
+    "crypto-js": "^4.2.0",
     "debug": "^4.3.4",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.2.1",
     "@types/debug": "^4.1.12",
     "@types/node": "^14.18.63",
     "@types/uuid": "^8.3.4",
