@@ -52,12 +52,6 @@ export interface Tracking {
     active?: boolean;
 
     /**
-     * Google cloud message registration IDs to receive the push notifications.
-     * Accept either array or comma separated as input.
-     */
-    android?: string | [string];
-
-    /**
      * Custom fields of the tracking.
      */
     custom_fields?: object;
@@ -66,6 +60,11 @@ export interface Tracking {
      * Customer name of the tracking.
      */
     customer_name?: string;
+
+    /**
+     * Total transit time in days.
+     */
+    transit_time?: number;
 
     /**
      * Total delivery time in days.
@@ -103,12 +102,6 @@ export interface Tracking {
      * Available format:YYYY-MM-DD,YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+TIMEZONE
      */
     expected_delivery?: string;
-
-    /**
-     * Apple iOS device IDs to receive the push notifications.
-     * Accept either array or comma separated as input.
-     */
-    ios?: string | [string];
 
     /**
      * Text field for the note.
@@ -220,12 +213,6 @@ export interface Tracking {
      * Store, customer, or order language of the tracking.
      */
     language?: string | null;
-
-    /**
-     * The token to generate the direct tracking link:
-     * https://yourusername.aftership.com/unique_token or https://www.aftership.com/unique_token
-     */
-    unique_token?: string;
 
     /**
      * Array of Hash describes the checkpoint information.
