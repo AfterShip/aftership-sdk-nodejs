@@ -25,22 +25,22 @@ export interface TrackingList {
   keyword?: string;
 
   /**
-   * Unique courier code Use comma for multiple values. 
+   * Unique courier code Use comma for multiple values.
    */
   slug?: string;
 
   /**
-   * Origin country/region of trackings. Use ISO Alpha-3 (three letters). Use comma for multiple values. (Example: USA, HKG)
+   * Origin country/region of trackings. Use ISO Alpha-3 (three letters).
    */
   origin?: [string];
 
   /**
-   * Destination country/region of trackings. Use ISO Alpha-3 (three letters). Use comma for multiple values. (Example: USA, HKG)
+   * Destination country/region of trackings. Use ISO Alpha-3 (three letters).
    */
   destination?: [string];
 
   /**
-   * Current status of tracking. 
+   * Current status of tracking.
    */
   tag?: string;
 
