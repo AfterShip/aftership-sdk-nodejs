@@ -7,7 +7,7 @@ describe("Test constructor", function () {
     it("should construct with api_key correctly", function () {
       let aftership = new AfterShip(api_key);
       expect(aftership.apiKey).toEqual(api_key);
-      expect(aftership.endpoint).toEqual("https://api.aftership.com/v4");
+      expect(aftership.endpoint).toEqual("https://api.aftership.com/tracking/2023-10");
     });
   });
 

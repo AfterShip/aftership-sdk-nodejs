@@ -112,4 +112,15 @@ export interface MultiTrackingsQueryParams {
    */
   courier_destination_country_iso3?: string;
 
+  /**
+   * Tags you added to your shipments to help categorize and filter them easily.
+   * Use a comma to separate multiple values (Example: a,b)
+   */
+  shipment_tags?: string;
+
+  /**
+   * Total delivery time in days.
+   */
+  transit_time?: string;
+
 }

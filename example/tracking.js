@@ -33,36 +33,34 @@ aftership.tracking
   .catch((e) => console.log(e));
 
 
-// DELETE /trackings/:slug/:tracking_number
+// DELETE /trackings/:tracking_id
 aftership.tracking
-	.deleteTracking({
-		slug: "ups",
-		tracking_number: "1234567890",
-	})
-	.then((result) => console.log(result))
+  .deleteTracking({
+    id: 'id1234567890'
+  })
+  .then((result) => console.log(result))
   .catch((e) => console.log(e));
 
 
 // GET /trackings
 const query = {
-	slug: 'dhl,ups,usps'
+  slug: 'dhl,ups,usps'
 };
 aftership.tracking
-	.listTrackings(query)
-	.then((result) => console.log(result))
-	.catch((e) => console.log(e));
-
-
-// GET /trackings/:slug/:tracking_number
-aftership.tracking
-	.getTracking({
-		slug: "ups",
-		tracking_number: "1234567890",
-	})
-	.then((result) => console.log(result))
+  .listTrackings(query)
+  .then((result) => console.log(result))
   .catch((e) => console.log(e));
 
-// PUT /trackings/:slug/:tracking_number
+
+// GET /trackings/:tracking_id
+aftership.tracking
+  .getTracking({
+    id: "id1234567890"
+  })
+  .then((result) => console.log(result))
+  .catch((e) => console.log(e));
+
+// PUT /trackings/:tracking_id
 payload = {
   tracking: {
     title: "New Title",
@@ -70,30 +68,27 @@ payload = {
 };
 aftership.tracking
   .updateTracking({
-    slug: "ups",
-    tracking_number: "1234567890",
+    id: "id1234567890"
   }, payload)
   .then((result) => console.log(result))
   .catch((e) => console.log(e));
 
 
-// POST /trackings/:slug/:tracking_number/retrack
+// POST /trackings/:tracking_id
 aftership.tracking
-	.retrack({
-		slug: "ups",
-		tracking_number: "1234567890",
-	})
-	.then((result) => console.log(result))
+  .retrack({
+    id: "id1234567890"
+  })
+  .then((result) => console.log(result))
   .catch((e) => console.log(e));
 
 
-  // POST /trackings/:slug/:tracking_number/mark-as-completed
-  aftership.tracking
-    .markAsCompleted({
-      slug: "ups",
-      tracking_number: "1234567890",
-    }, {
-      reason: "DELIVERED"
-    })
-    .then((result) => console.log(result))
-    .catch((e) => console.log(e));
+// POST /trackings/:tracking_id/mark-as-completed
+aftership.tracking
+  .markAsCompleted({
+    id: "id1234567890"
+  }, {
+    reason: "DELIVERED"
+  })
+  .then((result) => console.log(result))
+  .catch((e) => console.log(e));

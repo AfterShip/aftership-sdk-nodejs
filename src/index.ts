@@ -14,12 +14,15 @@ import { LastCheckpointImplementation } from './implementation/last_checkpoint';
 import { NotificationImplementation } from './implementation/notification';
 import { TrackingImplementation } from './implementation/tracking';
 import { EstimatedDeliveryDateImplementation } from './implementation/estimated_delivery_date';
+import { AuthType } from './lib/auth_enum';
 
-const DEFAULT_ENDPOINT = 'https://api.aftership.com/v4';
+const DEFAULT_ENDPOINT = 'https://api.aftership.com/tracking/2023-10';
 const DEFAULT_USER_AGENT = 'aftership-sdk-nodejs';
 
 export class AfterShip {
+  public readonly authType: number;
   public readonly apiKey: string;
+  public readonly apiSecret: string;
   public readonly endpoint: string;
   public readonly user_agent_prefix: string;
 
@@ -65,7 +68,15 @@ export class AfterShip {
       this.user_agent_prefix = isStringValid(options.user_agent_prefix)
         ? options.user_agent_prefix
         : DEFAULT_USER_AGENT;
+      this.authType = options.auth_type !== undefined
+        ? options.auth_type
+        : 0;
+      this.apiSecret = isStringValid(options.api_secret)
+        ? options.api_secret
+        : '';
     } else {
+      this.authType = AuthType.ApiKey;
+      this.apiSecret = '';
       this.endpoint = DEFAULT_ENDPOINT;
       this.user_agent_prefix = DEFAULT_USER_AGENT;
     }

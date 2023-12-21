@@ -5,7 +5,7 @@ import { SingleTrackingParam } from '../model/tracking/single_tracking_param';
 /**
  * Build tracking url by param
  * @param param tracking param
- * @param sub_path the sub path behind /:slug/:tracking_number, f.e. /:slug/:tracking_number/retrack
+ * @param sub_path the sub path behind /:id, f.e. /:id/retrack
  */
 export function buildTrackingUrl(param: SingleTrackingParam, sub_path?: string): string {
   if (param === undefined) {
@@ -15,7 +15,6 @@ export function buildTrackingUrl(param: SingleTrackingParam, sub_path?: string):
     );
   }
 
-  // validate
   if (
     isStringValid(param.id) &&
     (isStringValid(param.slug) || isStringValid(param.tracking_number))

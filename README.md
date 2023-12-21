@@ -68,15 +68,17 @@ Create AfterShip instance with options
 
 - `api_key` - **Require** - your Aftership API key
 - `options` - **Optional** - object of request options
-	- `endpoint` - *string*, AfterShip endpoint, default 'https://api.aftership.com/v4'
+	- `endpoint` - *string*, AfterShip endpoint, default 'https://api.aftership.com/tracking/2023-10'
 	- `user_agent_prefix` - *string*, prefix of User-Agent in headers, default 'aftership-sdk-nodejs'
+  - `auth_type` -number, if authentication type is AES, use `AuthType.Aes`, default `AuthType.ApiKey`.
+  - `api_secret` -string, if authentication type is AES, it is required.
 
 
 Example:
 ```javascript
 // Construct with options
 const aftership = new AfterShip('YOUR_API_KEY', {
-	endpoint: 'https://api.aftership.com/OLDER_VERSION'
+  auth_type: AuthType.Aes, api_secret:'YOUR_API_SECRET'
 });
 ```
 
