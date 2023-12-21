@@ -1,7 +1,8 @@
 
 import cryptoJs from 'crypto-js';
 
-const seperator = '\n';
+const SEPERATOR = '\n';
+const AFTERSHIP_HEADER_PREFIX = 'as-';
 
 export interface ApiSignature {
   sign(
@@ -48,7 +49,7 @@ export class ApiSignatureImplement implements ApiSignature {
     const newHeaders: any = {};
     for (const key in headers) {
       const newKey = key.toLowerCase();
-      if (newKey.indexOf('as-') === -1) {
+      if (newKey.indexOf(AFTERSHIP_HEADER_PREFIX) === -1) {
         continue;
       }
       keys.push(newKey);
@@ -60,7 +61,7 @@ export class ApiSignatureImplement implements ApiSignature {
     for (let i = 0; i < keys.length; i += 1) {
       result.push(`${keys[i]}:${newHeaders[keys[i]]}`);
     }
-    return result.join(seperator);
+    return result.join(SEPERATOR);
   }
 
   private canonicalizedResource(url: string): string {
@@ -82,7 +83,7 @@ export class ApiSignatureImplement implements ApiSignature {
     canonicalizedHeader: string,
     resource: string,
   ): string {
-    let result: string = method + seperator;
+    let result: string = method + SEPERATOR;
     let newBody = '';
     let newContentType = contentType;
     if (body === undefined || body.length === 0) {
@@ -90,10 +91,10 @@ export class ApiSignatureImplement implements ApiSignature {
     } else {
       newBody = cryptoJs.MD5(body).toString().toUpperCase();
     }
-    result += newBody + seperator;
-    result += newContentType + seperator;
-    result += date + seperator;
-    result += canonicalizedHeader + seperator;
+    result += newBody + SEPERATOR;
+    result += newContentType + SEPERATOR;
+    result += date + SEPERATOR;
+    result += canonicalizedHeader + SEPERATOR;
     result += resource;
     return result;
   }

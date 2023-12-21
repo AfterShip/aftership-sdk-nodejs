@@ -7,8 +7,7 @@ const aftership = new AfterShip(API_KEY);
 
 // GET /last_checkpoint/:slug/:tracking_number
 aftership.last_checkpoint.getLastCheckpoint({
-    slug: 'ups',
-    tracking_number: '1234567890',
+    id:'oox5j5339istjlpwfoky'
   })
   .then(result => console.log(result))
   .catch(e => console.log(e));
