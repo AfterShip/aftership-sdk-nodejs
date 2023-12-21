@@ -15,16 +15,18 @@ export function buildTrackingUrl(param: SingleTrackingParam, sub_path?: string):
     );
   }
 
+  let url: string = '';
   // validate
-  if (!isStringValid(param.id)) {
+  if (isStringValid(param.id)) {
+    url = `${param.id}`;
+  } else if (isStringValid(param.slug) && isStringValid(param.tracking_number)) {
+    url = `${param.slug}/${param.tracking_number}`;
+  } else {
     throw AftershipError.getSdkError(
-      ErrorEnum.handlerInvalidEmptyTrackingId,
-      param.id,
+      ErrorEnum.handlerInvalidEmptySlugOrTrackNumber,
+      param.tracking_number,
     );
   }
-
-  // Build url
-  let url = `${param.id}`;
 
   // Add sub path
   if (isStringValid(sub_path)) {
