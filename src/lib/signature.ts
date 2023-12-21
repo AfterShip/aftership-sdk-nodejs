@@ -47,14 +47,14 @@ export class ApiSignatureImplement implements ApiSignature {
 
     const keys: string[] = [];
     const newHeaders: any = {};
-    for (const key in headers) {
+    Object.keys(headers).forEach((key: string) => {
       const newKey = key.toLowerCase();
       if (newKey.indexOf(AFTERSHIP_HEADER_PREFIX) === -1) {
-        continue;
+        return;
       }
       keys.push(newKey);
       newHeaders[newKey] = headers[key].trim();
-    }
+    });
     keys.sort();
 
     const result: string[] = [];
