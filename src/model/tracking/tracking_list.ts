@@ -32,12 +32,12 @@ export interface TrackingList {
   /**
    * Origin country/region of trackings. Use ISO Alpha-3 (three letters).
    */
-  origin?: [string];
+  origin?: string[];
 
   /**
    * Destination country/region of trackings. Use ISO Alpha-3 (three letters).
    */
-  destination?: [string];
+  destination?: string[];
 
   /**
    * Current status of tracking.
@@ -63,6 +63,11 @@ export interface TrackingList {
    * Whether or not the shipment is returned to sender.
    */
   return_to_sender?: boolean[];
+
+  /**
+   * Total delivery time in days.
+   */
+  transit_time?: number;
 
   /**
    * Destination country/region of the tracking detected from the courier.

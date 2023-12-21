@@ -33,7 +33,7 @@ aftership.tracking
   .catch((e) => console.log(e));
 
 
-// DELETE /trackings/:slug/:tracking_number
+// DELETE /trackings/:tracking_id
 aftership.tracking
   .deleteTracking({
     id: 'id1234567890'
@@ -52,7 +52,7 @@ aftership.tracking
   .catch((e) => console.log(e));
 
 
-// GET /trackings/:slug/:tracking_number
+// GET /trackings/:tracking_id
 aftership.tracking
   .getTracking({
     id: "id1234567890"
@@ -60,7 +60,7 @@ aftership.tracking
   .then((result) => console.log(result))
   .catch((e) => console.log(e));
 
-// PUT /trackings/:slug/:tracking_number
+// PUT /trackings/:tracking_id
 payload = {
   tracking: {
     title: "New Title",
@@ -74,7 +74,7 @@ aftership.tracking
   .catch((e) => console.log(e));
 
 
-// POST /trackings/:slug/:tracking_number/retrack
+// POST /trackings/:tracking_id
 aftership.tracking
   .retrack({
     id: "id1234567890"
@@ -83,7 +83,7 @@ aftership.tracking
   .catch((e) => console.log(e));
 
 
-// POST /trackings/:slug/:tracking_number/mark-as-completed
+// POST /trackings/:tracking_id/mark-as-completed
 aftership.tracking
   .markAsCompleted({
     id: "id1234567890"

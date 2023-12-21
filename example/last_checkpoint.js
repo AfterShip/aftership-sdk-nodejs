@@ -5,14 +5,14 @@ const { AfterShip } = require('../dist/index.js');
 
 const aftership = new AfterShip(API_KEY);
 
-// GET /last_checkpoint/:slug/:tracking_number
+// GET /last_checkpoint/:tracking_id
 aftership.last_checkpoint.getLastCheckpoint({
     id:'oox5j5339istjlpwfoky'
   })
   .then(result => console.log(result))
   .catch(e => console.log(e));
 
-// GET /last_checkpoint/:id
+// GET /last_checkpoint/:tracking_id
 aftership.last_checkpoint.getLastCheckpoint({
     id: '5b74f4958776db0e00b6f5ed',
   })
