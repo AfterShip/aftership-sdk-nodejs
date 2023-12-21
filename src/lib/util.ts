@@ -15,17 +15,43 @@ export function buildTrackingUrl(param: SingleTrackingParam, sub_path?: string):
     );
   }
 
-  let url: string = '';
-  // validate
-  if (isStringValid(param.id)) {
-    url = `${param.id}`;
-  } else if (isStringValid(param.slug) && isStringValid(param.tracking_number)) {
-    url = `${param.slug}/${param.tracking_number}`;
-  } else {
+  if (
+    isStringValid(param.id) &&
+    (isStringValid(param.slug) || isStringValid(param.tracking_number))
+  ) {
+    throw AftershipError.getSdkError(
+      ErrorEnum.handlerInvalidBothTrackingIdAndNumber,
+      param.id,
+    );
+  } else if (
+    !isStringValid(param.id) &&
+    !isStringValid(param.slug) &&
+    !isStringValid(param.tracking_number)
+  ) {
+    throw AftershipError.getSdkError(
+      ErrorEnum.handlerInvalidEmptyTrackingIdAndNumber,
+      param.tracking_number,
+    );
+  } else if (
+    !isStringValid(param.id) &&
+    (!isStringValid(param.slug) || !isStringValid(param.tracking_number))
+  ) {
     throw AftershipError.getSdkError(
       ErrorEnum.handlerInvalidEmptySlugOrTrackNumber,
       param.tracking_number,
     );
+  }
+
+  // Build url
+  let url = '';
+
+  // id
+  if (isStringValid(param.id)) {
+    url = `${param.id}`;
+  } else {
+    // slug && tracking_number
+
+    url = `${param.slug}/${param.tracking_number}`;
   }
 
   // Add sub path
