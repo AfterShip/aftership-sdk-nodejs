@@ -1,7 +1,10 @@
-# aftership-sdk-node
+# Deprecation notice: New Version Available
 
-[![AfterShip SDKs channel](https://aftership-sdk-slackin.herokuapp.com/badge.svg)](https://aftership-sdk-slackin.herokuapp.com/)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FAfterShip%2Faftership-sdk-nodejs.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FAfterShip%2Faftership-sdk-nodejs?ref=badge_shield)
+This version of the SDK has been deprecated and replaced with the newly reconstructed SDK.
+
+For the latest API features and improved integration, please visit our updated repository at https://github.com/AfterShip/tracking-sdk-nodejs and follow the provided instructions.
+
+# aftership-sdk-node
 
 [![node](https://img.shields.io/node/v/aftership.svg)](https://nodejs.org/en/)
 [![npm](https://img.shields.io/npm/v/aftership.svg)](https://www.npmjs.com/package/aftership)
